@@ -1,0 +1,12 @@
+.invertir-flex {
+    justify-content: flex-end;
+}
+
+.centrar-vertical {
+    display: flex;
+    align-items: center;
+}
+
+.sin-fondo {
+    background-color: transparent;
+}

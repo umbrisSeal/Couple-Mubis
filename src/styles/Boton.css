@@ -1,0 +1,22 @@
+.boton {
+    padding: 5px 15px;
+    border-radius: 10px;
+    border-style: solid;
+    margin: auto 1rem;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.boton-bordeado {
+    background-color: transparent;
+}
+
+.amarillo {
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+.amarillo:hover {
+    background-color: var(--acento);
+    color: white;
+}

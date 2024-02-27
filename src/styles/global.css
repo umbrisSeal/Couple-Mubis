@@ -1,0 +1,21 @@
+:root {
+    --fuente-lexend: "Lexend", sans-serif;
+    --primario: #220901;
+    --secundario: #621708;
+    --terciario: #941B0C;
+    --acento: #F6AA1C;
+    --acento2: #BC3908;
+    --blanco: #FFFFFF;
+}
+
+body {
+    font-family: var(--fuente-lexend);
+}
+
+header {
+    min-height: 60px;
+}
+
+.fondo-radial {
+    background: radial-gradient(ellipse farthest-corner ,var(--secundario), var(--secundario), var(--primario), var(--primario));
+}
