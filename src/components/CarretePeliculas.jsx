@@ -20,7 +20,7 @@ function CarretePeliculas() {
     ];
 
     return(
-        <div className='prueba enfila centrar'>
+        <div className='prueba enfila'>
             {datosSimulados.map((pelicula, index) => {
                 return <PeliculaCarrete url={pelicula} index={index} />
             })}

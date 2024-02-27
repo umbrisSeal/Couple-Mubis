@@ -5,7 +5,7 @@ import CarretePeliculas from './CarretePeliculas';
 
 function SeccionPeliculas() {
     return(
-        <div className='fondo-peliculas centrar'>
+        <div className='fondo-peliculas centrar estirar'>
             <CarretePeliculas />
         </div>
     )

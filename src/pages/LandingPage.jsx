@@ -6,7 +6,7 @@ function LandingPage() {
     return(
         <Fragment>
             <Bienvenida />
-            
+            <SeccionPeliculas />
             <p> Landing page </p>
         </Fragment>
     )
