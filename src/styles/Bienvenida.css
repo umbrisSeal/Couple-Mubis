@@ -26,11 +26,6 @@
 }
 
 @media (max-width: 620px) {
-    .contenedor-imagen {
-        display: flex;
-        height: 80vh;
-    }
-
     .animar-fin {
         height: 280px;
         opacity: 1;
@@ -38,11 +33,6 @@
 }
 
 @media (max-width: 450px) {
-    .contenedor-imagen {
-        display: flex;
-        height: 80vh;
-    }
-
     .animar-fin {
         height: 200px;
         opacity: 1;
