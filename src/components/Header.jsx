@@ -6,7 +6,7 @@ import '../styles/Header.css';
 function HeaderLogin() {
 
     return(
-        <header className='centrar-vertical invertir-flex sin-fondo'>
+        <header className='centrar-vertical invertir-flex sin-fondo cabecera'>
             <Boton />
         </header>
     )

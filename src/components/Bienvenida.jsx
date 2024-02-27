@@ -4,25 +4,21 @@ import Header from '../components/Header'
 import '../styles/Bienvenida.css';
 
 function Bienvenida() {
-    const [imgHeight, setImgHeight] = useState(50);
-    const [opacity, setOpacity] = useState(0);
-
-    const maxImgHeight = 380;
+    const [estilos, setEstilos] = useState('animar-inicio');
 
     useEffect( () => {
-        setImgHeight(maxImgHeight);
-        setOpacity(1);
+        setEstilos('animar-fin');
     }, []);
 
-
+    // 80vh
 
     return(
         <main className='fondo-radial'>
             <Header />
             <div className='centrar-contenido'>
-                <div style={ {height: '80vh'} } className='contenedor-imagen'>
+                <div className='contenedor-imagen'>
                     <img src='./src/assets/images/logo.png' alt='Logo de Couple Mubis'
-                        style={{height: `${imgHeight.toString()}px`, opacity: opacity, margin: 'auto'} } className='animacion'
+                        className={`animacion ${estilos}`}
                     />
                 </div>
                 <h1 className='titulo-principal'> ¡Listas de películas para parejas y amigos! </h1>

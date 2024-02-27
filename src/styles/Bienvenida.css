@@ -1,6 +1,17 @@
 
 .animacion {
+    margin: auto;
     transition: all 1.2s ease-in-out;
+}
+
+.animar-inicio {
+    height: 50px;
+    opacity: 0;
+}
+
+.animar-fin {
+    height: 380px;
+    opacity: 1;
 }
 
 .centrar-contenido {
@@ -11,10 +22,36 @@
 
 .contenedor-imagen {
     display: flex;
+    height: 80vh;
+}
+
+@media (max-width: 620px) {
+    .contenedor-imagen {
+        display: flex;
+        height: 80vh;
+    }
+
+    .animar-fin {
+        height: 280px;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 450px) {
+    .contenedor-imagen {
+        display: flex;
+        height: 80vh;
+    }
+
+    .animar-fin {
+        height: 200px;
+        opacity: 1;
+    }
 }
 
 .titulo-principal {
     margin: 0px auto 4.5rem auto;
     color: white;
     font-weight: 700;
+    text-align: center;
 }
