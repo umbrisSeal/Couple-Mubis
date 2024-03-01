@@ -1,0 +1,46 @@
+
+.seccion-about {
+}
+
+.fondo-rojo {
+    background-color: var(--primario);
+}
+
+.texto-rojo {
+    color: var(--acento2);
+}
+
+.centrar-texto {
+    text-align: center;
+}
+
+.contenedor-about {
+    width: 50%;
+    margin: 3rem 0px;
+}
+
+.contenedor-about h2 {
+    font-weight: 600;
+    margin: 2rem 0px;
+}
+
+.contenedor-about p {
+    margin: 1.5rem 0px;
+}
+
+.medio-circulo {
+    height: 340px;
+    width: 100px;
+}
+
+.derecho {
+    background: radial-gradient(ellipse at right, var(--terciario) 0%, transparent 70%);
+    border-top-left-radius: 100px;
+    border-bottom-left-radius: 100px;
+}
+
+.izquierdo {
+    background: radial-gradient(ellipse at left, var(--terciario) 0%, transparent 70%);
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+}

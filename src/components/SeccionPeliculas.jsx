@@ -74,7 +74,7 @@ function SeccionPeliculas() {
             </div>
             <div className='centrar centrar-texto d-flex flex-column texto-carrete'>
                 <h2> Crea tu primera lista compartida de películas ahora: </h2>
-                <Link to='/signin'>
+                <Link to='/login-temporal'>
                     <Boton version='carrete' />
                 </Link>
             </div>
