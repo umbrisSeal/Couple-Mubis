@@ -7,16 +7,36 @@
     transition: all 0.2s ease-in-out;
 }
 
-.boton-bordeado {
-    background-color: transparent;
+.boton-grande {
+    padding: 12px 26px;
+    border-radius: 10px;
+    border-style: solid;
+    margin: auto 1rem;
+
+    font-size: 1.4rem;
+    font-weight: 600;
+
+    transition: all 0.2s ease-in-out;
 }
 
 .amarillo {
+    color: white;
+    background-color: var(--acento);
+    border-color: var(--acento);
+}
+
+.bordeado-amarillo {
+    background-color: transparent;
     border-color: var(--acento);
     color: var(--acento);
 }
 
-.amarillo:hover {
+.bordeado-amarillo:hover {
     background-color: var(--acento);
     color: white;
+}
+
+.amarillo:hover {
+    background-color: transparent;
+    color: var(--acento);
 }
