@@ -3,6 +3,7 @@ import Bienvenida from '../components/Bienvenida'
 import SeccionPeliculas from '../components/SeccionPeliculas'
 import SeccionAbout from '../components/SeccionAbout'
 import SeccionTecnica from '../components/SeccionTecnica'
+import Footer from '../components/Footer'
 
 function LandingPage() {
     return(
@@ -11,7 +12,7 @@ function LandingPage() {
             <SeccionPeliculas />
             <SeccionAbout />
             <SeccionTecnica />
-            <p> Landing page </p>
+            <Footer />
         </Fragment>
     )
 }
