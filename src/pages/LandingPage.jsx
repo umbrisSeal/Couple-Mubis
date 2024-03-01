@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import Bienvenida from '../components/Bienvenida'
 import SeccionPeliculas from '../components/SeccionPeliculas'
 import SeccionAbout from '../components/SeccionAbout'
+import SeccionTecnica from '../components/SeccionTecnica'
 
 function LandingPage() {
     return(
@@ -9,6 +10,7 @@ function LandingPage() {
             <Bienvenida />
             <SeccionPeliculas />
             <SeccionAbout />
+            <SeccionTecnica />
             <p> Landing page </p>
         </Fragment>
     )

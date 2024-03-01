@@ -1,0 +1,29 @@
+
+.contenedor-tecnico {
+    color: white;
+}
+
+.contenedor-tecnico h2 {
+    padding: 2rem 0px;
+    font-weight: 600;
+}
+
+.fondo-rojo {
+    background-color: var(--primario);
+}
+
+.centrar-texto {
+    text-align: center;
+}
+
+.contenedor-tarjetas {
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+}
+
+@media (max-width: 900px) {
+    .contenedor-tarjetas {
+        flex-direction: column;
+        align-items: center;
+    }
+}

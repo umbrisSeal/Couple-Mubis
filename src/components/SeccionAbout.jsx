@@ -3,7 +3,7 @@ import '../styles/SeccionAbout.css';
 
 function SeccionAbout() {
     return (
-        <div className='fondo-rojo seccion-about d-flex flex-row justify-content-between align-items-center'>
+        <div className='fondo-rojo d-flex flex-row justify-content-between align-items-center'>
             <div className='medio-circulo izquierdo'></div>
             <div className='texto-rojo centrar-texto contenedor-about'>
                 <h2> ¿Que es Couple Mubis? </h2>
