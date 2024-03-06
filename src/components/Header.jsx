@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import Boton from './Boton';
-
 import '../styles/Header.css';
 
-function HeaderLogin() {
+function Header() {
 
     return(
         <header className='centrar-vertical invertir-flex sin-fondo cabecera'>
@@ -15,7 +14,7 @@ function HeaderLogin() {
     )
 }
 
-export default HeaderLogin
+export default Header
 
 /*
 
