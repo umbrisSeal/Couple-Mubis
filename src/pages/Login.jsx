@@ -47,6 +47,11 @@ function Login(props) {
         PASSWORD_INCORRECTO: 'El password es incorrecto.',
         CUENTA_DESABILITADA: 'Su cuenta ha sido desabilitada.',
         CAMPOS_VACIOS: 'Por favor, ingrese usuario y contraseña.',
+        CUENTA_DUPLICADA: 'El correo que intenta registrar ya existe.',
+        PASSWORD_DIFERENTE: 'Las contraseñas no coinciden.',
+        PASSWORD_PEQUEÑO: 'El password debe tener al menos 6 caracteres',
+        PASSWORD_NUMERO: 'El password debe contener al menos 1 numero.',
+        PASSWORD_CARACTER: 'El password debe contener al menos 1 caracter especial.',
     }
 
     // Renderizar pagina de vinculacion login si no tiene usuario (revisar en base de datos).
@@ -68,13 +73,22 @@ function Login(props) {
        setErrorState(ESTADO_ERROR.NONE);
        const emailValidoRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.(com|net|org)$/;
        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+       const contieneNumeroRegex = /\d/;
+       const contieneCaracterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-       if(user == '' || password == '') return setErrorState(ESTADO_ERROR.CAMPOS_VACIOS);
-       if(user.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_USUARIO);
-       if(password.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_PASSWORD);
-       if(!emailRegex.test(user)) return setErrorState(ESTADO_ERROR.CORREO);
-       if(!emailValidoRegex.test(user)) return setErrorState(ESTADO_ERROR.DOMINIO_CORREO);
-       // Validaciones extras.
+       if(version != 'vincular') {
+            if(user == '' || password == '') return setErrorState(ESTADO_ERROR.CAMPOS_VACIOS);
+            if(user.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_USUARIO);
+            if(password.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_PASSWORD);
+            if(!emailRegex.test(user)) return setErrorState(ESTADO_ERROR.CORREO);
+            if(!emailValidoRegex.test(user)) return setErrorState(ESTADO_ERROR.DOMINIO_CORREO);
+       }
+       if(version === 'registro') {
+            if(password.length < 6) return setErrorState(ESTADO_ERROR.PASSWORD_PEQUEÑO);
+            if(!contieneNumeroRegex.test(password)) return setErrorState(ESTADO_ERROR.PASSWORD_NUMERO);
+            if(!contieneCaracterRegex.test(password)) return setErrorState(ESTADO_ERROR.PASSWORD_CARACTER);
+            if(password != passwordConfirmar) return setErrorState(ESTADO_ERROR.PASSWORD_DIFERENTE);
+        }
     }
 
     const handleUserChange = (event) => setUser(event.target.value);
@@ -138,8 +152,6 @@ function Login(props) {
                     <p className={`centrar-texto letras-pequeñas ${version === '' ? '' : 'ocultar'}`}> ¿No tienes una cuenta? Crea una <Link to="/registro-temporal"> <span className='hypervinculo'>aqui.</span> </Link> </p>
                     <p className={`centrar-texto letras-pequeñas ${version === 'registro' ? '' : 'ocultar'}`}> ¿Ya tienes una cuenta refugio14? Inicia sesion <Link to="/login"> <span className='hypervinculo'> aqui.</span> </Link> </p>
                     <p className={`centrar-texto letras-pequeñas ${version === 'vincular' ? '' : 'ocultar'}`}> Al vincular su cuenta, acepta los <Link to="/terminos"> <span className='hypervinculo'>terminos y condiciones</span> </Link> de Couple Mubis. </p>
-
-                    <Link to="/registro"> Prueba de Verificacion de cuenta. </Link>
                 </div>
 
             </form>
