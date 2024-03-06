@@ -19,6 +19,28 @@
     transition: all 0.2s ease-in-out;
 }
 
+.boton-mediano {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.azul {
+    color: white;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.azul:hover {
+    background-color: #0062CC;
+    border-color: #0062CC;
+}
+
 .amarillo {
     color: white;
     background-color: var(--acento);
@@ -39,4 +61,8 @@
 .amarillo:hover {
     background-color: transparent;
     color: var(--acento);
+}
+
+.texto-capital {
+    text-transform: capitalize;
 }
