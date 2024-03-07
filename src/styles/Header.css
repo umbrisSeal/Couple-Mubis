@@ -13,4 +13,156 @@
 
 .cabecera {
     height: 10vh;
+    min-height: 60px;
 }
+
+.ocultar {
+    display: none;
+}
+
+.fondo-primario {
+    background-color: var(--primario);
+    color: white;
+}
+
+.extender-fondo {
+    width: 100%;
+}
+
+.header-home {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 1rem;
+}
+
+.header-home p {
+    margin: 0px;
+}
+
+.imagen-perfil {
+    border-radius: 100%;
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
+}
+
+.imagen-logo {
+    height: 45px;
+}
+
+.seccion-busqueda {
+    display: flex;
+    align-items: center;
+    gap: 0px 10px;
+}
+
+.boton-buscar {
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 10px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.boton-buscar:hover {
+    background-color: #941c0c7c;
+}
+
+.icono-buscar {
+    height: 24px;
+}
+
+.contenedor-busqueda, .resultados-busqueda {
+    width: 280px;
+}
+
+.campo-busqueda {
+    width: 100%;
+    height: 30px;
+    padding: 1px 4px;
+
+    font-size: 14px;
+
+    background-color: transparent;
+    color: var(--terciario);
+    border-radius: 6px;
+    border-color: var(--terciario);
+    border-style: solid;    /* Probar */
+}
+
+.campo-busqueda:focus {
+    outline: inset 2px var(--acento2);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.boton-perfil {
+    background-color: transparent;
+    border: none;
+}
+
+.resultados-busqueda {
+    position: absolute;
+    display: none;
+}
+
+#inputBusqueda:focus + .resultados-busqueda {
+    display: block;
+}
+
+.resultados-busqueda:active {
+    /* Permite conservar el menu cuando el mouse esta encima del menu. */
+    display: block;
+}
+
+#lista-busqueda, #lista-busqueda li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#lista-busqueda li {
+    padding: 2px 6px;
+    
+    background-color: var(--primario);
+    border: solid 2px var(--secundario);
+    margin-bottom: -2px;    /* Evitar apariencia de bordes "duplicados". */
+
+    cursor: pointer;
+}
+
+.link-busqueda {
+    text-decoration: none;
+
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+#lista-busqueda li:hover {
+    background-color: var(--terciario);
+}
+
+#lista-busqueda li:last-of-type {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+#lista-busqueda img {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.titulo-pelicula-busqueda {
+    color: white;
+    font-size: 14px;
+
+    text-decoration: none;
+}
+
+.año-pelicula-busqueda {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+}
+

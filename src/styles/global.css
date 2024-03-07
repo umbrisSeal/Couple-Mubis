@@ -20,6 +20,10 @@ header {
     background: radial-gradient(ellipse farthest-corner ,var(--secundario), var(--secundario), var(--primario), var(--primario));
 }
 
+.fondo-radial-tenue {
+    background: radial-gradient(ellipse farthest-corner, var(--secundario) 0%, var(--primario) 70%);
+}
+
 .prueba {
     background-color: aqua;
 }

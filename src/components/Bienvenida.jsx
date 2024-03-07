@@ -14,7 +14,7 @@ function Bienvenida() {
 
     return(
         <main className='fondo-radial'>
-            <Header />
+            <Header version='login' />
             <div className='centrar-contenido'>
                 <div className='contenedor-imagen'>
                     <img src='./src/assets/images/logo.png' alt='Logo de Couple Mubis'
