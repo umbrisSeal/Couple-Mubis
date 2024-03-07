@@ -66,3 +66,73 @@
 .texto-capital {
     text-transform: capitalize;
 }
+
+.contenedor-doble {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.negritas {
+    font-weight: 700;
+}
+
+.boton-borde {
+    padding: 5px 15px;
+    margin: auto 1rem;
+    border-radius: 10px;
+    background-color: transparent;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.borde-amarillo {
+    border: solid 2px var(--acento);
+    color: var(--acento);
+}
+
+.borde-amarillo:hover {
+    background-color: rgba(246, 170, 28, 0.25);
+}
+
+.borde-rojo {
+    border: solid 2px var(--acento2);
+    color: var(--acento2);
+}
+
+.borde-rojo:hover {
+    background-color: rgba(188, 57, 8, 0.25);
+}
+
+.texto-grande {
+    font-size: 20px;
+}
+
+/*
+
+.bordeado-amarillo {
+    background-color: transparent;
+    border-color: var(--acento);
+    color: var(--acento);
+}
+
+.boton {
+    padding: 5px 15px;
+    border-radius: 10px;
+    border-style: solid;
+    margin: auto 1rem;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.amarillo {
+    color: white;
+    background-color: var(--acento);
+    border-color: var(--acento);
+}
+
+.amarillo:hover {
+    background-color: transparent;
+    color: var(--acento);
+}
+

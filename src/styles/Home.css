@@ -1,5 +1,24 @@
 
 .contenedor-main {
-    height: 100dvh;
+    height: calc(100dvh - 60px);
+    min-height: 480px;
     color: white;
+
+    padding: 1.2rem;
 }
+
+.contenedor-main p, .contenedor-main h2 {
+    margin: 0;
+}
+
+.titulo-home {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 1rem;
+}
+
+.conjunto-recomendados, .conjunto-listas {
+    margin-bottom: 1rem;
+}
+
