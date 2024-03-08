@@ -1,0 +1,54 @@
+
+.contenedor-lista {
+    width: 300px;
+}
+
+.contenedor-posters {
+    width: 100%;
+    height: 240px;
+
+    border: solid 2px var(--terciario);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.borde-izquierdo {
+    border-top-left-radius: 10px;
+}
+
+.borde-derecho {
+    border-top-right-radius: 10px;
+}
+
+.contenedor-posters-lateral {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.no-hypervinculo {
+    text-decoration: none;
+}
+
+.contenedor-informacion {
+    width: 100%;
+    height: 60px;
+    border: solid 2px var(--terciario);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    margin-top: -2px;
+    padding: 2px 4px;
+}
+
+.lista-nombre {
+    color: white;
+    font-weight: 500;
+}
+
+.lista-colaboradores {
+    color: var(--acento2)
+}
