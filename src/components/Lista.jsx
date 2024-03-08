@@ -8,6 +8,7 @@ function Lista({lista}) {
     let contenido;
 
     const recortarString = (string) => {
+        if(string.length == 0)  return '[Lista Sin Nombre]';
         if(string.length > 32) {
             return string.substring(0, 32) + ' ...';
         } else {
@@ -17,26 +18,30 @@ function Lista({lista}) {
 
     const mostrarEditores = (editores) => {
         const longitudMaxima = 22;
-        let editoresString;
         let editoresRestantes = 0;
-        
-        const stringEditores = editores.reduce((stringTotal, editor) => {
-            if(stringTotal.length < 22 && stringTotal.length + editor.length < 22) {
-                // Verificar si no es el primer o ultimo elemento.
-                    // Si es el primer elemento aplicar la formula:
-                    // Si no, agregar una coma.
-                return `${stringTotal} ${editor}`;
-            } else {
-                editoresRestantes += 1;
-                return stringTotal;
-            }
-        }, "Con:");
 
-        if(editoresRestantes > 0) {
-            return `${stringEditores} y ${editoresRestantes} mas.`;
+        if(editores.length != 0) {
+            const stringEditores = editores.reduce((stringTotal, editor) => {
+                if(stringTotal.length < longitudMaxima && stringTotal.length + editor.length < longitudMaxima) {
+                    // Verificar si no es el primer o ultimo elemento.
+                        // Si es el primer elemento aplicar la formula:
+                        // Si no, agregar una coma.
+                    return `${stringTotal} ${editor}`;
+                } else {
+                    editoresRestantes += 1;
+                    return stringTotal;
+                }
+            }, "Con:");
+    
+            if(editoresRestantes > 0) {
+                return `${stringEditores} y ${editoresRestantes} mas.`;
+            } else {
+                return editoresRestantes;
+            }
         } else {
-            return editoresRestantes;
+            return 'Solo tu.'
         }
+        
     }
 
     switch(lista.cantidadPeliculas) {
