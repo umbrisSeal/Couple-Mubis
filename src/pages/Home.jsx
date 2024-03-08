@@ -72,9 +72,13 @@ function Home() {
                         <Boton version='agregarLista' />
                     </div>
                     <div className='conjunto-listas'>
-                        {/* Verificar que halla listas a nombre del usuario, si no, mostrar el elemento vacio. */}
-                        {/* Hacer un .map para circular y crear una Lista y enviar como prop la informacion basica de la prop para renderizarla. */}
-                        <Lista lista={datosSimulados.listas[4]} />
+                        {datosSimulados.listas.length == 0 ?
+                            <p> ¡Aun no has creado ninguna lista! </p>
+                            :
+                            datosSimulados.listas.map((lista, index) => {
+                                return <Lista key={index + lista.nombre} lista={lista} />
+                            })
+                        }
                     </div>
                 </section>
                 <section>

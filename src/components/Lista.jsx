@@ -45,6 +45,12 @@ function Lista({lista}) {
     }
 
     switch(lista.cantidadPeliculas) {
+        case 0:
+            contenido = <div className='contenedor-sin-peliculas'>
+                <p> (Lista vacia) </p>
+            </div>
+            break;
+            
         case 1:
             contenido = <Fragment>
                 <img src={`https://image.tmdb.org/t/p/${tamaño}/${lista.urlPosters[0]}`} width={'100%'} height={'100%'} className='borde-izquierdo borde-derecho' />
@@ -70,7 +76,7 @@ function Lista({lista}) {
             </Fragment>
             break;
 
-        case 4:
+        default:
             contenido = <Fragment>
                 <div className='contenedor-posters-lateral'>
                     <img src={`https://image.tmdb.org/t/p/${tamaño}/${lista.urlPosters[0]}`} width={'100%'} height={'50%'} className='borde-izquierdo' />
@@ -81,11 +87,6 @@ function Lista({lista}) {
                     <img src={`https://image.tmdb.org/t/p/${tamaño}/${lista.urlPosters[3]}`} width={'100%'} height={'50%'} className='' />
                 </div>
             </Fragment>
-            break;
-        default:
-            contenido = <div className='contenedor-sin-peliculas'>
-                <p> (Lista vacia) </p>
-            </div>
             break;
     }
 
@@ -105,39 +106,3 @@ function Lista({lista}) {
 }
 
 export default Lista
-
-/*
-    id: 'ERT45GG',
-            nombre: '',
-            editores: [''],
-            privada: false,
-            cantidadPeliculas: 4,
-    urlPosters: [],
-    w92
-    <img src={`https://image.tmdb.org/t/p/${tamaño}/${pelicula.urlPoster}`} />
-
-    "w92",
-    "w154",
-    "w185",
-    "w342",
-    "w500",
-    "w780",
-    "original"
-
-    - 0 images: transparent
-
-    - 1 image: full with x heigth
-    - 2 image: full with x 1/2 height
-    - 3 image full 1 fill wifth 1/2 height; 2 1/2 1/2
-    - 4 image half all with and heith
-
-
-    2
-    1   [full space]
-    2   [full heigth] [half width]
-    3   [full heigth] [half width] / [half all]
-
-
-
-
-*/
