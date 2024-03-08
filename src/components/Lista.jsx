@@ -83,7 +83,9 @@ function Lista({lista}) {
             </Fragment>
             break;
         default:
-            // Agregar un mensaje de "no hay peliculas en esta lista" o algo asi.
+            contenido = <div className='contenedor-sin-peliculas'>
+                <p> (Lista vacia) </p>
+            </div>
             break;
     }
 
