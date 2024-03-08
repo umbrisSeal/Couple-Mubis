@@ -1,6 +1,11 @@
 
 .contenedor-lista {
     width: 300px;
+    border-radius: 10px;
+}
+
+.contenedor-lista:hover {
+    background-color: var(--terciario) ;
 }
 
 .contenedor-posters {
@@ -52,3 +57,4 @@
 .lista-colaboradores {
     color: var(--acento2)
 }
+
