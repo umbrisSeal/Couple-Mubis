@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import Boton from './Boton';
 import '../styles/Header.css';
@@ -8,28 +8,44 @@ import { obtenerNivel } from '../assets/js/niveles.js';
 
 function Header(props) {
     const [busqueda, setBusqueda] = useState('');
+    const [mostrarPerfil, setMostrarPerfil] = useState(false);
+    const perfilRef = useRef(null);
+
+    useEffect(() => {
+        // Definir esta funcion handle, para garantizar el tener el valor actualizado de mostarPerfil.
+        const handleClickAfuera = (event) => {
+            if(perfilRef.current && !perfilRef.current.contains(event.target)) {
+                setMostrarPerfil(false);
+            }
+        }
+
+        if(mostrarPerfil) {
+            document.addEventListener('mousedown', handleClickAfuera);
+        } else {
+            document.removeEventListener('mousedown', handleClickAfuera);
+        }
+
+
+        // Clean-up
+        return () => {
+            document.removeEventListener('mousedown', handleClickAfuera);
+        }
+    }, [mostrarPerfil])
 
     const handleBusquedaChange = (event) => setBusqueda(event.target.value);
+
 
     const buscarPeliculas = function() {
         // Solicitud HTTP para solicitar peliculas.
         return;
     }
-    const mostrarPerfil = function() {
+    const handleMostrarPerfilChange = function() {
         // Cambiar variable de estado para mostrar perfil mini.
-        return;
+        setMostrarPerfil(!mostrarPerfil);
     }
 
     const tamaño = 'w92';
 
-    // Debe ir contenido como estado, para detectar cambios.
-    /*
-        Contiene link de poster, titulo, año y id (oculto).
-        Oculta el titulo de la pelicula si excede el length X, en dado caso sustituye a "..."
-        El objeto tambien contiene el numero de resultados a mostrar, si no hay resultados entonces se
-        muestra el error "no hay resultados".
-        Tambien se muestra un loader cuando se manda a llamar la solicitud.
-    */
     const datosSimulados = {
         resultados: 5,
         peliculas: [
@@ -105,9 +121,9 @@ function Header(props) {
                     </div>
                 </div>
 
-                <button type='button' className='boton-perfil' onClick={mostrarPerfil}>
-                    <img src={`src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' />
-                    <div id='contenedor-menu-perfil'>
+                <button type='button' className='boton-perfil' ref={perfilRef}>
+                    <img src={`src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
+                    <div id='contenedor-menu-perfil' className={`${mostrarPerfil ? '' : 'ocultar'}`} >
                         <div className='triangulo'></div>
                         <div className='contenedor-menu'>
                             <h3> {datosSimulados3.nombreUsuario} </h3>
@@ -117,11 +133,11 @@ function Header(props) {
                             <p id='nivel-nombre'> {obtenerNivel(datosSimulados3.xpTotal).nombreNivel} </p>
                             <RuedaXP nivel={obtenerNivel(datosSimulados3.xpTotal)} />
                             <hr/>
-                            <Link to='/configuracion' className='no-hypervinculo'>
+                            <Link to='/configuracion' className='no-hypervinculo' >
                                 <h4> Configuración de Perfil </h4>
                             </Link>
                             <hr/>
-                            <Link to='/logout' className='no-hypervinculo'>
+                            <Link to='/logout' className='no-hypervinculo' >
                                 <h4> Cerrar Sesion </h4>
                             </Link>
                         </div>
