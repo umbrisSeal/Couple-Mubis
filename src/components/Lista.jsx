@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 function Lista({lista}) {
 
+    if(!lista) return <p> Error: Debe de pasar un prop lista.</p>
+
     const tamaño = 'w342';
     let contenido;
 
@@ -93,7 +95,7 @@ function Lista({lista}) {
     return (
         <div className='contenedor-lista'>
             <Link to={`/lista/${lista.id}`} className='no-hypervinculo'>
-                <div className='contenedor-posters'>
+                <div className='contenedor-posters-lista'>
                     {contenido}
                 </div>
                 <div className='contenedor-informacion'>

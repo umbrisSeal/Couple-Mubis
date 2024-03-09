@@ -3,6 +3,7 @@ import '../styles/Home.css';
 import Header from '../components/Header';
 import Boton from '../components/Boton';
 import Lista from '../components/Lista';
+import Pelicula from '../components/Pelicula';
 
 
 function Home() {
@@ -61,6 +62,11 @@ function Home() {
         ]
     }
 
+    const datosSimulados2 = [
+        {id: '671', titulo: 'Harry Potter and the Philosopher\'s Stone', año: 2013, urlPoster: 'wuMc08IPKEatf9rnMNXvIDxqP4W.jpg'},
+        {id: 505832, titulo: "My Little Pony: Equestria Girls", año: 2012, urlPoster: 'dY7pdaPfbTnJnfnZBjRFprgRuUn.jpg'}
+    ]
+
 
     return (
         <Fragment>
@@ -87,7 +93,9 @@ function Home() {
                         <Boton version='verMas' />
                     </div>
                     <div className='conjunto-recomendados'>
-                        <p> Esto es una pelicula. </p>
+                        <Lista lista={datosSimulados.listas[0]} />
+                        {/* Agregar otro .map para mostrar las peliculas recomendads. */}
+                        <Pelicula pelicula={datosSimulados2[1]} />
                     </div>
                 </section>
             </main>
