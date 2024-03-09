@@ -1,0 +1,51 @@
+
+.contenedor-ruedaxp {
+    display: flex;
+    justify-content: center;
+
+    margin: 1rem auto;
+}
+
+.circulo-progreso {
+    height: 120px;
+    width: 120px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circulo-relleno {
+    height: 100px;
+    width: 100px;
+
+    border-radius: 50%;
+    background: var(--terciario);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#texto-xp {
+    text-transform: uppercase;
+}
+
+#texto-xp, #puntos-xp {
+    color: var(--acento);
+}
+
+#texto-xp, #puntos-xp-restantes {
+    font-size: 14px;
+}
+
+#puntos-xp {
+    font-weight: 500;
+    font-size: 24px;
+}
+
+#puntos-xp-restantes {
+    color: var(--acento2);
+}
