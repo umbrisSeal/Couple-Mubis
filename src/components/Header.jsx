@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import Boton from './Boton';
 import '../styles/Header.css';
+import '../assets/js/niveles.js';
 
 function Header(props) {
     const [busqueda, setBusqueda] = useState('');
@@ -41,6 +42,15 @@ function Header(props) {
         resultados: 0,
         peliculas: []
     }
+
+    const datosSimulados3 = {
+        usuarioId: 'REVETGILLE',
+        imagenPerfil: 'anonimo.png',
+        nombreUsuario: 'Kevin Monterrey',
+        nivel: 2,
+        xp: 134
+    }
+    
 
 
 
@@ -94,8 +104,31 @@ function Header(props) {
                 </div>
 
                 <button type='button' className='boton-perfil' onClick={mostrarPerfil}>
-                    <img src='src\assets\images\perfiles\anonimo.png' className='imagen-perfil' />
+                    <img src={`src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' />
+                    <div id='contenedor-menu-perfil'>
+                        <div className='triangulo'></div>
+                        <div className='contenedor-menu'>
+                            <h3> {datosSimulados3.nombreUsuario} </h3>
+                            <p id='id-usuario'> ID: {datosSimulados3.usuarioId} </p>
+                            <hr/>
+                            <p id='nivel'> Nivel {datosSimulados3.nivel} </p>
+                            <p id='nivel-nombre'> Aqui va el nombre del nivel. </p>
+                            <div>
+                                <p> Aqui va la rueda de progreso. </p>
+                                <p> Quizas esto deberia de ser un componente. </p>
+                            </div>
+                            <hr/>
+                            <Link to='/configuracion' className='no-hypervinculo'>
+                                <h4> Configuración de Perfil </h4>
+                            </Link>
+                            <hr/>
+                            <Link to='/logout' className='no-hypervinculo'>
+                                <h4> Cerrar Sesion </h4>
+                            </Link>
+                        </div>
+                    </div>
                 </button>
+
             </div>
 
         </header>

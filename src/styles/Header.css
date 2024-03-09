@@ -166,3 +166,69 @@
     font-size: 12px;
 }
 
+#contenedor-menu-perfil {
+    cursor: auto;
+    position: fixed;
+
+    top: 60px;
+    right: 20px;
+
+    width: 300px;
+    height: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.triangulo {
+    width: 0px;
+    height: 0px;
+
+    border-left: solid 14px transparent;    /* Mitad de width */
+    border-right: solid 14px transparent;
+    border-bottom: solid 20px rgba(148, 27, 12, 0.90);    /* Height */
+
+    align-self: flex-end;
+    margin-right: 8px;
+}
+
+.contenedor-menu {
+    height: auto;
+    padding: 1.2rem;
+
+    border-radius: 6px;
+
+
+    background-color: rgba(148, 27, 12, 0.90);
+}
+
+.contenedor-menu h3, .contenedor-menu h4 {
+    margin: 0px;
+    color: white;
+}
+
+.contenedor-menu h4 {
+    font-size: 18px;
+}
+
+.contenedor-menu hr {
+    opacity: 1;
+    color: white;
+}
+
+#id-usuario {
+    color: white;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+#nivel {
+    color: white;
+    font-size: 16px;
+}
+
+#nivel-nombre {
+    color: white;
+}
+
