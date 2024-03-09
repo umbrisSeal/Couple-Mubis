@@ -13,6 +13,10 @@
     margin: 0;
 }
 
+.contenedor-main section {
+    margin-bottom: 3rem;
+}
+
 .titulo-home {
     display: flex;
     align-items: center;
@@ -28,4 +32,11 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+}
+
+.conjunto-recomendados {
+    display: flex;
+    gap: 1rem;
+
+    /* Ocultar elementos overflow, solo mostrar 1 linea de maximo 8 recomendaciones. */
 }

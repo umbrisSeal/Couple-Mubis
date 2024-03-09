@@ -8,6 +8,7 @@ function Boton(props) {
         loginTransparente: <button type='button' className='boton bordeado-amarillo'> Login </button>,
         carrete: <button type='button' className='boton-grande amarillo'> Crea una cuenta </button>,
         loginSubmit: <button type='submit' className='boton-mediano azul texto-capital'> {props.texto ? props.texto : 'Entrar'} </button>,
+        verPelicula: <button type='button' className='boton-borde boton-grande borde-rojo-intenso texto-capital'> Ver pelicula </button>,
         agregarLista:
             <button type='button' className='boton-borde borde-amarillo texto-grande texto-capital'>
                 <div className='contenedor-doble negritas'>

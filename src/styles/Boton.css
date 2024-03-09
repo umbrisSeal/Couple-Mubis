@@ -104,35 +104,17 @@
     background-color: rgba(188, 57, 8, 0.25);
 }
 
+.borde-rojo-intenso {
+    border: solid 2px var(--acento2);
+    color: var(--acento2);
+}
+
+.borde-rojo-intenso:hover {
+    background-color: var(--acento2);
+    color: white;
+}
+
 .texto-grande {
     font-size: 20px;
-}
-
-/*
-
-.bordeado-amarillo {
-    background-color: transparent;
-    border-color: var(--acento);
-    color: var(--acento);
-}
-
-.boton {
-    padding: 5px 15px;
-    border-radius: 10px;
-    border-style: solid;
-    margin: auto 1rem;
-
-    transition: all 0.2s ease-in-out;
-}
-
-.amarillo {
-    color: white;
-    background-color: var(--acento);
-    border-color: var(--acento);
-}
-
-.amarillo:hover {
-    background-color: transparent;
-    color: var(--acento);
 }
 
