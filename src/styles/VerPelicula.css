@@ -1,0 +1,57 @@
+
+.fondo-completo-header {
+    height: calc(100dvh - 60px);
+    min-height: 480px;
+    color: white;
+
+    padding: 2rem;
+
+    overflow: auto;
+}
+
+.presentacion-centrar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-presentacion-pelicula {
+    display: flex;
+    gap: 2rem;
+}
+
+.presentacion-imagen {
+    width: 350px;
+    height: 520px;
+
+    flex-shrink: 0;
+
+    border: solid 3px var(--acento2);
+    border-radius: 10px;
+
+    background-color: rgba(148, 27, 12, 0.2);
+}
+
+.presentacion-imagen img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.contenedor-presentacion-puntuacion {
+    display: flex;
+}
+
+.contenedor-presentacion-puntuacion p {
+    padding: 6px 10px;
+    margin-right: 1.4rem;
+    border-radius: 10px;
+}
+
+.puntuacion-calificacion {
+    background-color: var(--terciario);
+}
+
+.puntuacion-popularidad {
+    background-color: var(--terciario);
+}

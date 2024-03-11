@@ -12,15 +12,22 @@ function Boton(props) {
         agregarLista:
             <button type='button' className='boton-borde borde-amarillo texto-grande texto-capital'>
                 <div className='contenedor-doble negritas'>
-                    <img src='src\assets\images\iconos\pelicula.png' alt='Icono Pelicula' height={30} width={30} />
+                    <img src='../src/assets/images/iconos/pelicula.png' alt='Icono Pelicula' height={30} width={30} />
                     <p> Crear lista </p>
                 </div>
             </button>,
         verMas:
             <button type='button' className='boton-borde borde-rojo texto-grande texto-capital'>
                 <div className='contenedor-doble negritas'>
-                    <img src='src\assets\images\iconos\verMas.png' alt='Icono Lupa' height={30} width={30} />
+                    <img src='../src/assets/images/iconos/verMas.png' alt='Icono Lupa' height={30} width={30} />
                     <p> Ver mas </p>
+                </div>
+            </button>,
+        agregarPelicula:
+            <button className='boton-agregar amarillo'>
+                <div className='contenedor-doble negritas'>
+                    <img src='../src/assets/images/iconos/boleto.png' alt='Icono Agregar' height={30} width={30} />
+                    <p> Agregar Pelicula </p>
                 </div>
             </button>,
     };

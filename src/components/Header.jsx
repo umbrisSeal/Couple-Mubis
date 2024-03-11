@@ -82,12 +82,12 @@ function Header(props) {
 
             <div className={`fondo-primario extender-fondo header-home ${props.version === 'home' ? '' : 'ocultar'}`}>
                 <Link to='/home'>
-                    <img src='src\assets\images\logo.png' className='imagen-logo' />
+                    <img src='../src/assets/images/logo.png' className='imagen-logo' />
                 </Link>
 
                 <div className='seccion-busqueda'>
                     <button type='button' className='boton-buscar' onClick={buscarPeliculas}>
-                        <img src='src\assets\images\iconos\buscar.png' className='icono-buscar'/>
+                        <img src='../src/assets/images/iconos/buscar.png' className='icono-buscar'/>
                     </button>
                     <div className='contenedor-busqueda'>
                         <input type='text' id='inputBusqueda' name='inputBusqueda' maxLength={80} value={busqueda} onChange={handleBusquedaChange} placeholder='Buscar pelicula...' className='campo-busqueda'></input>
@@ -122,7 +122,7 @@ function Header(props) {
                 </div>
 
                 <button type='button' className='boton-perfil' ref={perfilRef}>
-                    <img src={`src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
+                    <img src={`../src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
                     <div id='contenedor-menu-perfil' className={`${mostrarPerfil ? '' : 'ocultar'}`} >
                         <div className='triangulo'></div>
                         <div className='contenedor-menu'>
