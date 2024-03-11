@@ -38,6 +38,7 @@ export function obtenerNivel(xp) {
                 return {
                     nombreNivel: nombresNiveles[index],
                     xpRestante: nivelAcumulado.xpRestante - xpNecesaria,
+                    xpSiguienteNivel: xpNecesaria,
                     nivel: index+1,
                     limiteAlcanzado: true
                 }
