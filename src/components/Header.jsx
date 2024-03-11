@@ -159,6 +159,10 @@ function Header(props) {
                 </div>
                 <div className='contenedor-header-perfil fondo-perfil-inferior'>
                     <img src={`../src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
+                    <div className='configuracion-imagen-perfil-perfil'>
+                        <img src='../src/assets/images/iconos/editar.png' alt='Imagen editar' width={25} />
+                        <p> Editar </p>
+                    </div>
                 </div>
             </div>
 
