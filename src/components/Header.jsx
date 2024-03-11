@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Boton from './Boton';
 import '../styles/Header.css';
 import '../assets/js/niveles.js';
@@ -10,6 +10,7 @@ function Header(props) {
     const [busqueda, setBusqueda] = useState('');
     const [mostrarPerfil, setMostrarPerfil] = useState(false);
     const perfilRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Definir esta funcion handle, para garantizar el tener el valor actualizado de mostarPerfil.
@@ -33,6 +34,10 @@ function Header(props) {
     }, [mostrarPerfil])
 
     const handleBusquedaChange = (event) => setBusqueda(event.target.value);
+
+    const regresar = () => {
+        navigate(-1);   // Sustituto del history.goBack().
+    }
 
 
     const buscarPeliculas = function() {
@@ -75,12 +80,14 @@ function Header(props) {
     return(
         <header className={`${props.version === 'home' ? 'd-flex' : ''}`}>
             <div className={`centrar-vertical invertir-flex sin-fondo cabecera ${props.version === 'login' ? '' : 'ocultar'}`}>
+                {/* Version: login, para pagina principal. */}
                 <Link to="/login">
                     <Boton version='loginTransparente' />
                 </Link>
             </div>
 
             <div className={`fondo-primario extender-fondo header-home ${props.version === 'home' ? '' : 'ocultar'}`}>
+                {/* Version: home */}
                 <Link to='/home'>
                     <img src='../src/assets/images/logo.png' className='imagen-logo' />
                 </Link>
@@ -146,22 +153,17 @@ function Header(props) {
 
             </div>
 
+            <div className={`${props.version === 'perfil' ? '' : 'ocultar'} header-perfil`}>
+                <div className='contenedor-header-perfil fondo-perfil-superior'>
+                    <button className='boton-header-volver' onClick={regresar}> &lt; Regresar </button>
+                </div>
+                <div className='contenedor-header-perfil fondo-perfil-inferior'>
+                    <img src={`../src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
+                </div>
+            </div>
+
         </header>
     )
 }
 
 export default Header
-
-/*
-
-<Link to="/login">
-            <button type='button' className='boton bordeado-amarillo'> Login </button>
-        </Link>
-
-
-        texto 941B0C 941B0C
-
-<input type='text' id='usuario' name='usuario' maxLength={50} placeholder='Usuario o email' className={`entrada ${version === 'vincular' ? 'ocultar' : ''}`} value={user} onChange={handleUserChange} />
-
-
-*/
