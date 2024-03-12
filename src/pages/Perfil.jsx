@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Perfil.css';
 import { obtenerNivel } from '../assets/js/niveles';
 import Header from '../components/Header';
 import Boton from '../components/Boton';
 
-function Perfil() {
+function Perfil(props) {
+    const [configuracion, setConfiguracion] = useState(props.configuracion || false);
 
     const datosSimulados = {
         nombre: 'Mac Giver',
@@ -22,7 +23,7 @@ function Perfil() {
     }
 
     return <Fragment>
-        <Header version='perfil' />
+        <Header version='perfil' configuracion={configuracion} />
         <main className='fondo-rojo contenedor-informacion-perfil'>
             <div className='contenedor-informacion-perfil-perfil'>
                 <h1 className='negritas'> {datosSimulados.nombre} </h1>

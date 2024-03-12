@@ -19,7 +19,7 @@ function App() {
         <Route path='/home' element={<Home />} />, /* agregar loader para authenticar usuario y sesion. */
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} />,
         <Route path='pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
-        <Route path='perfil/:perfilId' element={<Perfil />} />,
+        <Route path='perfil/:perfilId' element={<Perfil configuracion={false} />} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
 
         <Route path='*' element={<ErrorPage />} />
