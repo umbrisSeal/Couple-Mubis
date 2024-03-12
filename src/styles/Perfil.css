@@ -14,9 +14,15 @@
     color: white;
 }
 
+#perfil-botones {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
 #perfil-bibliografia {
     color: var(--terciario);
-    width: 35%;
+    width: 60%;
     margin: 0px auto;
 }
 

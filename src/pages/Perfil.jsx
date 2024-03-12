@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Perfil.css';
 import { obtenerNivel } from '../assets/js/niveles';
 import Header from '../components/Header';
+import Boton from '../components/Boton';
 
 function Perfil() {
 
@@ -31,7 +32,8 @@ function Perfil() {
                 <h4 className='negritas'> {obtenerNivel(datosSimulados.xp).nombreNivel} </h4>
                 <br />
                 <div id='perfil-botones'>
-                    <p> Conjunto botones. </p>
+                    <Boton version='perfilAgregar' />
+                    <Boton version='perfilBloquear' />
                 </div>
                 <br />
                 <br />

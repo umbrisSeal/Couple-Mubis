@@ -30,6 +30,9 @@ function Boton(props) {
                     <p> Agregar Pelicula </p>
                 </div>
             </button>,
+        perfilAgregar: <button type='button' className='perfil-boton perfil-boton-amarillo negritas'> Agregar Contacto </button>,
+        perfilBloquear: <button type='button' className='perfil-boton perfil-boton-rojo negritas'> Bloquear Usuario </button>,
+        // Agregar boton para borrar amigo.
     };
 
     return versionBoton[props.version] || <p> Error: Version de boton no definida. </p>

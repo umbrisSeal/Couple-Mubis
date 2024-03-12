@@ -131,3 +131,33 @@
 
     transition: all 0.2s ease-in-out;
 }
+
+.perfil-boton {
+    color: white;
+    border-style: solid;
+    border-radius: 10px;
+    padding: 8px;
+    width: 240px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.perfil-boton-rojo {
+    background-color: var(--acento2);
+    border-color: var(--acento2);
+}
+
+.perfil-boton-amarillo {
+    background-color: var(--acento);
+    border-color: var(--acento);
+}
+
+.perfil-boton-rojo:hover {
+    background: transparent;
+    color: var(--acento2);
+}
+
+.perfil-boton-amarillo:hover {
+    background: transparent;
+    color: var(--acento);
+}
