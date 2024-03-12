@@ -50,3 +50,81 @@
 .perfil-lista p {
     margin: 0px;
 }
+
+/*
+    Para perfil configuracion.
+*/
+
+.contenedor-barraxp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barraxp-datos {
+    color: var(--acento);
+    margin: 0px;
+    font-size: 16px;
+    width: 180px;
+}
+
+.barraxp-fondo {
+    background-color: var(--acento2);
+    height: 14px;
+    width: 280px;
+}
+
+.barraxp-relleno {
+    background-color: var(--acento);
+    height: 100%;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.grid-configuracion {
+    margin: 2rem auto;
+    width: 80%;
+
+    display: grid;
+    grid-template-columns: 25% auto;
+    row-gap: 1.4rem;
+}
+
+.grid-configuracion > * {
+    align-self: start;
+    justify-self: start;
+}
+
+#configuracion-bibliografia {
+    resize: none;
+    min-width: 400px;
+    width: 70%;
+    height: 120px;
+}
+
+#configuracion-idioma {
+    width: 120px;
+    height: 31px;
+}
+
+#configuracion-borrarcuenta {
+    width: 300px;
+}
+
+.configuracion-input {
+    color: var(--acento2);
+    background-color: transparent;
+
+    border: solid 2px var(--acento2);
+    border-radius: 10px;
+    padding: 2px 8px;
+}
+
+.configuracion-indicador-caracteres {
+    color: var(--acento2);
+    font-size: 14px;
+
+    display: block;
+    text-align: end;
+}
+
