@@ -34,12 +34,13 @@ export function obtenerNivel(xp) {
 
         if(nivelAcumulado.xpRestante - xpNecesaria >= 0) {
             if(index === arreglo.length-1) {
-                // Se ha superado el ultimo nivel, se asigna el rango maximo.
+                // Se ha superado el ultimo nivel disponible, se asigna el rango maximo.
                 return {
                     nombreNivel: nombresNiveles[index],
                     xpRestante: nivelAcumulado.xpRestante - xpNecesaria,
                     xpSiguienteNivel: xpNecesaria,
                     nivel: index+1,
+                    porcentaje: 100,
                     limiteAlcanzado: true
                 }
             } else {
@@ -56,6 +57,7 @@ export function obtenerNivel(xp) {
                 xpRestante: nivelAcumulado.xpRestante,
                 xpSiguienteNivel: xpNecesaria,
                 nivel: index+1,
+                porcentaje: Math.round(nivelAcumulado.xpRestante/xpNecesaria*100),
                 limiteAlcanzado: true,
             }
         }
@@ -66,6 +68,7 @@ export function obtenerNivel(xp) {
         nombreNivel: nivelActual.nombreNivel,
         xpRestante: nivelActual.xpRestante,
         xpSiguienteNivel: nivelActual.xpSiguienteNivel,
-        nivel: nivelActual.nivel
+        nivel: nivelActual.nivel,
+        porcentaje: nivelActual.porcentaje
     }
 }
