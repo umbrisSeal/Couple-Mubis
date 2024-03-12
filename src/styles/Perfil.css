@@ -1,4 +1,46 @@
 
 .contenedor-informacion-perfil {
-    height: 1000px;
+    /* Se resta el tamaño esperado de los dos elementos del Header. */
+    min-height: calc(100dvh - 200px);
+
+    text-align: center;
+}
+
+.contenedor-informacion-perfil-perfil {
+    padding: 2rem;
+    margin: 0px auto;
+    width: 90%;
+
+    color: white;
+}
+
+#perfil-bibliografia {
+    color: var(--terciario);
+    width: 35%;
+    margin: 0px auto;
+}
+
+#perfil-conjunto-listas {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.perfil-lista {
+    color: white;
+    width: 140px;
+
+    padding: 6px;
+    border-radius: 10px;
+
+    overflow: hidden; /* Cambiar a ... */
+    transition: all 0.2s ease-in-out;
+}
+
+.perfil-lista:hover {
+    background-color: rgba(148, 27, 12, 0.25);
+}
+
+.perfil-lista p {
+    margin: 0px;
 }
