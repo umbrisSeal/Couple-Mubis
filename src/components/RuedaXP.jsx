@@ -5,21 +5,14 @@ function RuedaXP({nivel}) {
 
     if(!nivel) return <p> Error: No hay suficientes datos para RuedaXP.</p>
 
-    // Calcular el porcentaje de circulo relleno.
-    const calcularRellenoGrados = (xp, xpMaxima) => {
-        const rellenoGrados = Math.ceil((xp * 360) / xpMaxima);
-        if(rellenoGrados > 360) {
-            return 360;
-        } else {
-            return rellenoGrados;
-        }
-    }
+    // Calcular el porcentaje de circulo relleno en grados.
+    const calcularRellenoGrados = (porcentaje) => Math.ceil((porcentaje * 360) / 100);
 
     return (
         <div className='contenedor-ruedaxp'>
             <div
                 className='circulo-progreso'
-                style={{background: `conic-gradient(var(--acento) ${calcularRellenoGrados(nivel.xpRestante, nivel.xpSiguienteNivel)}deg, var(--acento2) 0deg)`}}
+                style={{background: `conic-gradient(var(--acento) ${calcularRellenoGrados(nivel.porcentaje)}deg, var(--acento2) 0deg)`}}
             >
                 <div className='circulo-relleno'>
                     <p id='texto-xp'> xp </p>
