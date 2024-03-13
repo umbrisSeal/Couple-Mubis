@@ -24,6 +24,11 @@ function Perfil(props) {
     const handleBorrarCuentaChange = (event) => setBorrarCuenta(event.target.value);
     const handleIdiomaBusquedaChange = (event) => setIdiomaBusqueda(event.target.value);
 
+    const actualizarPerfil = (event) => {
+        event.preventDefault();
+        // Mandar soliciutd HTTP.
+    }
+
     
     //const handleUsarPrivacidadChange
 
@@ -92,7 +97,7 @@ function Perfil(props) {
                                 <div className='barraxp-relleno' style={{width: `${obtenerNivel(datosUsuario.xp).porcentaje}%`}}></div>
                             </div>
                         </div>
-                        <form className='grid-configuracion'>
+                        <form className='grid-configuracion' onSubmit={actualizarPerfil}>
 
                             <label htmlFor='configuracion-alias'> Alias de Couple Mubis: </label>
                             <input id='configuracion-alias' className='configuracion-input' name='configuracion-alias' placeholder='Ingresa un alias...' value={alias} onChange={handleAliasChange} maxLength={15} />
@@ -123,8 +128,14 @@ function Perfil(props) {
                             </select>
 
                             <label htmlFor='configuracion-borrarcuenta'> Borra cuenta de Couple Mubis: </label>
-                            <input id='configuracion-borrarcuenta' className='configuracion-input' name='configuracion-borrarcuenta' placeholder='Escribe "BORRAR" para confirmar' value={borrarCuenta} onChange={handleBorrarCuentaChange} maxLength={6} />
+                            <div>
+                                <input id='configuracion-borrarcuenta' className='configuracion-input' name='configuracion-borrarcuenta' placeholder='Escribe "BORRAR" para confirmar' value={borrarCuenta} onChange={handleBorrarCuentaChange} maxLength={6} />
+                                <span style={{margin: '0px 1rem'}}>
+                                    <Boton version='perfilBorrar' mensaje='Borrar Cuenta' />
+                                </span>
+                            </div>
 
+                            <Boton version='perfilGuardar' mensaje='Guardar Cambios' />
                         </form>
                     </Fragment>
                 :
