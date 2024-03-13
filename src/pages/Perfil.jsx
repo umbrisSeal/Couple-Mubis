@@ -4,6 +4,7 @@ import '../styles/Perfil.css';
 import { obtenerNivel } from '../assets/js/niveles';
 import Header from '../components/Header';
 import Boton from '../components/Boton';
+import FormSwitch from '../components/FormSwitch';
 
 function Perfil(props) {
     const datosUsuario = useLoaderData();
@@ -20,6 +21,8 @@ function Perfil(props) {
     const handleBibliografiaChange = (event) => { setBibliografia(event.target.value); setCaracteres(event.target.value.length); }
     const handleBorrarCuentaChange = (event) => setBorrarCuenta(event.target.value);
     const handleIdiomaBusquedaChange = (event) => setIdiomaBusqueda(event.target.value);
+
+    const estadoAlias = (estado) => setUsarAlias(estado);
 
     const caracteresMaximos = 160;
 
@@ -92,7 +95,7 @@ function Perfil(props) {
                             <input id='configuracion-alias' className='configuracion-input' name='configuracion-alias' placeholder='Ingresa un alias...' value={alias} onChange={handleAliasChange} maxLength={15} />
 
                             <label> Mostrar Nombre de Usuario: </label>
-                            <p> Esto es un slider, en componente. </p>
+                            <FormSwitch estadoInicial={usarAlias} cambiarEstado={estadoAlias} />
 
                             <label> Privacidad de Perfil: </label>
                             <p> Esto es un slider, en componente. </p>

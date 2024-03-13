@@ -1,0 +1,25 @@
+
+.contenedor-switch {
+    height: 30px;
+    width: 70px;
+
+    border: solid 2px var(--acento2);
+    border-radius: 30px;
+
+    background-color: transparent;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.indicador-switch {
+    height: 20px;
+    width: 20px;
+
+    border-radius: 50%;
+
+    background-color: var(--acento2);
+
+    /* transform: translateX(190%); */ /* Debe de haber una mejor forma */
+
+    transition: all 0.2s ease-in-out;
+}
