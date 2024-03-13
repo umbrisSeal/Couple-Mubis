@@ -98,7 +98,7 @@ function Perfil(props) {
                             <p> Esto es un slider, en componente. </p>
 
                             <label htmlFor='configuracion-bibliografia'> Biografia de Perfil: </label>
-                            <div>
+                            <div className='configuracion-contenedor-bibliografia'>
                                 <textarea id='configuracion-bibliografia' className='configuracion-input' name='configuracion-bibliografia' placeholder='¿Que peliculas te gustan? Compartelo con el mundo!... ' value={bibliografia} onChange={handleBibliografiaChange} maxLength={caracteresMaximos} />
                                 <span className='configuracion-indicador-caracteres'> {`${caracteres} / ${caracteresMaximos}`} </span>
                             </div>

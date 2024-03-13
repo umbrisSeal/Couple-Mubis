@@ -98,8 +98,12 @@
 #configuracion-bibliografia {
     resize: none;
     min-width: 400px;
-    width: 70%;
+    width: 100%;
     height: 120px;
+}
+
+.configuracion-contenedor-bibliografia {
+    width: 70%;
 }
 
 #configuracion-idioma {
