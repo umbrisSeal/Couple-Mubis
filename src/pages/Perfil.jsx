@@ -18,11 +18,14 @@ function Perfil(props) {
     const [caracteres, setCaracteres] = useState(datosUsuario.bibliografia.length);
 
     const handleAliasChange = (event) => setAlias(event.target.value);
+    const handleUsarAliasChange = (estado) => setUsarAlias(estado);
+    const handleUsarPrivacidadChange = (estado) => setUsarPrivacidad(estado);
     const handleBibliografiaChange = (event) => { setBibliografia(event.target.value); setCaracteres(event.target.value.length); }
     const handleBorrarCuentaChange = (event) => setBorrarCuenta(event.target.value);
     const handleIdiomaBusquedaChange = (event) => setIdiomaBusqueda(event.target.value);
 
-    const estadoAlias = (estado) => setUsarAlias(estado);
+    
+    //const handleUsarPrivacidadChange
 
     const caracteresMaximos = 160;
 
@@ -95,14 +98,20 @@ function Perfil(props) {
                             <input id='configuracion-alias' className='configuracion-input' name='configuracion-alias' placeholder='Ingresa un alias...' value={alias} onChange={handleAliasChange} maxLength={15} />
 
                             <label> Mostrar Nombre de Usuario: </label>
-                            <FormSwitch estadoInicial={usarAlias} cambiarEstado={estadoAlias} />
+                            <div className='configuracion-conjunto-switch'>
+                                <FormSwitch estadoInicial={usarAlias} handleChange={handleUsarAliasChange} />
+                                <p> {usarAlias ? 'Se usara el Alias de Couple Mubis.' : 'Se usara tu mismo nombre de Refugio14.'} </p>
+                            </div>
 
                             <label> Privacidad de Perfil: </label>
-                            <p> Esto es un slider, en componente. </p>
+                            <div className='configuracion-conjunto-switch'>
+                                <FormSwitch estadoInicial={usarPrivacidad} handleChange={handleUsarPrivacidadChange} />
+                                <p> {usarPrivacidad ? 'ACTIVADO: Nadie puede ver tu perfil ni agregarte como amigo.' : 'DESACTIVADO: Tu perfil es publico y cualquiera en Couple Mubis lo puede ver.'} </p>
+                            </div>
 
                             <label htmlFor='configuracion-bibliografia'> Biografia de Perfil: </label>
                             <div className='configuracion-contenedor-bibliografia'>
-                                <textarea id='configuracion-bibliografia' className='configuracion-input' name='configuracion-bibliografia' placeholder='¿Que peliculas te gustan? Compartelo con el mundo!... ' value={bibliografia} onChange={handleBibliografiaChange} maxLength={caracteresMaximos} />
+                                <textarea id='configuracion-bibliografia' className='configuracion-input' name='configuracion-bibliografia' placeholder='¿Que peliculas te gustan? Compartelo con el mundo! ... ' value={bibliografia} onChange={handleBibliografiaChange} maxLength={caracteresMaximos} />
                                 <span className='configuracion-indicador-caracteres'> {`${caracteres} / ${caracteresMaximos}`} </span>
                             </div>
 
@@ -114,7 +123,7 @@ function Perfil(props) {
                             </select>
 
                             <label htmlFor='configuracion-borrarcuenta'> Borra cuenta de Couple Mubis: </label>
-                            <input id='configuracion-borrarcuenta' className='configuracion-input' name='configuracion-borrarcuenta' placeholder='Escribe "BORRAR" para confirmar' value={borrarCuenta} onChange={handleBorrarCuentaChange} />
+                            <input id='configuracion-borrarcuenta' className='configuracion-input' name='configuracion-borrarcuenta' placeholder='Escribe "BORRAR" para confirmar' value={borrarCuenta} onChange={handleBorrarCuentaChange} maxLength={6} />
 
                         </form>
                     </Fragment>

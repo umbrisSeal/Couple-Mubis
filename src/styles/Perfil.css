@@ -82,12 +82,12 @@
 }
 
 .grid-configuracion {
-    margin: 2rem auto;
+    margin: 4rem auto;
     width: 80%;
 
     display: grid;
     grid-template-columns: 25% auto;
-    row-gap: 1.4rem;
+    row-gap: 2.8rem;
 }
 
 .grid-configuracion > * {
@@ -130,5 +130,16 @@
 
     display: block;
     text-align: end;
+}
+
+.configuracion-conjunto-switch {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--acento2);
+}
+
+.configuracion-conjunto-switch p {
+    margin: 0px;
 }
 

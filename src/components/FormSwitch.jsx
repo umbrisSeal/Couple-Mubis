@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import '../styles/FormSwitch.css';
 
-function FormSwitch({estadoInicial, cambiarEstado}) {
+function FormSwitch({estadoInicial, handleChange}) {
     const [estado, setEstado] = useState(estadoInicial || false);
 
     const modificarEstado = () => {
         setEstado(!estado);
-        cambiarEstado(!estado);
+        handleChange(!estado);
     }
 
     return (

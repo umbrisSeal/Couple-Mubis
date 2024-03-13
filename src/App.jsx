@@ -35,7 +35,7 @@ function App() {
                 xp: 100,
                 alias: '',
                 bibliografia: '',
-                usarAlias: true,
+                usarAlias: false,
                 usarPrivacidad: true,
                 usuariosBloqueados: [/* {id, nombreUsuario} */],
                 idiomaBusqueda: 0,
