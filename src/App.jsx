@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import VerPelicula from './pages/VerPelicula';
 import Perfil from './pages/Perfil';
+import VerLista from './pages/VerLista';
 
 const datosSimulados = {
     nombre: 'Mac Giver',
@@ -58,6 +59,48 @@ function App() {
         }
     }
 
+    const solicitarDatosLista = (listaId = 0) => {
+
+
+        return {
+            nombre: 'Para maratonear!!!',
+            autoridad: 3,
+            esPublica: true,
+            editores: ['Mario Bros', 'Michael Jackson', 'Tea-bean'],
+            lectores: ['Jose Jose'],
+            peliculas: [
+                {id: 4312, vista: false, urlPoster: 'pmjiwwfT7kRJQ0ATi79upBmSOO9.jpg', titulo: 'mario', año: 1200},
+                {id: 4321, vista: false, urlPoster: 'zaqam2RNscH5ooYFWInV6hjx6y5.jpg', titulo: 'luigi', año: 2000},
+                {id: 4321, vista: false, urlPoster: '3bhkrj58Vtu7enYsRolD1fZdja1.jpg', titulo: 'peach', año: 2012},
+                {id: 4321, vista: false, urlPoster: 'lgEXNBnFsq8oTck1C2giSvnTjzz.jpg', titulo: 'bowser', año: 2011},
+                {id: 4321, vista: true, urlPoster: 'vSzOobYVu16MogSALNg1bjTaGc.jpg', titulo: 'monkey', año: 2009},
+                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+            ],
+        }
+
+        /*
+        {
+            nombre,
+            autoridad: 0, 0 = nada, 1= lector, 2=editor 3=dueño.
+            esPublica: true/false,
+            añadir nombre, con autoridad al correspondiente.
+            editores: ['nombre', 'nombre'],
+            lectores: [],
+            peliculas: [
+                {id, vista(bool), urlPoster},
+                ...
+            ]
+        }
+
+        */
+
+
+    }
+
 
     const router = createBrowserRouter(createRoutesFromElements([
         <Route path='/' element={<LandingPage />} />,
@@ -71,6 +114,8 @@ function App() {
         <Route path='/perfil' loader={() => redirect('/configuracion')} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
         <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => solicitarDatosUsuario()} />,
+        <Route path='/lista/:listaId' element={<VerLista />} loader={({params}) => solicitarDatosLista(params.listaId)} />,
+        <Route path='/lista' loader={() => redirect('/home')} />,
 
         <Route path='*' element={<ErrorPage />} />
     ]))

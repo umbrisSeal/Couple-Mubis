@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom';
 import '../styles/Pelicula.css';
 import Boton from './Boton';
 
-function Pelicula({pelicula, version}) {
+function Pelicula({pelicula, version, handleVistaChange, indexPelicula}) {
+    const [vista, setVista] = useState(pelicula?.vista || false);
 
     if(!pelicula || !version) return <p> Error: Debe de enviar una pelicula y la version como prop. </p>
 
     const tamaño = 'w342';
+    const handleBotonChange = () => {
+        handleVistaChange(indexPelicula);
+        setVista(!vista);
+    }
 
     return (
         <div className='contenedor-pelicula'>
@@ -23,9 +28,14 @@ function Pelicula({pelicula, version}) {
                     </div>
                 </Link>
             </div>
-            <div className={`contenedor-pelicula-botones ${version == 'guardada' ? '' : 'ocultar'}`}>
-                <p> Soy el contenedor botones </p>
-            </div>
+            {version == 'enLista' && handleVistaChange ? 
+                <div className='contenedor-pelicula-botones'>
+                    <Boton version='peliculaVer' vista={vista} handleBotonChange={handleBotonChange} />
+                    <Boton version='peliculaBorrar' />
+                </div>
+                : 
+                <Fragment></Fragment>
+            }
         </div>
     )
 }
@@ -33,10 +43,15 @@ function Pelicula({pelicula, version}) {
 export default Pelicula
 
 /*
-"w342"
-<img src={`https://image.tmdb.org/t/p/${tamaño}/${pelicula.urlPoster}`} className='pelicula-poster' />
+    pelicula = {
+        titulo,
+        año,
+        urlPoster,
+        id,
+        vista (bool, solo cuando version enLista.)
+    }
 
-<div className='pipip'> Soy oscurecedor </div>
-
+    Para version guardada, para mostrar enLista.
+    Para version guardada debe de proveer una funcion handleVistaChange.
 
 */

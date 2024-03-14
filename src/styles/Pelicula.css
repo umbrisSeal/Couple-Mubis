@@ -50,3 +50,9 @@
 .darkener-pelicula-contenido, .darkener-pelicula-boton {
     color: white;
 }
+
+.contenedor-pelicula-botones {
+    display: flex;
+    justify-content: space-around;
+    margin: 6px 0px;
+}

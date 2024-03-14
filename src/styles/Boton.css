@@ -70,6 +70,7 @@
 .contenedor-doble {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
 }
 
@@ -191,4 +192,31 @@
 .lista-gris:hover {
     color: lightgray;
     border-color: lightgray;
+}
+
+.boton-pelicula {
+    width: 46%;
+    height: 36px;
+
+    border-style: solid;
+    border-radius: 10px;
+
+    background-color: transparent;
+
+    color: white;
+}
+
+.boton-pelicula-vista {
+    color: #04BF00;
+    border-color: #04BF00;
+}
+
+.boton-pelicula-novista {
+    color: lightgray;
+    border-color: lightgray;
+}
+
+.boton-pelicula-borrar {
+    color: red;
+    border-color: red;
 }
