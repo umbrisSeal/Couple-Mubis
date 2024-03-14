@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import '../styles/Pelicula.css';
 import Boton from './Boton';
 
-function Pelicula({pelicula, version, handleVistaChange, indexPelicula}) {
+function Pelicula({pelicula, version, handleVistaChange, indexPelicula, handleBorrarPelicula}) {
     const [vista, setVista] = useState(pelicula?.vista || false);
 
     if(!pelicula || !version) return <p> Error: Debe de enviar una pelicula y la version como prop. </p>
@@ -31,7 +31,7 @@ function Pelicula({pelicula, version, handleVistaChange, indexPelicula}) {
             {version == 'enLista' && handleVistaChange ? 
                 <div className='contenedor-pelicula-botones'>
                     <Boton version='peliculaVer' vista={vista} handleBotonChange={handleBotonChange} />
-                    <Boton version='peliculaBorrar' />
+                    <Boton version='peliculaBorrar' nombrePelicula={pelicula.titulo} handleBorrarPelicula={handleBorrarPelicula} indexPelicula={indexPelicula} />
                 </div>
                 : 
                 <Fragment></Fragment>

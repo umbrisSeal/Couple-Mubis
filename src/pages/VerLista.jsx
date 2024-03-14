@@ -19,6 +19,12 @@ function VerLista() {
         // Mandar a actualizar a la base de datos? O agregarlo a un useEffect[]?
     }
 
+    const handleBorrarPelicula = (indexPelicula) => {
+        let peliculasActualizadas = [...peliculas];
+        peliculasActualizadas.splice(indexPelicula, 1);
+        setPeliculas(peliculasActualizadas);
+    }
+
 
     return <Fragment>
         <Header version='home' />
@@ -44,7 +50,7 @@ function VerLista() {
             <section className='vista-lista-peliculas'>
                 {peliculas.length > 0 ? 
                     peliculas.map((pelicula, index) => {
-                        return <Pelicula version={datosLista.autoridad >= 2 ? 'enLista' : 'recomendaciones'} pelicula={pelicula} indexPelicula={index} handleVistaChange={handleVistaChange} key={pelicula + index} />
+                        return <Pelicula version={datosLista.autoridad >= 2 ? 'enLista' : 'recomendaciones'} pelicula={pelicula} indexPelicula={index} handleVistaChange={handleVistaChange} handleBorrarPelicula={handleBorrarPelicula} key={pelicula + index} />
                     })
                 : 
                     <p> ¡Esta lista aun no tiene peliculas! </p>

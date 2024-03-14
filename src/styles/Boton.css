@@ -220,3 +220,34 @@
     color: red;
     border-color: red;
 }
+
+.boton-ventana {
+    width: 200px;
+    height: 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border-style: solid;
+    border-radius: 6px;
+    color: white;
+    margin: 1rem;
+
+    transition: all 0.2 ease-in-out;
+}
+
+.boton-ventana-aceptar {
+    background-color: #04BF00;
+    border-color: #04BF00;
+}
+
+.boton-ventana-aceptar:hover {
+    box-shadow: 0px 0px 15px 5px #04BF00;
+}
+
+.boton-ventana-cancelar {
+    background-color: red;
+    border-color: red;
+}
+
+.boton-ventana-cancelar:hover {
+    box-shadow: 0px 0px 15px 5px red;
+}
