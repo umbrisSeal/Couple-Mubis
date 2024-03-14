@@ -33,7 +33,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     // Iniciador de Mensajes.
     const mensajesVentana = {
         borrarPeliculaLista: {titulo: 'Borrar Pelicula', mensaje: 'BORRAR-PELICULA', mensajeAceptar: 'Borrar Pelicula', mensajeCancelar: 'Cancelar'},
-        borrarLista: {titulo: 'Borrar Lista', mensaje: 'Esta seguro de esto señor rango?', mensajeAceptar: 'Borrar Lista', mensajeCancelar: 'Cancelar'},
+        borrarLista: {titulo: 'Borrar Lista', mensaje: '¿Seguro que quieres borrar esta lista? Se borrara de manera permanente! ', mensajeAceptar: 'Borrar Lista', mensajeCancelar: 'Cancelar'},
     }
 
     const mensaje = mensajesVentana[version] || {titulo: 'Mensaje no definido!', mensaje: 'Esta version de ventana emergente no esta definida.'};
