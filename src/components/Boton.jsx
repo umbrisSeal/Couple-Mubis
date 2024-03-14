@@ -51,7 +51,7 @@ function Boton(props) {
         listaBorrar: <button type='button' className='boton-lista lista-rojo'> Borrar Lista </button>,
         peliculaBorrar: <Fragment>
             <button type='button' className='boton-pelicula boton-pelicula-borrar' onClick={handleVentanaEmergente}> Borrar </button>
-            {mostrarVentana ? <VentanaEmergente version='borrarPeliculaLista' handleVentanaEmergente={handleVentanaEmergente} nombrePelicula={props.nombrePelicula} handleBorrarPelicula={props.handleBorrarPelicula} indexPelicula={props.indexPelicula} /> : ''}
+            {mostrarVentana ? <VentanaEmergente version='borrarPeliculaLista' handleBotonCancelar={handleVentanaEmergente} nombrePelicula={props.nombrePelicula} handleBotonAceptar={props.handleBorrarPelicula} indexPelicula={props.indexPelicula} /> : ''}
         </Fragment>,
         peliculaVer: <button type='button' className={`boton-pelicula ${vista ? 'boton-pelicula-vista' : 'boton-pelicula-novista'}`} onClick={handleChange} >
             <div className='contenedor-doble'>

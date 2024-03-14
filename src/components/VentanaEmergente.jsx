@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from 'react'
 import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 
-function VentanaEmergente({handleVentanaEmergente, nombrePelicula, handleBorrarPelicula, indexPelicula}) {
+function VentanaEmergente({handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula}) {
     const ventanaRef = useRef(null);
 
     useEffect(() => {
         const handleClickAfuera = (event) => {
             if(ventanaRef.current && !ventanaRef.current.contains(event.target)) {
                 // Cerrar ventana emergente sin hacer nada.
-                handleVentanaEmergente();
+                handleBotonCancelar();
             }
         };
 
@@ -25,9 +25,9 @@ function VentanaEmergente({handleVentanaEmergente, nombrePelicula, handleBorrarP
         }
     }, []);
 
-    const handleBotonBorrar = () => {
-        handleBorrarPelicula(indexPelicula);
-        handleVentanaEmergente();
+    const handleAceptar = () => {
+        handleBotonAceptar(indexPelicula);
+        handleBotonCancelar();
     }
 
 
@@ -37,8 +37,8 @@ function VentanaEmergente({handleVentanaEmergente, nombrePelicula, handleBorrarP
                 <h2 className='ventana-titulo'> Borrar Pelicula </h2>
                 <p className='ventana-mensaje'> ¿Estas seguro de querer borrar <span className='ventana-mensaje-negritas'> {nombrePelicula} </span> de esta lista? </p>
                 <div className='ventana-botones'>
-                    <div onClick={handleVentanaEmergente}> <Boton version='ventanaCancelar' /> </div>
-                    <div onClick={handleBotonBorrar}> <Boton version='ventanaAceptar' /> </div>
+                    <div onClick={handleBotonCancelar}> <Boton version='ventanaCancelar' /> </div>
+                    <div onClick={handleAceptar}> <Boton version='ventanaAceptar' /> </div>
                 </div>
             </div>
         </section>
