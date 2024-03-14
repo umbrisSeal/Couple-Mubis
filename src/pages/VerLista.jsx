@@ -29,7 +29,7 @@ function VerLista() {
                         <h1> Lista: {datosLista.nombre} </h1>
                         <p className='vista-lista-privacidad'> {datosLista.esPublica ? 'Lista Publica' : 'Lista Privada'} </p>
                     </div>
-                    <div className='vista-lista-botones'>
+                    <div className={`vista-lista-botones ${datosLista.autoridad == 3 ? '' : 'ocultar'}`}>
                         <Boton version='listaEditar' />
                         <Boton version='listaBorrar' />
                         {/* Crear ventanas emergentes. */}
@@ -44,7 +44,7 @@ function VerLista() {
             <section className='vista-lista-peliculas'>
                 {peliculas.length > 0 ? 
                     peliculas.map((pelicula, index) => {
-                        return <Pelicula version='enLista' pelicula={pelicula} indexPelicula={index} handleVistaChange={handleVistaChange} key={pelicula + index} />
+                        return <Pelicula version={datosLista.autoridad >= 2 ? 'enLista' : 'recomendaciones'} pelicula={pelicula} indexPelicula={index} handleVistaChange={handleVistaChange} key={pelicula + index} />
                     })
                 : 
                     <p> ¡Esta lista aun no tiene peliculas! </p>
