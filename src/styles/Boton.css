@@ -161,3 +161,34 @@
     background: transparent;
     color: var(--acento);
 }
+
+.boton-lista {
+    border-style: solid;
+    border-width: 2px;
+    background-color: transparent;
+    height: 35px;
+    width: 120px;
+    border-radius: 10px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+.lista-gris {
+    color: #808080;
+    border-color: #808080;
+}
+
+.lista-rojo {
+    color: var(--terciario);
+    border-color: var(--terciario);
+}
+
+.lista-rojo:hover {
+    color: red;
+    border-color: red;
+}
+
+.lista-gris:hover {
+    color: lightgray;
+    border-color: lightgray;
+}
