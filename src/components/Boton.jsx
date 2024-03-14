@@ -16,6 +16,10 @@ function Boton(props) {
         setMostrarVentana(!mostrarVentana);
     }
 
+    const borrarLista = () => {
+        // Mandar la solicitud HTTP para borrar la lista.
+    }
+
 
     const versionBoton = {
         loginTransparente: <button type='button' className='boton bordeado-amarillo'> Login </button>,
@@ -48,7 +52,10 @@ function Boton(props) {
         perfilGuardar: <button type='submit' className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
         perfilBorrar: <button type='submit' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
         listaEditar: <button type='button' className='boton-lista lista-gris' > Editar Lista </button>,
-        listaBorrar: <button type='button' className='boton-lista lista-rojo'> Borrar Lista </button>,
+        listaBorrar: <Fragment>
+            <button type='button' className='boton-lista lista-rojo' onClick={handleVentanaEmergente}> Borrar Lista </button>
+            {mostrarVentana ? <VentanaEmergente version='borrarLista' handleBotonCancelar={handleVentanaEmergente} handleBotonAceptar={borrarLista} /> : ''}
+        </Fragment>,
         peliculaBorrar: <Fragment>
             <button type='button' className='boton-pelicula boton-pelicula-borrar' onClick={handleVentanaEmergente}> Borrar </button>
             {mostrarVentana ? <VentanaEmergente version='borrarPeliculaLista' handleBotonCancelar={handleVentanaEmergente} nombrePelicula={props.nombrePelicula} handleBotonAceptar={props.handleBorrarPelicula} indexPelicula={props.indexPelicula} /> : ''}
@@ -59,8 +66,8 @@ function Boton(props) {
                 <p> {vista ? 'Vista' : 'Por Ver'} </p>
             </div>
         </button>,
-        ventanaAceptar: <button className='boton-ventana boton-ventana-aceptar'> Aceptar </button>,
-        ventanaCancelar: <button className='boton-ventana boton-ventana-cancelar'> Cancelar </button>,
+        ventanaAceptar: <button className='boton-ventana boton-ventana-aceptar'> {props.mensaje || 'Aceptar'} </button>,
+        ventanaCancelar: <button className='boton-ventana boton-ventana-cancelar'> {props.mensaje || 'Cancelar'} </button>,
     };
 
     return versionBoton[props.version] || <p> Error: Version de boton no definida. </p>

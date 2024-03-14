@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 
-function VentanaEmergente({handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula}) {
+function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula}) {
     const ventanaRef = useRef(null);
 
     useEffect(() => {
@@ -30,15 +30,27 @@ function VentanaEmergente({handleBotonCancelar, nombrePelicula, handleBotonAcept
         handleBotonCancelar();
     }
 
+    // Iniciador de Mensajes.
+    const mensajesVentana = {
+        borrarPeliculaLista: {titulo: 'Borrar Pelicula', mensaje: 'BORRAR-PELICULA', mensajeAceptar: 'Borrar Pelicula', mensajeCancelar: 'Cancelar'},
+        borrarLista: {titulo: 'Borrar Lista', mensaje: 'Esta seguro de esto señor rango?', mensajeAceptar: 'Borrar Lista', mensajeCancelar: 'Cancelar'},
+    }
+
+    const mensaje = mensajesVentana[version] || {titulo: 'Mensaje no definido!', mensaje: 'Esta version de ventana emergente no esta definida.'};
+
 
     return (
         <section className='contenedor-ventana-emergente'>
             <div className='ventana-emergente' ref={ventanaRef}>
-                <h2 className='ventana-titulo'> Borrar Pelicula </h2>
-                <p className='ventana-mensaje'> ¿Estas seguro de querer borrar <span className='ventana-mensaje-negritas'> {nombrePelicula} </span> de esta lista? </p>
+                <h2 className='ventana-titulo'> {mensaje.titulo} </h2>
+                {mensaje.mensaje === 'BORRAR-PELICULA' ?
+                    <p className='ventana-mensaje'> ¿Estas seguro de querer borrar <span className='ventana-mensaje-negritas'> {nombrePelicula} </span> de esta lista? </p>
+                    : 
+                    <p className='ventana-mensaje'> {mensaje.mensaje} </p>
+                }
                 <div className='ventana-botones'>
-                    <div onClick={handleBotonCancelar}> <Boton version='ventanaCancelar' /> </div>
-                    <div onClick={handleAceptar}> <Boton version='ventanaAceptar' /> </div>
+                    <div onClick={handleBotonCancelar}> <Boton version='ventanaCancelar' mensaje={mensaje.mensajeCancelar} /> </div>
+                    <div onClick={handleAceptar}> <Boton version='ventanaAceptar' mensaje={mensaje.mensajeAceptar} /> </div>
                 </div>
             </div>
         </section>
