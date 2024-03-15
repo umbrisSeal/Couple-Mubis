@@ -1,9 +1,14 @@
 
-export function obtenerNombres(nombres, incluirse) {
+export function obtenerNombres(usuarios, incluirse) {
     // Construye un string con un arreglo nombres agregando comas y "y" antes del elemento final.
     // Tambien se solicita si se debe de incluir el "tu" en la lista.
 
-    if(nombres.length == 0) return 'Ninguno.';
+    if(usuarios.length == 0) return 'Ninguno.';
+
+    const nombres = usuarios.map((usuario) => {
+        return usuario.nombre;
+    });
+
     const listaNombres = incluirse ? ['Tu', ...nombres] : [...nombres];
 
     return listaNombres.reduce((listaString, nombre, index, arreglo) => {

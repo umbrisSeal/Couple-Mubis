@@ -66,8 +66,14 @@ function App() {
             nombre: 'Para maratonear!!!',
             autoridad: 3,
             esPublica: true,
-            editores: ['Mario Bros', 'Michael Jackson', 'Tea-bean'],
-            lectores: ['Jose Jose'],
+            editores: [
+                {id: '12RFGTH', nombre: 'Mario Bros', imgPerfil: 'anonimo.png'},
+                {id: '1GT67LO', nombre: 'Michael Jackson', imgPerfil: 'anonimo.png'},
+                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+            ],
+            lectores: [
+                {id: 'EGGRGTA', nombre: 'Jose Jose', imgPerfil: 'anonimo.png'},
+            ],
             peliculas: [
                 {id: 4312, vista: false, urlPoster: 'pmjiwwfT7kRJQ0ATi79upBmSOO9.jpg', titulo: 'Nosotros los Inocentes', año: 1200},
                 {id: 4321, vista: false, urlPoster: 'zaqam2RNscH5ooYFWInV6hjx6y5.jpg', titulo: 'luigi', año: 2000},
