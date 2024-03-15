@@ -48,6 +48,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                     : 
                     <p className='ventana-mensaje'> {mensaje.mensaje} </p>
                 }
+                {/* Caso especial */}
                 <div className='ventana-botones'>
                     <div onClick={handleBotonCancelar}> <Boton version='ventanaCancelar' mensaje={mensaje.mensajeCancelar} /> </div>
                     <div onClick={handleAceptar}> <Boton version='ventanaAceptar' mensaje={mensaje.mensajeAceptar} /> </div>

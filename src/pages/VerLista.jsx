@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import '../styles/VerLista.css'
 import { obtenerNombres } from '../assets/js/obtenerNombres';
-import { useLoaderData } from 'react-router-dom'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import Header from '../components/Header';
 import Boton from '../components/Boton';
 import Pelicula from '../components/Pelicula';
@@ -9,6 +9,7 @@ import Pelicula from '../components/Pelicula';
 function VerLista() {
     const datosLista = useLoaderData();
     const [peliculas, setPeliculas] = useState(datosLista.peliculas || []);
+    const navegador = useNavigate();
 
     //console.log(peliculas);
 
@@ -25,6 +26,12 @@ function VerLista() {
         setPeliculas(peliculasActualizadas);
     }
 
+    const handleBorrarLista = () => {
+        // Mandar la solicitud HTTP para borrar la lista.
+        // Una vez terminado, redireccionar al usuario a home.
+        navegador('/home');
+    }
+
 
     return <Fragment>
         <Header version='home' />
@@ -37,7 +44,7 @@ function VerLista() {
                     </div>
                     <div className={`vista-lista-botones ${datosLista.autoridad == 3 ? '' : 'ocultar'}`}>
                         <Boton version='listaEditar' />
-                        <Boton version='listaBorrar' />
+                        <Boton version='listaBorrar' aceptar={handleBorrarLista} />
                         {/* Crear ventanas emergentes. */}
                     </div>
                 </div>

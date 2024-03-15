@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 function Boton(props) {
     const [vista, setVista] = useState(props.vista || false);
     const [mostrarVentana, setMostrarVentana] = useState(false);
-    const navegador = useNavigate();
 
     const handleChange = () => {
         props.handleBotonChange();
@@ -16,12 +15,6 @@ function Boton(props) {
 
     const handleVentanaEmergente = () => {
         setMostrarVentana(!mostrarVentana);
-    }
-
-    const borrarLista = () => {
-        // Mandar la solicitud HTTP para borrar la lista.
-        // Una vez terminado, redireccionar al usuario a home.
-        navegador('/home');
     }
 
 
@@ -55,10 +48,15 @@ function Boton(props) {
         perfilBloquear: <button type='button' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Bloquear Usuario'} </button>,
         perfilGuardar: <button type='submit' className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
         perfilBorrar: <button type='submit' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
-        listaEditar: <button type='button' className='boton-lista lista-gris' > Editar Lista </button>,
+        listaEditar: <Fragment>
+            <button type='button' className='boton-lista lista-gris' onClick={handleVentanaEmergente} > Editar Lista </button>
+            {mostrarVentana ? <VentanaEmergente />
+            : ''}
+            {/* */}
+        </Fragment>,
         listaBorrar: <Fragment>
             <button type='button' className='boton-lista lista-rojo' onClick={handleVentanaEmergente}> Borrar Lista </button>
-            {mostrarVentana ? <VentanaEmergente version='borrarLista' handleBotonCancelar={handleVentanaEmergente} handleBotonAceptar={borrarLista} /> : ''}
+            {mostrarVentana ? <VentanaEmergente version='borrarLista' handleBotonCancelar={handleVentanaEmergente} handleBotonAceptar={props.aceptar} /> : ''}
         </Fragment>,
         peliculaBorrar: <Fragment>
             <button type='button' className='boton-pelicula boton-pelicula-borrar' onClick={handleVentanaEmergente}> Borrar </button>
