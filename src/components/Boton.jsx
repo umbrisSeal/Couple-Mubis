@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from 'react'
 import '../styles/Boton.css';
 import VentanaEmergente from './VentanaEmergente';
+import { useNavigate } from 'react-router-dom';
 
 
 function Boton(props) {
     const [vista, setVista] = useState(props.vista || false);
     const [mostrarVentana, setMostrarVentana] = useState(false);
+    const navegador = useNavigate();
 
     const handleChange = () => {
         props.handleBotonChange();
@@ -18,6 +20,8 @@ function Boton(props) {
 
     const borrarLista = () => {
         // Mandar la solicitud HTTP para borrar la lista.
+        // Una vez terminado, redireccionar al usuario a home.
+        navegador('/home');
     }
 
 
