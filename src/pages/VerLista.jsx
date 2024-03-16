@@ -1,16 +1,22 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import '../styles/VerLista.css'
 import { obtenerNombres } from '../assets/js/obtenerNombres';
 import { useLoaderData, useNavigate } from 'react-router-dom'
 import Header from '../components/Header';
 import Boton from '../components/Boton';
 import Pelicula from '../components/Pelicula';
+import { copiarObjeto } from '../assets/js/copiarObjeto';
 
 function VerLista() {
     const datosLista = useLoaderData();
     const [peliculas, setPeliculas] = useState(datosLista.peliculas || []);
     const navegador = useNavigate();
+    const [lista, setLista] = useState(useLoaderData());
     // Generar un state para datosLista para actualizarlos cuando sea necesario sin recargar la pagina.
+
+    useEffect(() => {
+        setLista(copiarObjeto(datosLista));
+    }, []);
 
     const handleVistaChange = (indexPelicula) => {
         let peliculasActualizadas = [...peliculas];
@@ -34,8 +40,24 @@ function VerLista() {
     const actualizarColaboradores = (nuevosColaboradoresReorganizados) => {
         // Re-organizar los colaboradores y mandar la solicitud HTTP, tambien actualizar
         // nuestro state (crear uno nuevo para el loader.);
-        console.log('autoridad original', colaboradoresReorganizados);
-        console.log('nueva autoridad', nuevosColaboradoresReorganizados);
+        //console.log('autoridad original', colaboradoresReorganizados);
+        //console.log('nueva autoridad', nuevosColaboradoresReorganizados);
+
+        const nuevosEditores = nuevosColaboradoresReorganizados.filter((colaborador) => {
+            return colaborador.autoridad == 2;
+        })
+        const nuevosLectores = nuevosColaboradoresReorganizados.filter((colaborador) => {
+            return colaborador.autoridad == 1;
+        })
+
+        console.log('editores', nuevosEditores);
+        console.log('lectores',nuevosLectores)
+
+        let nuevaLista = copiarObjeto(lista);
+        nuevaLista.editores = nuevosEditores;
+        nuevaLista.lectores = nuevosLectores;
+
+        setLista(nuevaLista);
 
         console.log("Ser o no ser... aniquilado!");
     }
@@ -51,8 +73,9 @@ function VerLista() {
 
         return [...nuevosEditores, ...nuevosLectores];
     }
-    const colaboradoresReorganizados = reorganizarColaboradores(datosLista.editores, datosLista.lectores);
+    const colaboradoresReorganizados = reorganizarColaboradores(lista.editores, lista.lectores);
 
+    console.log(lista.autoridad >= 2);
 
 
     return <Fragment>
@@ -61,25 +84,25 @@ function VerLista() {
             <section>
                 <div className='vista-lista-titulos'>
                     <div>
-                        <h1> Lista: {datosLista.nombre} </h1>
-                        <p className='vista-lista-privacidad'> {datosLista.esPublica ? 'Lista Publica' : 'Lista Privada'} </p>
+                        <h1> Lista: {lista.nombre} </h1>
+                        <p className='vista-lista-privacidad'> {lista.esPublica ? 'Lista Publica' : 'Lista Privada'} </p>
                     </div>
-                    <div className={`vista-lista-botones ${datosLista.autoridad == 3 ? '' : 'ocultar'}`}>
+                    <div className={`vista-lista-botones ${lista.autoridad == 3 ? '' : 'ocultar'}`}>
                         <Boton version='listaEditar' colaboradoresReorganizados={colaboradoresReorganizados} actualizarColaboradores={actualizarColaboradores} />
                         <Boton version='listaBorrar' aceptar={handleBorrarLista} />
                         {/* Crear ventanas emergentes. */}
                     </div>
                 </div>
                 <div className='vista-lista-editores'>
-                    <p> {`Editores: ${obtenerNombres(datosLista.editores, datosLista.autoridad >= 2)}`} </p>
-                    <p> {`Lectores: ${obtenerNombres(datosLista.lectores, datosLista.autoridad == 1)}`} </p>
+                    <p> {`Editores: ${obtenerNombres(lista.editores, lista.autoridad >= 2)}`} </p>
+                    <p> {`Lectores: ${obtenerNombres(lista.lectores, lista.autoridad == 1)}`} </p>
                 </div>
             </section>
 
             <section className='vista-lista-peliculas'>
                 {peliculas.length > 0 ? 
                     peliculas.map((pelicula, index) => {
-                        return <Pelicula version={datosLista.autoridad >= 2 ? 'enLista' : 'recomendaciones'} pelicula={pelicula} indexPelicula={index} handleVistaChange={handleVistaChange} handleBorrarPelicula={handleBorrarPelicula} key={pelicula + index} />
+                        return <Pelicula version={lista.autoridad >= 2 ? 'enLista' : 'recomendaciones'} pelicula={pelicula} indexPelicula={index} handleVistaChange={handleVistaChange} handleBorrarPelicula={handleBorrarPelicula} key={pelicula + index} />
                     })
                 : 
                     <p> ¡Esta lista aun no tiene peliculas! </p>

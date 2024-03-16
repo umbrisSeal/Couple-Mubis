@@ -66,7 +66,8 @@ function App() {
             nombre: 'Para maratonear!!!',
             autoridad: 3,
             esPublica: true,
-            editores: [
+            editores: [],
+            editores2: [
                 {id: '12RFGTH', nombre: 'Mario Bros', imgPerfil: 'anonimo.png'},
                 {id: '1GT67LO', nombre: 'Michael Jackson', imgPerfil: 'anonimo.png'},
                 {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
