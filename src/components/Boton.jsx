@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function Boton(props) {
     const [vista, setVista] = useState(props.vista || false);
     const [mostrarVentana, setMostrarVentana] = useState(false);
+    const [opcionSelect, setOpcionSelect] = useState(props.autoridad || 0);
 
     const handleChange = () => {
         props.handleBotonChange();
@@ -15,6 +16,13 @@ function Boton(props) {
 
     const handleVentanaEmergente = () => {
         setMostrarVentana(!mostrarVentana);
+    }
+
+    const handleSelectChange = (event) => {
+        setOpcionSelect(event.target.value.toString());
+        if(props.handleChange && props.version == 'seleccionAutoridad') {
+            props.handleChange(props.indexColaborador, parseInt(event.target.value));
+        }
     }
 
 
@@ -70,6 +78,11 @@ function Boton(props) {
         </button>,
         ventanaAceptar: <button className='boton-ventana boton-ventana-aceptar'> {props.mensaje || 'Aceptar'} </button>,
         ventanaCancelar: <button className='boton-ventana boton-ventana-cancelar'> {props.mensaje || 'Cancelar'} </button>,
+        seleccionAutoridad: <select className='boton-seleccion' value={opcionSelect} onChange={handleSelectChange} >
+            <option value={2}> Puede editar </option>
+            <option value={1}> Solo lectura </option>
+            <option value={0}> Eliminar </option>
+        </select>,
     };
 
     return versionBoton[props.version] || <p> Error: Version de boton no definida. </p>

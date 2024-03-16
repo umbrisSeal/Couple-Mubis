@@ -8,11 +8,15 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     const [mostrarAgregarUsuarios, setMostrarAgregarUsuarios] = useState(false);
     const [colaboradores, setColaboradores] = useState([]);
 
-    console.log(colaboradoresReorganizados);
+    //console.log(colaboradoresReorganizados);
 
     useEffect(() => {
         setColaboradores(copiarObjeto(colaboradoresReorganizados));
     }, []);
+
+    useEffect(() => {
+        console.log(colaboradores);
+    }, [colaboradores])
 
     useEffect(() => {
         const handleClickAfuera = (event) => {
@@ -37,6 +41,18 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     const handleAceptar = () => {
         handleBotonAceptar(indexPelicula);
         handleBotonCancelar();
+    }
+
+    const handleChangeColaboradores = () => {
+        // Actualiza la lista de colaboradores.
+    }
+
+    const handleChangeAutoridad = (colaboradorIndex, nuevaAutoridad) => {
+        // Actualiza la autoridad del colaborador seleccionado.
+        // Verificar que el PROP original no ha sido afectado! y solo se cambio nuestro state.
+        let colaboradoresActualizados = copiarObjeto(colaboradores);
+        colaboradoresActualizados[colaboradorIndex].autoridad = nuevaAutoridad;
+        setColaboradores(colaboradoresActualizados);
     }
 
     const handleGuardarCambios = () => {
@@ -72,12 +88,12 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                             <div className='ventana-tabla'>
                                 <table>
                                     <tbody>
-                                        {colaboradores.map((colaborador) => {
-                                            return <tr>
+                                        {colaboradores.map((colaborador, index) => {
+                                            return <tr key={colaborador + index}>
                                                 <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${colaborador.imgPerfil}`} alt='Img Perfil' /> </td>
                                                 <td className='columna-nombre'> {colaborador.nombre} </td>
                                                 <td className='columna-boton'>
-                                                    Boton aqui.
+                                                    <Boton version='seleccionAutoridad' autoridad={colaborador.autoridad} indexColaborador={index} handleChange={handleChangeAutoridad} />
                                                 </td>
                                             </tr>
                                         })}
