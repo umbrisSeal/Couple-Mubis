@@ -58,7 +58,7 @@ function Boton(props) {
         perfilBorrar: <button type='submit' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
         listaEditar: <Fragment>
             <button type='button' className='boton-lista lista-gris' onClick={handleVentanaEmergente} > Editar Lista </button>
-            {mostrarVentana ? <VentanaEmergente colaboradoresReorganizados={props.colaboradoresReorganizados} version='editarLista' handleBotonCancelar={handleVentanaEmergente} />
+            {mostrarVentana ? <VentanaEmergente colaboradoresReorganizados={props.colaboradoresReorganizados} version='editarLista' handleBotonCancelar={handleVentanaEmergente} actualizarColaboradores={props.actualizarColaboradores} />
             : ''}
             {/* */}
         </Fragment>,

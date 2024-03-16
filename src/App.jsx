@@ -70,6 +70,11 @@ function App() {
                 {id: '12RFGTH', nombre: 'Mario Bros', imgPerfil: 'anonimo.png'},
                 {id: '1GT67LO', nombre: 'Michael Jackson', imgPerfil: 'anonimo.png'},
                 {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
             ],
             lectores: [
                 {id: 'EGGRGTA', nombre: 'Jose Jose', imgPerfil: 'anonimo.png'},

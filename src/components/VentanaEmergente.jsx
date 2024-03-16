@@ -3,20 +3,14 @@ import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 import { copiarObjeto } from '../assets/js/copiarObjeto.js';
 
-function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados}) {
+function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados, actualizarColaboradores}) {
     const ventanaRef = useRef(null);
     const [mostrarAgregarUsuarios, setMostrarAgregarUsuarios] = useState(false);
     const [colaboradores, setColaboradores] = useState([]);
 
-    //console.log(colaboradoresReorganizados);
-
     useEffect(() => {
         setColaboradores(copiarObjeto(colaboradoresReorganizados));
     }, []);
-
-    useEffect(() => {
-        console.log(colaboradores);
-    }, [colaboradores])
 
     useEffect(() => {
         const handleClickAfuera = (event) => {
@@ -43,10 +37,6 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         handleBotonCancelar();
     }
 
-    const handleChangeColaboradores = () => {
-        // Actualiza la lista de colaboradores.
-    }
-
     const handleChangeAutoridad = (colaboradorIndex, nuevaAutoridad) => {
         // Actualiza la autoridad del colaborador seleccionado.
         // Verificar que el PROP original no ha sido afectado! y solo se cambio nuestro state.
@@ -59,6 +49,9 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         // Enviar la solicitud HTTP para actualizar la base de datos.
         // Actualizar tambien los datos actuales.
         // Esto se debe de hacer en el componente VerLista.
+        if(actualizarColaboradores) {
+            actualizarColaboradores(colaboradores);
+        }
         handleBotonCancelar();
     }
 

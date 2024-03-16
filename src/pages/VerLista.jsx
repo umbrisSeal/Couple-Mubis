@@ -30,6 +30,15 @@ function VerLista() {
         navegador('/home');
     }
 
+    const actualizarColaboradores = (nuevosColaboradoresReorganizados) => {
+        // Re-organizar los colaboradores y mandar la solicitud HTTP, tambien actualizar
+        // nuestro state (crear uno nuevo para el loader.);
+        console.log('autoridad original', colaboradoresReorganizados);
+        console.log('nueva autoridad', nuevosColaboradoresReorganizados);
+
+        console.log("Ser o no ser... aniquilado!");
+    }
+
     const reorganizarColaboradores = (editores, lectores) => {
         // Toma 2 arreglos de objetos con los datos de los editores y lectores. Devuelve un solo arrelgo.
         const nuevosEditores = editores.map((editor) => {
@@ -55,7 +64,7 @@ function VerLista() {
                         <p className='vista-lista-privacidad'> {datosLista.esPublica ? 'Lista Publica' : 'Lista Privada'} </p>
                     </div>
                     <div className={`vista-lista-botones ${datosLista.autoridad == 3 ? '' : 'ocultar'}`}>
-                        <Boton version='listaEditar' colaboradoresReorganizados={colaboradoresReorganizados} />
+                        <Boton version='listaEditar' colaboradoresReorganizados={colaboradoresReorganizados} actualizarColaboradores={actualizarColaboradores} />
                         <Boton version='listaBorrar' aceptar={handleBorrarLista} />
                         {/* Crear ventanas emergentes. */}
                     </div>
