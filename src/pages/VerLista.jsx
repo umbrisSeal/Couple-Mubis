@@ -11,8 +11,6 @@ function VerLista() {
     const [peliculas, setPeliculas] = useState(datosLista.peliculas || []);
     const navegador = useNavigate();
 
-    //console.log(peliculas);
-
     const handleVistaChange = (indexPelicula) => {
         let peliculasActualizadas = [...peliculas];
         peliculasActualizadas[indexPelicula].vista = !peliculas[indexPelicula].vista;
@@ -32,6 +30,20 @@ function VerLista() {
         navegador('/home');
     }
 
+    const reorganizarColaboradores = (editores, lectores) => {
+        // Toma 2 arreglos de objetos con los datos de los editores y lectores. Devuelve un solo arrelgo.
+        const nuevosEditores = editores.map((editor) => {
+            return {...editor, autoridad: 2};
+        });
+        const nuevosLectores = lectores.map((lector) => {
+            return {...lector, autoridad: 1};
+        });
+
+        return [...nuevosEditores, ...nuevosLectores];
+    }
+    const colaboradoresReorganizados = reorganizarColaboradores(datosLista.editores, datosLista.lectores);
+
+
 
     return <Fragment>
         <Header version='home' />
@@ -43,7 +55,7 @@ function VerLista() {
                         <p className='vista-lista-privacidad'> {datosLista.esPublica ? 'Lista Publica' : 'Lista Privada'} </p>
                     </div>
                     <div className={`vista-lista-botones ${datosLista.autoridad == 3 ? '' : 'ocultar'}`}>
-                        <Boton version='listaEditar' />
+                        <Boton version='listaEditar' colaboradoresReorganizados={colaboradoresReorganizados} />
                         <Boton version='listaBorrar' aceptar={handleBorrarLista} />
                         {/* Crear ventanas emergentes. */}
                     </div>

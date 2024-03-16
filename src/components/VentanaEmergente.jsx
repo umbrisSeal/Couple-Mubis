@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 
-function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula}) {
+function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados}) {
     const ventanaRef = useRef(null);
+    const [mostrarAgregarUsuarios, setMostrarAgregarUsuarios] = useState(false);
 
     useEffect(() => {
         const handleClickAfuera = (event) => {
@@ -30,10 +31,18 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         handleBotonCancelar();
     }
 
+    const handleGuardarCambios = () => {
+        // Enviar la solicitud HTTP para actualizar la base de datos.
+        // Actualizar tambien los datos actuales.
+        // Esto se debe de hacer en el componente VerLista.
+        handleBotonCancelar();
+    }
+
     // Iniciador de Mensajes.
     const mensajesVentana = {
         borrarPeliculaLista: {titulo: 'Borrar Pelicula', mensaje: 'BORRAR-PELICULA', mensajeAceptar: 'Borrar Pelicula', mensajeCancelar: 'Cancelar'},
         borrarLista: {titulo: 'Borrar Lista', mensaje: '¿Seguro que quieres borrar esta lista? Se borrara de manera permanente! ', mensajeAceptar: 'Borrar Lista', mensajeCancelar: 'Cancelar'},
+        editarLista: {titulo: 'Editar Colaboradores', mensaje: 'Selecciona los permisos de cada colaborador, o agrega nuevos.', mensajeAceptar: 'Guardar Cambios', mensajeCancelar: 'Cancelar'},
     }
 
     const mensaje = mensajesVentana[version] || {titulo: 'Mensaje no definido!', mensaje: 'Esta version de ventana emergente no esta definida.'};
@@ -48,10 +57,18 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                     : 
                     <p className='ventana-mensaje'> {mensaje.mensaje} </p>
                 }
-                {/* Caso especial */}
+                {version == 'editarLista' ? 
+                    !mostrarAgregarUsuarios ?
+                        <div>
+                        </div>
+                    :
+                        'Agregar usuarios.'
+                :
+                    <></>
+                }
                 <div className='ventana-botones'>
                     <div onClick={handleBotonCancelar}> <Boton version='ventanaCancelar' mensaje={mensaje.mensajeCancelar} /> </div>
-                    <div onClick={handleAceptar}> <Boton version='ventanaAceptar' mensaje={mensaje.mensajeAceptar} /> </div>
+                    <div onClick={version == 'editarLista' ? handleGuardarCambios : handleAceptar}> <Boton version='ventanaAceptar' mensaje={mensaje.mensajeAceptar} /> </div>
                 </div>
             </div>
         </section>
