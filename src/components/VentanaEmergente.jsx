@@ -1,10 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
+import { copiarObjeto } from '../assets/js/copiarObjeto.js';
 
 function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados}) {
     const ventanaRef = useRef(null);
     const [mostrarAgregarUsuarios, setMostrarAgregarUsuarios] = useState(false);
+    const [colaboradores, setColaboradores] = useState([]);
+
+    console.log(colaboradoresReorganizados);
+
+    useEffect(() => {
+        setColaboradores(copiarObjeto(colaboradoresReorganizados));
+    }, []);
 
     useEffect(() => {
         const handleClickAfuera = (event) => {
@@ -59,7 +67,23 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                 }
                 {version == 'editarLista' ? 
                     !mostrarAgregarUsuarios ?
-                        <div>
+                        <div className='ventana-contenedor-especial'>
+                            <Boton />
+                            <div className='ventana-tabla'>
+                                <table>
+                                    <tbody>
+                                        {colaboradores.map((colaborador) => {
+                                            return <tr>
+                                                <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${colaborador.imgPerfil}`} alt='Img Perfil' /> </td>
+                                                <td className='columna-nombre'> {colaborador.nombre} </td>
+                                                <td className='columna-boton'>
+                                                    Boton aqui.
+                                                </td>
+                                            </tr>
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     :
                         'Agregar usuarios.'
