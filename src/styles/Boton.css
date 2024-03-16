@@ -253,5 +253,9 @@
 }
 
 .boton-seleccion {
-    
+    color: white;
+    background-color: var(--terciario);
+    border: solid 2px var(--terciario);
+    border-radius: 10px;
+    padding: 10px;
 }

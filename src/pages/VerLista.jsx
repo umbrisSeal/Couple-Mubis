@@ -10,6 +10,7 @@ function VerLista() {
     const datosLista = useLoaderData();
     const [peliculas, setPeliculas] = useState(datosLista.peliculas || []);
     const navegador = useNavigate();
+    // Generar un state para datosLista para actualizarlos cuando sea necesario sin recargar la pagina.
 
     const handleVistaChange = (indexPelicula) => {
         let peliculasActualizadas = [...peliculas];
