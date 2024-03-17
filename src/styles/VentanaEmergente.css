@@ -76,3 +76,22 @@
     font-size: 18px;
     font-weight: 600;
 }
+
+.ventana-contenido-input {
+    display: flex;
+    flex-direction: column;
+
+    width: 80%;
+    margin: 2rem auto 0px auto;
+}
+
+.ventana-mensaje-error {
+    background-color: var(--terciario);
+    margin-top: 1rem;
+
+    padding: 6px;
+    border: solid 2px var(--acento2);
+    font-size: 14px;
+
+    text-align: center;
+}

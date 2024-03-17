@@ -75,9 +75,6 @@ function VerLista() {
     }
     const colaboradoresReorganizados = reorganizarColaboradores(lista.editores, lista.lectores);
 
-    console.log(lista.autoridad >= 2);
-
-
     return <Fragment>
         <Header version='home' />
         <main className='fondo-radial-tenue contenedor-main'>

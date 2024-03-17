@@ -32,12 +32,17 @@ function Boton(props) {
         loginSubmit: <button type='submit' className='boton-mediano azul texto-capital'> {props.texto ? props.texto : 'Entrar'} </button>,
         verPelicula: <button type='button' className='boton-borde boton-grande borde-rojo-intenso texto-capital'> Ver pelicula </button>,
         agregarLista:
-            <button type='button' className='boton-borde borde-amarillo texto-grande texto-capital'>
-                <div className='contenedor-doble negritas'>
-                    <img src='../src/assets/images/iconos/pelicula.png' alt='Icono Pelicula' height={30} width={30} />
-                    <p> Crear lista </p>
-                </div>
-            </button>,
+            <Fragment>
+                <button type='button' className='boton-borde borde-amarillo texto-grande texto-capital' onClick={handleVentanaEmergente}>
+                    <div className='contenedor-doble negritas'>
+                        <img src='../src/assets/images/iconos/pelicula.png' alt='Icono Pelicula' height={30} width={30} />
+                        <p> Crear lista </p>
+                    </div>
+                </button>
+                {mostrarVentana ?
+                    <VentanaEmergente handleBotonCancelar={handleVentanaEmergente} version='agregarLista' handleBotonAceptar={handleVentanaEmergente} />
+                : <></>}
+            </Fragment>,
         verMas:
             <button type='button' className='boton-borde borde-rojo texto-grande texto-capital'>
                 <div className='contenedor-doble negritas'>

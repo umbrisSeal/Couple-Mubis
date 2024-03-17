@@ -66,15 +66,9 @@ function App() {
             nombre: 'Para maratonear!!!',
             autoridad: 3,
             esPublica: true,
-            editores: [],
-            editores2: [
+            editores: [
                 {id: '12RFGTH', nombre: 'Mario Bros', imgPerfil: 'anonimo.png'},
                 {id: '1GT67LO', nombre: 'Michael Jackson', imgPerfil: 'anonimo.png'},
-                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
-                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
-                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
-                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
-                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
                 {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
             ],
             lectores: [
@@ -93,23 +87,6 @@ function App() {
                 {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
             ],
         }
-
-        /*
-        {
-            nombre,
-            autoridad: 0, 0 = nada, 1= lector, 2=editor 3=dueño.
-            esPublica: true/false,
-            añadir nombre, con autoridad al correspondiente.
-            editores: ['nombre', 'nombre'],
-            lectores: [],
-            peliculas: [
-                {id, vista(bool), urlPoster},
-                ...
-            ]
-        }
-
-        */
-
 
     }
 
