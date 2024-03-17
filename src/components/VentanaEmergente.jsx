@@ -91,6 +91,31 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                         <p> El nombre no puede estar vacio y los unicos caracteres especiales permitidos son: ? ! - + . , </p>
                     </div> : <></>}
             </div>,
+        editarLista:
+            version == 'editarLista' ? 
+                !mostrarAgregarUsuarios ?
+                    <div className='ventana-contenedor-especial'>
+                        <Boton />
+                        <div className='ventana-tabla'>
+                            <table>
+                                <tbody>
+                                    {colaboradores.map((colaborador, index) => {
+                                        return <tr key={colaborador + index}>
+                                            <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${colaborador.imgPerfil}`} alt='Img Perfil' /> </td>
+                                            <td className='columna-nombre'> {colaborador.nombre} </td>
+                                            <td className='columna-boton'>
+                                                <Boton version='seleccionAutoridad' autoridad={colaborador.autoridad} indexColaborador={index} handleChange={handleChangeAutoridad} />
+                                            </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                :
+                    'Agregar usuarios.'
+            :
+                <></>,
     };
 
     const mensaje = mensajesVentana[version] || {titulo: 'Mensaje no definido!', mensaje: 'Esta version de ventana emergente no esta definida.'};
@@ -105,31 +130,6 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                     <p className='ventana-mensaje'> ¿Estas seguro de querer borrar <span className='ventana-mensaje-negritas'> {nombrePelicula} </span> de esta lista? </p>
                     : 
                     <p className='ventana-mensaje'> {mensaje.mensaje} </p>
-                }
-                {version == 'editarLista' ? 
-                    !mostrarAgregarUsuarios ?
-                        <div className='ventana-contenedor-especial'>
-                            <Boton />
-                            <div className='ventana-tabla'>
-                                <table>
-                                    <tbody>
-                                        {colaboradores.map((colaborador, index) => {
-                                            return <tr key={colaborador + index}>
-                                                <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${colaborador.imgPerfil}`} alt='Img Perfil' /> </td>
-                                                <td className='columna-nombre'> {colaborador.nombre} </td>
-                                                <td className='columna-boton'>
-                                                    <Boton version='seleccionAutoridad' autoridad={colaborador.autoridad} indexColaborador={index} handleChange={handleChangeAutoridad} />
-                                                </td>
-                                            </tr>
-                                        })}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    :
-                        'Agregar usuarios.'
-                :
-                    <></>
                 }
                 { contenido }
                 <div className='ventana-botones'>
