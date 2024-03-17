@@ -3,12 +3,26 @@ import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 import { copiarObjeto } from '../assets/js/copiarObjeto.js';
 
+const datosSimulados = [
+    // Datos simulados  de la lista de amigos del usuario. Quizas un useContext? Cookies? localstorage? preguntar aqui mismo?
+    // No deberia mezclarse con la informacion de la lista... porque se supone que es informacion aparte no?
+    {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png', esColaborador: false},
+    {id: 'J7t9KpWx', nombre: 'Pato Lucas', imgPerfil: 'anonimo.png', esColaborador: true},
+    {id: 'R3y6NqPz', nombre: 'Rico McPato', imgPerfil: 'anonimo.png', esColaborador: false},
+    {id: 'E5u8MoYv', nombre: 'Obama Barack', imgPerfil: 'anonimo.png', esColaborador: true},
+    {id: 'A2s4LpTx', nombre: 'Laios Gloton', imgPerfil: 'anonimo.png', esColaborador: true},
+    {id: 'F9i3DqWs', nombre: 'Eren Yaguer', imgPerfil: 'anonimo.png', esColaborador: false},
+    {id: 'G1h7RpUz', nombre: 'Nezuko Kalamardo', imgPerfil: 'anonimo.png', esColaborador: false},
+    {id: 'K6l8NsYo', nombre: 'Chavo del 8', imgPerfil: 'anonimo.png', esColaborador: false},
+]
+
 function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados, actualizarColaboradores}) {
     const ventanaRef = useRef(null);
     const [mostrarAgregarUsuarios, setMostrarAgregarUsuarios] = useState(false);
     const [colaboradores, setColaboradores] = useState([]);
     const [nombreNuevaLista, setNombreNuevaLista] = useState('');
     const [mostrarError, setMostrarError] = useState(false);
+    const [amigosColaboradores, setAmigosColaboradores] = useState(copiarObjeto(datosSimulados));
 
     useEffect(() => {
         setColaboradores(copiarObjeto(colaboradoresReorganizados));
@@ -26,6 +40,10 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
             document.removeEventListener('mouseup', handleClickAfuera);
         }
     }, []);
+
+    useEffect(() => {
+        setAmigosColaboradores(copiarObjeto(datosSimulados));
+    }, [mostrarAgregarUsuarios])
 
     const validarInput = (valorInput) => {
         // Retorna verdadero si es correcto.
@@ -110,6 +128,19 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                 :
                     <div className='ventana-contenedor-especial'>
                         <div onClick={handleBotonAgregarUsuarios} className='ventana-contenedor-boton'> <Boton version='cambiarVentana' mensaje='Editar Colaboradores' /> </div>
+                        <div className='ventana-tabla'>
+                            <table>
+                                <tbody>
+                                    {amigosColaboradores.map((amigo, index) => {
+                                        return <tr key={amigo + index}>
+                                            <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${amigo.imgPerfil}`} alt='Img Perfil' /> </td>
+                                            <td className='columna-nombre'> {amigo.nombre} </td>
+                                            <td className='columna-boton'> <Boton version='agregarColaborador' estadoInicial={amigo.esColaborador} /> </td>
+                                        </tr>
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
             :
                 <></>,

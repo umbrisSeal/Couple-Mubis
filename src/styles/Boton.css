@@ -259,3 +259,33 @@
     border-radius: 10px;
     padding: 10px;
 }
+
+.boton-ventana-colaborador {
+    width: 120px;
+    font-weight: 600;
+    padding: 4px;
+    border-radius: 10px;
+    color: white;
+
+    transition: all 0.3s ease-in-out;
+}
+
+.boton-ventana-agregar {
+    background-color: var(--terciario);
+    border-color: var(--terciario);
+}
+
+.boton-ventana-agregar:hover {
+    background-color: var(--acento2);
+    border-color: var(--acento2);
+}
+
+.boton-ventana-agregado {
+    background-color: #5a5a5a;
+    border-color: #5a5a5a;
+}
+
+.boton-ventana-agregado:hover {
+    background-color: #808080;
+    border-color: #808080;
+}

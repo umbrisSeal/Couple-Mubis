@@ -8,6 +8,9 @@ function Boton(props) {
     const [vista, setVista] = useState(props.vista || false);
     const [mostrarVentana, setMostrarVentana] = useState(false);
     const [opcionSelect, setOpcionSelect] = useState(props.autoridad || 0);
+    const [estadoBoton, setEstadoBoton] = useState(props.estadoInicial || false);
+
+    const handleEstadoBoton = () => setEstadoBoton(!estadoBoton);
 
     const handleChange = () => {
         props.handleBotonChange();
@@ -89,6 +92,10 @@ function Boton(props) {
             <option value={0}> Eliminar </option>
         </select>,
         cambiarVentana: <button className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Cambiar Ventana'} </button>,
+        agregarColaborador:
+            <button onClick={handleEstadoBoton} className={`boton-ventana-colaborador ${estadoBoton ? 'boton-ventana-agregado' : 'boton-ventana-agregar'}`}>
+                {estadoBoton ? 'Agregado' : '+ Añadir' }
+            </button>,
     };
 
     return versionBoton[props.version] || <p> Error: Version de boton no definida. </p>
