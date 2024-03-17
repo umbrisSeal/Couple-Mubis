@@ -73,6 +73,7 @@ function App() {
             ],
             lectores: [
                 {id: 'EGGRGTA', nombre: 'Jose Jose', imgPerfil: 'anonimo.png'},
+                {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png'},
             ],
             peliculas: [
                 {id: 4312, vista: false, urlPoster: 'pmjiwwfT7kRJQ0ATi79upBmSOO9.jpg', titulo: 'Nosotros los Inocentes', año: 1200},

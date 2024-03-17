@@ -10,7 +10,14 @@ function Boton(props) {
     const [opcionSelect, setOpcionSelect] = useState(props.autoridad || 0);
     const [estadoBoton, setEstadoBoton] = useState(props.estadoInicial || false);
 
-    const handleEstadoBoton = () => setEstadoBoton(!estadoBoton);
+    const handleEstadoBoton = () => {
+        if(props.handleChange) {
+            props.handleChange(props.indexAmigo);
+        }
+        setEstadoBoton(!estadoBoton);
+    }
+
+
 
     const handleChange = () => {
         props.handleBotonChange();

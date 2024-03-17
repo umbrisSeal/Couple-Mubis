@@ -6,11 +6,14 @@ import { copiarObjeto } from '../assets/js/copiarObjeto.js';
 const datosSimulados = [
     // Datos simulados  de la lista de amigos del usuario. Quizas un useContext? Cookies? localstorage? preguntar aqui mismo?
     // No deberia mezclarse con la informacion de la lista... porque se supone que es informacion aparte no?
-    {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'J7t9KpWx', nombre: 'Pato Lucas', imgPerfil: 'anonimo.png', esColaborador: true},
+
+    // Conclusion, entonces esto se debe actualizar cada vez que se abre la ventana "editar Colaboradores", o mandarlo igual como prop. No creo
+    // que sea muy eficiente.
+    {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png', esColaborador: true},
+    {id: 'J7t9KpWx', nombre: 'Pato Lucas', imgPerfil: 'anonimo.png', esColaborador: false},
     {id: 'R3y6NqPz', nombre: 'Rico McPato', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'E5u8MoYv', nombre: 'Obama Barack', imgPerfil: 'anonimo.png', esColaborador: true},
-    {id: 'A2s4LpTx', nombre: 'Laios Gloton', imgPerfil: 'anonimo.png', esColaborador: true},
+    {id: 'E5u8MoYv', nombre: 'Obama Barack', imgPerfil: 'anonimo.png', esColaborador: false},
+    {id: 'A2s4LpTx', nombre: 'Laios Gloton', imgPerfil: 'anonimo.png', esColaborador: false},
     {id: 'F9i3DqWs', nombre: 'Eren Yaguer', imgPerfil: 'anonimo.png', esColaborador: false},
     {id: 'G1h7RpUz', nombre: 'Nezuko Kalamardo', imgPerfil: 'anonimo.png', esColaborador: false},
     {id: 'K6l8NsYo', nombre: 'Chavo del 8', imgPerfil: 'anonimo.png', esColaborador: false},
@@ -22,7 +25,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     const [colaboradores, setColaboradores] = useState([]);
     const [nombreNuevaLista, setNombreNuevaLista] = useState('');
     const [mostrarError, setMostrarError] = useState(false);
-    const [amigosColaboradores, setAmigosColaboradores] = useState(copiarObjeto(datosSimulados));
+    const [amigosColaboradores, setAmigosColaboradores] = useState([]);
 
     useEffect(() => {
         setColaboradores(copiarObjeto(colaboradoresReorganizados));
@@ -42,8 +45,11 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     }, []);
 
     useEffect(() => {
+        // Quizas elminar esto, y consultar los datos siempre al empezar.
+        // No podra actualizar y agregar usuarios al mismo tiempo.
+        // Aqui debe de ser la solicitud HTTP para consultar los amigos.
         setAmigosColaboradores(copiarObjeto(datosSimulados));
-    }, [mostrarAgregarUsuarios])
+    }, [])
 
     const validarInput = (valorInput) => {
         // Retorna verdadero si es correcto.
@@ -70,6 +76,24 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         let colaboradoresActualizados = copiarObjeto(colaboradores);
         colaboradoresActualizados[colaboradorIndex].autoridad = nuevaAutoridad;
         setColaboradores(colaboradoresActualizados);
+    }
+
+    const handleAgregarAmigoColaborador = (indexAmigo) => {
+        let nuevosColaboradores = copiarObjeto(colaboradores);
+        const amigoAEditar = {...amigosColaboradores[indexAmigo]};
+        const indexColaborador = colaboradores.findIndex((colaborador) => {
+            return colaborador.id == amigoAEditar.id;
+        });
+
+        if(indexColaborador == -1) {
+            // El amigo no es colaborador, agregarlo (siempre como lector primero).
+            nuevosColaboradores.push({id: amigoAEditar.id, nombre: amigoAEditar.nombre, imgPerfil: amigoAEditar.imgPerfil, autoridad: 1})
+        } else {
+            // El amigo ya es colaborador, borrarlo.
+            nuevosColaboradores.splice(indexColaborador, 1);
+        }
+
+        setColaboradores(nuevosColaboradores);
     }
 
     const handleGuardarCambios = () => {
@@ -135,7 +159,8 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                                         return <tr key={amigo + index}>
                                             <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${amigo.imgPerfil}`} alt='Img Perfil' /> </td>
                                             <td className='columna-nombre'> {amigo.nombre} </td>
-                                            <td className='columna-boton'> <Boton version='agregarColaborador' estadoInicial={amigo.esColaborador} /> </td>
+                                            <td className='columna-boton'> <Boton version='agregarColaborador' estadoInicial={amigo.esColaborador} indexAmigo=
+                                            {index} handleChange={handleAgregarAmigoColaborador} /> </td>
                                         </tr>
                                     })}
                                 </tbody>
