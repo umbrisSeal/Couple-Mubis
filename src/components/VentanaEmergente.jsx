@@ -12,9 +12,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
 
     useEffect(() => {
         setColaboradores(copiarObjeto(colaboradoresReorganizados));
-    }, []);
 
-    useEffect(() => {
         const handleClickAfuera = (event) => {
             if(ventanaRef.current && !ventanaRef.current.contains(event.target)) {
                 // Cerrar ventana emergente sin hacer nada.
@@ -22,15 +20,10 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
             }
         };
 
-        // Agrega eventListener con retraso para no hacer miss-click.
-        const clickTimeout = setTimeout( () => {
-            document.addEventListener('click', handleClickAfuera);
-        }, 100);
-
+        document.addEventListener('mouseup', handleClickAfuera);
 
         return () => {
-            clearTimeout(clickTimeout);
-            document.removeEventListener('click', handleClickAfuera);
+            document.removeEventListener('mouseup', handleClickAfuera);
         }
     }, []);
 
@@ -41,6 +34,9 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     }
 
     const handleNombreListaNueva = (event) => setNombreNuevaLista(event.target.value);
+    const handleBotonAgregarUsuarios = () => {
+        setMostrarAgregarUsuarios(true);
+    };
 
     const handleAceptar = () => {
         if(version == 'agregarLista' && !validarInput(nombreNuevaLista)) {
@@ -89,13 +85,14 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                 {mostrarError ?
                     <div className='ventana-mensaje-error'>
                         <p> El nombre no puede estar vacio y los unicos caracteres especiales permitidos son: ? ! - + . , </p>
-                    </div> : <></>}
+                    </div> : <></>
+                }
             </div>,
         editarLista:
             version == 'editarLista' ? 
                 !mostrarAgregarUsuarios ?
                     <div className='ventana-contenedor-especial'>
-                        <Boton />
+                        <div onClick={handleBotonAgregarUsuarios}> <Boton /> </div>
                         <div className='ventana-tabla'>
                             <table>
                                 <tbody>
