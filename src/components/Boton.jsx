@@ -88,6 +88,7 @@ function Boton(props) {
             <option value={1}> Solo lectura </option>
             <option value={0}> Eliminar </option>
         </select>,
+        cambiarVentana: <button className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Cambiar Ventana'} </button>,
     };
 
     return versionBoton[props.version] || <p> Error: Version de boton no definida. </p>

@@ -52,6 +52,11 @@
     flex-direction: column;
 }
 
+.ventana-contenedor-boton {
+    display: flex;
+    justify-content: center;
+}
+
 .ventana-tabla {
     background-color: var(--secundario);
     margin-top: 1rem;

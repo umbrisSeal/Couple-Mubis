@@ -34,9 +34,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     }
 
     const handleNombreListaNueva = (event) => setNombreNuevaLista(event.target.value);
-    const handleBotonAgregarUsuarios = () => {
-        setMostrarAgregarUsuarios(true);
-    };
+    const handleBotonAgregarUsuarios = () => setMostrarAgregarUsuarios(!mostrarAgregarUsuarios);
 
     const handleAceptar = () => {
         if(version == 'agregarLista' && !validarInput(nombreNuevaLista)) {
@@ -92,7 +90,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
             version == 'editarLista' ? 
                 !mostrarAgregarUsuarios ?
                     <div className='ventana-contenedor-especial'>
-                        <div onClick={handleBotonAgregarUsuarios}> <Boton /> </div>
+                        <div onClick={handleBotonAgregarUsuarios} className='ventana-contenedor-boton'> <Boton version='cambiarVentana' mensaje='Añadir Colaboradores' /> </div>
                         <div className='ventana-tabla'>
                             <table>
                                 <tbody>
@@ -110,7 +108,9 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                         </div>
                     </div>
                 :
-                    'Agregar usuarios.'
+                    <div className='ventana-contenedor-especial'>
+                        <div onClick={handleBotonAgregarUsuarios} className='ventana-contenedor-boton'> <Boton version='cambiarVentana' mensaje='Editar Colaboradores' /> </div>
+                    </div>
             :
                 <></>,
     };
