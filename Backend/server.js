@@ -1,13 +1,25 @@
-
 const express = require('express');
-
 const app = express();
 const port = 3000;
 
+const cookieParser = require('cookie-parser');
 
-app.get('/', (request, response) => {
-    response.send('Hola mundo.');
+
+const mainRouter = require('./app/routes/api');
+
+
+app.use(cookieParser());    // Get cookies.
+app.use(express.json())     // Allow req.body
+
+
+app.use('/api', mainRouter);
+
+
+app.all("*", (req, res) => {
+    res.send("Esto es un error, no encontre la ruta.");
 })
+
+
 
 
 app.listen(port, () => {
