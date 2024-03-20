@@ -12,10 +12,10 @@ function crearCuenta(request, response) {
         response.status(400).send('Bad Request: La solicitud no tiene el cuerpo necesario.');
         return;
     }
-    //console.log(typeof(body.email));
-    if(!verificarCorreo(body.email)) {
+
+    if(!verificarCorreo(body.email) || body.password != body.passwordRepetido) {
         // Hacer todas las validaciones necesarias.
-        response.status(400).send("Bad Request: email");
+        response.status(400).send("Bad Request");
         return;
     }
 
