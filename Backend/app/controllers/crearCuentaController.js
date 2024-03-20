@@ -1,27 +1,13 @@
-const verificaKeys = require("../validations/verificaKeys");
-const verificarCorreo = require("../validations/verificarCorreo");
 
+const validacionSignin = require("../validations/validacionSignin");
 
 
 function crearCuenta(request, response) {
 
-    const body = request.body;
-
-    if (!verificaKeys(body, ['clave', 'email', 'usuario', 'password', 'passwordRepetido'])) {
-        // Necesitamos llamar a una vista.
-        response.status(400).send('Bad Request: La solicitud no tiene el cuerpo necesario.');
-        return;
-    }
-
-    if(!verificarCorreo(body.email) || body.password != body.passwordRepetido) {
-        // Hacer todas las validaciones necesarias.
-        response.status(400).send("Bad Request");
-        return;
-    }
+    if(!validacionSignin(request, response)) return;
 
 
-
-    response.status(200).send('Tu si me entiendes mendes.');
+    response.status(200).send('Validacion exitosa.');
 
 }
 
