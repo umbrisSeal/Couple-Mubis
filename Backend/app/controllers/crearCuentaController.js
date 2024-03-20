@@ -26,6 +26,12 @@ Para crear una cuenta:
 
     1. Validar que el body contiene un JSON con las keys necesarias.
     2. Aplicar las validaciones a cada una de las secciones.
+    ------------------------------------------------------------------
+
+    Para crear la cuenta hay que validar:
+        (Modelo)
+    1. El correo electronico no existe en la base de datos.
+    2. 
 
     clave": "3MXFWGLVWF",
     "email": "micorreo@gmail.com",
