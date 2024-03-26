@@ -6,9 +6,12 @@
 function verificarNombre(nombre) {
     const regexNombre = /^[a-zA-Z0-9 _-]+$/;
 
+    console.log(nombre.length < 3 || nombre.length > 15);
+
     if(nombre.length < 3 || nombre.length > 15) return false;
     if(!regexNombre.test(nombre)) return false;
 
+    return true;
 }
 
 module.exports = verificarNombre;
