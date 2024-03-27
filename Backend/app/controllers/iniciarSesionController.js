@@ -14,7 +14,12 @@ async function iniciarSesionController(request, response) {
         Vista: Retorna un mensaje de operacion exitosa.
     */
 
-    const tokens = iniciarSesionModel(request, response);
+    const tokens = await iniciarSesionModel(request, response);
+
+    if(!tokens) {
+        response.status(403).send("Ha ocurrido un error al authenticar al usuario.");
+        return;
+    }
 
 
     response.send("Wow, te haz autenticado exitosamente.");
