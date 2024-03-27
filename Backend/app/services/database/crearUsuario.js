@@ -7,6 +7,7 @@ const conexionMDB = require('./conexionMDB');
 async function crearUsuario(datos) {
     const clienteMDB = conexionMDB.conectar();
     const coleccionUsuarios = clienteMDB.db('coupleMubis').collection('usuarios');
+    const coleccionClaves = clienteMDB.db('coupleMubis').collection('clavesAcceso');
 
     let resultado;
 
@@ -37,9 +38,9 @@ async function crearUsuario(datos) {
 
     try {
         resultado = await coleccionUsuarios.insertOne( nuevoUsuario );
+        await coleccionClaves.updateOne({ clave: datos.clave }, { $set: { valida: false }});    // Invalidar clave una vez usada.
 
     } catch(error) {
-        //console.log("Error durante la creacion de un nuevo usuario: ", error);
         console.log("Error al intentar crear un nuevo usuario. Error: ", error);
         console.log(error.errorResponse.errInfo.details.schemaRulesNotSatisfied[0]);
 
@@ -47,9 +48,6 @@ async function crearUsuario(datos) {
         conexionMDB.desconectar();
 
     }
-
-    console.log("Resultado de la operacion: ", resultado);
-
 }
 
 
