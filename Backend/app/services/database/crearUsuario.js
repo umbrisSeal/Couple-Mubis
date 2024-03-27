@@ -10,6 +10,7 @@ async function crearUsuario(datos) {
     const coleccionClaves = clienteMDB.db('coupleMubis').collection('clavesAcceso');
 
     let resultado;
+    let operacionExitosa = false;
 
     const passwordHash = await hashearPassword(datos.password);
 
@@ -39,6 +40,7 @@ async function crearUsuario(datos) {
     try {
         resultado = await coleccionUsuarios.insertOne( nuevoUsuario );
         await coleccionClaves.updateOne({ clave: datos.clave }, { $set: { valida: false }});    // Invalidar clave una vez usada.
+        operacionExitosa = true;
 
     } catch(error) {
         console.log("Error al intentar crear un nuevo usuario. Error: ", error);
@@ -46,7 +48,7 @@ async function crearUsuario(datos) {
 
     } finally {
         conexionMDB.desconectar();
-
+        return operacionExitosa;
     }
 }
 
