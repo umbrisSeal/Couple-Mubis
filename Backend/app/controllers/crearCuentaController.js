@@ -2,17 +2,23 @@
 const validacionSignin = require("../validations/validacionSignin");
 
 
-function crearCuenta(request, response) {
+async function crearCuenta(request, response) {
+    
 
-    if(!validacionSignin(request, response)) return;
+    if(! await validacionSignin(request, response)) return;
+
+    // Validacion superada, crear un nuevo usuario.
 
 
-    response.status(200).send('Validacion exitosa.');
+    response.status(200).send('Validacion exitosa. El formulario enviado es correcto.');
+
+    // Cambiar todo el correo a lowercase.
 
 }
 
 
 module.exports = crearCuenta;
+
 
 /*
 Para crear una cuenta:

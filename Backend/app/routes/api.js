@@ -13,7 +13,7 @@ mainRouter.use("/cuenta", cuenta);
 mainRouter.get("/", async (req, res) => {
     // Para testing.
 
-    const passwordHasheado = await hashearPassword("fc882c4231159c7c8c4dc14c21b007588816223106f79937db7b7db507f94b6e");
+    const passwordHasheado = await hashearPassword("0d15dc44680a0cf58a4dfedb3d6c30cc4ed2250fd04a114609126fd766161e34");
 
     res.send(`Sistema Activo, tu nuevo hash es: ${passwordHasheado.hash} y se genero con una salt de: ${passwordHasheado.salt}`);
 })
