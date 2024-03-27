@@ -6,8 +6,9 @@
 const emailExiste = require("../services/database/emailExiste");
 const verificaKeys = require("./verificaKeys");
 const verificarCorreo = require("./verificarCorreo");
+const verificarNombre = require("./verificarNombre");
 
-function validacionSignIn(request, response) {
+async function validacionSignIn(request, response) {
 
     const body = request.body;
 
@@ -16,17 +17,25 @@ function validacionSignIn(request, response) {
         return false;
     }
 
-    if(!verificarCorreo(body.email) || body.password != body.passwordRepetido) {
-        response.status(400).send("BAD REQUEST: El password no tiene la estructura correcta.");
+    if(body.password != body.passwordRepetido) {
+        response.status(400).send("BAD REQUEST: Los passwords no coinciden.");
         return false;
     }
 
-    // Verificar que el email aun no existe en la base de datos.
-    if(emailExiste(body.email)) {
+    if(!verificarCorreo(body.email)) {
+        response.status(400).send("BAD REQUEST: El correo no tiene la estructura correcta.");
+        return false;
+    }
+
+    if(!verificarNombre(request.body.usuario)) {
+        response.status(400).send("BAD REQUEST: El nombre de usuario no tiene la estructura correcta.");
+        return false;
+    }
+    
+    if(await emailExiste(body.email)) {
         response.status(409).send("CONFLICT: El email proporcionado ya existe.");
         return false;
     }
-
 
     return true;
 }
