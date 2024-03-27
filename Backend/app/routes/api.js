@@ -5,9 +5,11 @@ const generarID = require('../helpers/generarID');
 const hashearPassword = require('../helpers/hashearPassword');
 
 const cuenta = require('./cuenta');
+const auth = require('./auth');
 
 
 mainRouter.use("/cuenta", cuenta);
+mainRouter.use("/auth", auth);
 
 
 mainRouter.get("/", async (req, res) => {

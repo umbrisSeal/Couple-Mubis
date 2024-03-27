@@ -1,13 +1,9 @@
 require('dotenv').config();
 
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PUERTO;
-
-
-
-const cookieParser = require('cookie-parser');
-
 
 const mainRouter = require('./app/routes/api');
 
