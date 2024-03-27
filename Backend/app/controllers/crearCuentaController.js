@@ -1,4 +1,5 @@
 
+const crearUsuario = require("../services/database/crearUsuario");
 const validacionSignin = require("../validations/validacionSignin");
 
 
@@ -8,6 +9,9 @@ async function crearCuenta(request, response) {
     if(! await validacionSignin(request, response)) return;
 
     // Validacion superada, crear un nuevo usuario.
+    // ANTES! Verificar que la clave sea valida.
+    
+    crearUsuario(request.body);
 
 
     response.status(200).send('Validacion exitosa. El formulario enviado es correcto.');

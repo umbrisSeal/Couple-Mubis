@@ -2,7 +2,7 @@
 const crypto = require('crypto');
 
 function generarID() {
-    const longitud = 8;
+    const longitud = 10;
 
     const randomBytes = crypto.randomBytes(longitud);
     const stringBase64 = randomBytes.toString('base64');
