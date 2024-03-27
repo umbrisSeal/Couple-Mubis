@@ -7,10 +7,11 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 
 const DB_URI = `${DB_PROVIDER}://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/`;
 
-const client = new MongoClient(DB_URI);
+let client;
 
 function conectar() {
     // En la nueva version de MongoDB ya no se necesita .connect()
+    client = new MongoClient(DB_URI);
     console.log("Conexion MDB establecida.");
     return client;
 }
