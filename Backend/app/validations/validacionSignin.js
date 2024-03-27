@@ -7,6 +7,7 @@ const emailExiste = require("../services/database/emailExiste");
 const verificaKeys = require("./verificaKeys");
 const verificarCorreo = require("./verificarCorreo");
 const verificarNombre = require("./verificarNombre");
+const verifivarClave = require("../services/database/validarClave");
 
 async function validacionSignIn(request, response) {
 
@@ -34,6 +35,11 @@ async function validacionSignIn(request, response) {
     
     if(await emailExiste(body.email)) {
         response.status(409).send("CONFLICT: El email proporcionado ya existe.");
+        return false;
+    }
+
+    if(! await verifivarClave(body.clave)) {
+        response.status(403).send("FORBIDDEN: La clave de acceso no es valida.");
         return false;
     }
 
