@@ -11,6 +11,16 @@ const mainRouter = require('./app/routes/api');
 app.use(cookieParser());    // Get cookies.
 app.use(express.json())     // Allow req.body
 
+// Se necesita verificar que el body es un json valido.
+
+app.use((error, request, response, next) => {
+    if(error instanceof SyntaxError && error.status === 400 && 'body' in error) {
+        response.status(400).send("Error en la estructura del body, no se puede convertir a JSON.");
+        return;
+    }
+    next();
+})
+
 
 app.use('/api', mainRouter);
 
