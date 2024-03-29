@@ -16,7 +16,7 @@ async function authController(request, response, next) {
     const cookies = request.cookies;
 
     if(!cookies['idToken', 'sessionToken']) {
-        response.status(200).send("No tiene sus 2 tokens, por favor de authenticarse.");
+        response.status(403).send("No tiene sus 2 tokens, por favor de authenticarse.");
         // Redireccion a iniciar sesion. (frontend)
         // Llama a la vista aqui con un status de 0 para que mande el json con ese valor.
         // Esto es solo para este endpoint, normalmente usaremos el helper autenticar para retornar el status de nivel de autorizacion de manera interna.
@@ -34,7 +34,7 @@ async function authController(request, response, next) {
     if(!idTokenValido) {
         response.clearCookie('idToken');
         response.clearCookie('sessionToken');
-        response.status(200).send("Su idToken ya no es valido, por favor vuelva a autenticarse.");
+        response.status(403).send("Su idToken ya no es valido, por favor vuelva a autenticarse.");
         return;
     }
 
