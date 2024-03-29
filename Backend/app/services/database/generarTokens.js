@@ -15,10 +15,10 @@ async function generarTokens(request) {
 
     // Generar tokens:
     const idToken = generarIdToken(userID);
-    const sessionToken = generarSessionToken();
+    const sessionToken = generarSessionToken(userID);
 
     // Registrar session token en la base de datos:
-    const resultado = await registrarSessionToken(sessionToken, userID, request.headers['user-agent']);
+    const resultado = await registrarSessionToken(sessionToken, request.headers['user-agent']);
 
     return resultado ? {idToken, sessionToken} : null;
 }

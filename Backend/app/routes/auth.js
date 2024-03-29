@@ -3,10 +3,10 @@ const express = require('express');
 const auth = express.Router();
 
 const iniciarSesionController = require('../controllers/iniciarSesionController');
+const authController = require('../controllers/authController');
 
-auth.get("/", (req, res) => {
-    res.send("Bienvenido a auth!");
-})
+
+auth.get("/", authController);
 
 auth.post("/", iniciarSesionController);
 

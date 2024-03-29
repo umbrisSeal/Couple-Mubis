@@ -6,7 +6,7 @@
 const jwt = require('jsonwebtoken');
 const conexionMDB = require('./conexionMDB');
 
-async function registrarSessionToken(sessionToken, userID, userAgent) {
+async function registrarSessionToken(sessionToken, userAgent) {
 
     const tokenPayload = jwt.verify(sessionToken, process.env.JWT_SECRET, (error, payloadDecoded) => {
         if(error) return null;
@@ -15,7 +15,7 @@ async function registrarSessionToken(sessionToken, userID, userAgent) {
 
     if(tokenPayload === null) return false;
 
-    const { tokenID, sessionID, exp } = tokenPayload;
+    const { tokenID, sessionID, exp, userID } = tokenPayload;
 
     const clienteMDB = conexionMDB.conectar();
     const coleccionSesiones = clienteMDB.db('coupleMubis').collection('sesiones');
