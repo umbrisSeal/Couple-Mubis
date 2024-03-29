@@ -3,10 +3,12 @@ const express = require('express');
 const auth = express.Router();
 
 const iniciarSesionController = require('../controllers/iniciarSesionController');
-const authController = require('../controllers/authController');
+const authenticar = require('../auth/authenticar');
 
 
-auth.get("/", authController);
+auth.get("/", authenticar, (request, response) => {
+    response.status(200).send("Felicidades, si estas viendo esto es porque te autenticaste exitosamente!");
+});
 
 auth.post("/", iniciarSesionController);
 

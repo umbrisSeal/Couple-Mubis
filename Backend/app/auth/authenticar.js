@@ -1,8 +1,8 @@
-const validarIdToken = require("../auth/validarIdToken");
-const validarSessionToken = require("../auth/validarSessionToken");
+const validarIdToken = require("./validarIdToken");
+const validarSessionToken = require("./validarSessionToken");
 const refreshSessionToken = require("../helpers/refreshSessionToken");
 
-async function authController(request, response) {
+async function authController(request, response, next) {
 
     //response.send("Bienvenido a auth 2! ¿Me permite sus tokens por favor?");
 
@@ -21,6 +21,7 @@ async function authController(request, response) {
         // Llama a la vista aqui con un status de 0 para que mande el json con ese valor.
         // Esto es solo para este endpoint, normalmente usaremos el helper autenticar para retornar el status de nivel de autorizacion de manera interna.
         return;
+        // Lanzar un error para ir al middleware correspondiente?
     }
 
     // Tiene sus tokens, hay que revisar si son validos.
@@ -35,7 +36,6 @@ async function authController(request, response) {
         response.clearCookie('sessionToken');
         response.status(200).send("Su idToken ya no es valido, por favor vuelva a autenticarse.");
         return;
-        // next?
     }
 
     // Si el idToken fue valido, hay que borrarlo y actualizarlo para que se reinicie su tiempo de vida.
@@ -45,13 +45,15 @@ async function authController(request, response) {
     if(!sessionTokenValido) {
         // Actualizar token.
         await refreshSessionToken(cookies['idToken'], request, response);
-        response.status(200).send("Su session token ha sido actualizado.");
+        //response.status(200).send("Su session token ha sido actualizado.");
+        next();
         return;
         // next?
     }
 
     // Ambos tokens aun siguen validos.
-    response.status(200).json(cookies);
+    next();
+    //response.status(200).json(cookies);
 }
 
 module.exports = authController;
