@@ -8,8 +8,6 @@ const conexionMDB = require('./conexionMDB');
 
 async function crearLista(nuevoNombre, userID) {
 
-    console.log(`Veo que quieres crear la lista: ${nuevoNombre} a partir del usuario con ID: ${userID} seguro?`);
-
     const nuevaListaID = generarID();
 
     const nuevaLista = {

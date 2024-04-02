@@ -3,7 +3,6 @@
     Recibe un userID para identificar un usuario y retorna su atributo "listas".
 */
 
-const objetoVacio = require('../../helpers/objetoVacio');
 const conexionMDB = require('./conexionMDB');
 
 async function obtenerListas(userID) {

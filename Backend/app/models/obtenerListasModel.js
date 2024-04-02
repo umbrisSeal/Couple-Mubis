@@ -1,6 +1,8 @@
 const obtenerListas = require("../services/database/obtenerListas");
+const obtenerNombreUsuario = require("../services/obtenerNombreUsuario");
 
 async function obtenerListasModel(userID) {
+    //console.log(await obtenerNombreUsuario(userID));
 
     let listas = {};
 
@@ -12,6 +14,18 @@ async function obtenerListasModel(userID) {
         listas.listas = [];
         return listas;
     }
+
+    listas.listas = listasArreglo.map((listaID) => {
+        const datosLista = {
+            id: listaID,
+            // Pausa: Ahora necesitamos un modulo para solicitar toda la informacion de las listas, seria bueno hacerlo fuera y hacer el .map con esa informacion.
+            // Un modulo que tome un arreglo de listaIDs y retorne la informacion.
+            // Obtener Resumen Listas.
+        }
+        return datosLista;
+    })
+
+    return listas;
 
     // Hacer un .map para recorrer cada una de las listas y obtener los nombres de usuarios y el resto de informacion de la lista.
 
