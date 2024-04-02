@@ -1,5 +1,7 @@
 
 const express = require('express');
+const obtenerListasController = require('../../controllers/obtenerListasController');
+const auth = require("../../auth/authenticar");
 const listas = express.Router();
 
 const sample = {
@@ -79,9 +81,7 @@ const datosSimulados2 = [
 */
 
 
-listas.get("/", (req, res) => {
-    res.status(200).json(sample);
-});
+listas.get("/", auth, obtenerListasController);
 
 
 module.exports = listas;
