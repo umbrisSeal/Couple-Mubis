@@ -4,7 +4,7 @@
 */
 
 const jwt = require('jsonwebtoken');
-const validarExpiracionToken = require('../helpers/validarExpiracionToken');
+const validarExpiracionToken = require('../validations/validarExpiracionToken');
 const consultaUsuario = require('../services/database/consultaUsuario');
 const objetoVacio = require('../helpers/objetoVacio');
 

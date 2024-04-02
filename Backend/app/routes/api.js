@@ -7,11 +7,13 @@ const hashearPassword = require('../helpers/hashearPassword');
 const cuenta = require('./cuenta');
 const auth = require('./auth');
 const usuario = require('./usuario');
+const lista = require('./lista');
 
 
 mainRouter.use("/cuenta", cuenta);
 mainRouter.use("/auth", auth);
 mainRouter.use("/usuario", usuario);
+mainRouter.use("/lista", lista);
 
 
 mainRouter.get("/", async (req, res) => {
