@@ -7,7 +7,7 @@ const authenticar = require('../auth/authenticar');
 
 
 auth.get("/", authenticar, (request, response) => {
-    response.status(200).send("Felicidades, si estas viendo esto es porque te autenticaste exitosamente!");
+    response.status(200).send("Usted esta autenticado.");
 });
 
 auth.post("/", iniciarSesionController);
