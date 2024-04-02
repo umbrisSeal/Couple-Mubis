@@ -1,12 +1,15 @@
 const obtenerUserIdToken = require("../helpers/obtenerUserIdToken");
+const obtenerListasModel = require("../models/obtenerListasModel");
 
 
-function obtenerListasController(request, response) {
+async function obtenerListasController(request, response) {
 
     const userID = obtenerUserIdToken(request.cookies['idToken']);
 
+    const listaJSON = await obtenerListasModel(userID);
 
-    response.status(200).json({userID: userID});
+
+    response.status(200).send(listaJSON);
 
 
 
