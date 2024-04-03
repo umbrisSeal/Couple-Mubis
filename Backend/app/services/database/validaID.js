@@ -4,7 +4,7 @@
 */
 
 function validaID(id, longitud) {
-    const regexID = /^[A-Z0-9]$/;
+    const regexID = /^[A-Z0-9]*$/;
 
     return regexID.test(id) && id.length === longitud;
 }

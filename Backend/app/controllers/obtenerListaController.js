@@ -6,8 +6,9 @@ const validaID = require("../services/database/validaID");
 async function obtenerListaController(request, response) {
 
     // Validar param. if not 418.
-    if(!validaID(request.params.listaID)) {
+    if(!validaID(request.params.listaID, 10)) {
         response.status(418).send("Error: El ID de la lista solicitada no es correcto.");
+        console.log(request.params.listaID);
         return;
     }
 

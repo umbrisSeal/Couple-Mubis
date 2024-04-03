@@ -1,8 +1,14 @@
+const obtenerLista = require("../services/database/obtenerLista");
+
 
 
 async function obtenerListaModel(listaID, userID) {
 
-    console.log("Tu parametro fue: ", listaID);
+    const lista = await obtenerLista(listaID);
+
+    console.log(lista);
+
+
 
 }
 
