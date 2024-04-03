@@ -1,6 +1,7 @@
 const obtenerUserIdToken = require("../helpers/obtenerUserIdToken");
 const obtenerListaModel = require("../models/obtenerListaModel");
 const validaID = require("../services/database/validaID");
+const obtenerListaView = require("../views/obtenerListaView");
 
 
 async function obtenerListaController(request, response) {
@@ -14,10 +15,14 @@ async function obtenerListaController(request, response) {
 
     const userID = obtenerUserIdToken(request.cookies['idToken']);
 
-    const respuesta = await obtenerListaModel(request.params.listaID, userID);
+    const respuesta = await obtenerListaModel(request.params.listaID);
 
+    if(!respuesta) {
+        response.status(400).send("La lista solicitada no existe.");
+        return;
+    };
 
-    response.send(`El parametro ingresado fue: ${userID}`);
+    await obtenerListaView(userID, respuesta, response);
 }
 
 module.exports = obtenerListaController;
