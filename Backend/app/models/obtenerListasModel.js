@@ -1,5 +1,15 @@
 const obtenerListas = require("../services/database/obtenerListas");
-const obtenerNombreUsuario = require("../services/obtenerNombreUsuario");
+const obtenerResumenListas = require("../services/database/obtenerResumenListas");
+const obtenerNombreUsuario = require('../services/database/obtenerNombreUsuario');
+
+const funcionMapAsync = async (arreglo) => {
+    const resultados = [];
+    for(const elemento of arreglo) {
+        const resultado = await obtenerNombreUsuario(elemento);
+        resultados.push(resultado);
+    }
+    return resultados;
+}
 
 async function obtenerListasModel(userID) {
     //console.log(await obtenerNombreUsuario(userID));
@@ -15,15 +25,32 @@ async function obtenerListasModel(userID) {
         return listas;
     }
 
-    listas.listas = listasArreglo.map((listaID) => {
+    const resumenListas = await obtenerResumenListas(listasArreglo);
+
+    listas.listas = resumenListas.map( (resumenLista) => {
         const datosLista = {
-            id: listaID,
-            // Pausa: Ahora necesitamos un modulo para solicitar toda la informacion de las listas, seria bueno hacerlo fuera y hacer el .map con esa informacion.
-            // Un modulo que tome un arreglo de listaIDs y retorne la informacion.
-            // Obtener Resumen Listas.
-        }
+            id: resumenLista.listaID,
+            nombre: resumenLista.nombre,
+            privada: resumenLista.esPrivada,
+            cantidadPeliculas: resumenLista.peliculas.length,
+            urlPosters: resumenLista.peliculas.length > 0 ? [/* Sustituir por un .map en resumenLista.peliculas */] : [],
+            editores: resumenLista.editores,
+        };
+
         return datosLista;
-    })
+    });
+
+    // Solucion al problema de no poder usar await en un .map
+    for(let i = 0; i < listas.cantidadListas; i++) {
+        await funcionMapAsync(listas.listas[i].editores)
+            .then(resultado => {
+                listas.listas[i].editores = resultado;
+            })
+        ;
+    };
+
+    console.log(listas);
+
 
     return listas;
 
@@ -46,7 +73,6 @@ async function obtenerListasModel(userID) {
         8. Consultar el nombre de cada userID, dependiendo de su privacidad.
         // Hacer una funcion para consultar nombres. Toma un arreglo de userIDs y retorna el nombre del usuario dado su nivel de privacidad.
     */
-
 
 }
 

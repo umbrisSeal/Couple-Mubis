@@ -3,8 +3,8 @@
     Recibe un userID y retorna el nombre del usuario dependiendo de sus preferencias de alias y privacidad.
 */
 
-const objetoVacio = require("../helpers/objetoVacio");
-const consultaUsuario = require("./database/consultaUsuario");
+const objetoVacio = require("../../helpers/objetoVacio");
+const consultaUsuario = require("./consultaUsuario");
 
 async function obtenerNombreUsuario(userID) {
 
