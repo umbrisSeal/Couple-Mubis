@@ -1,15 +1,83 @@
+const consultaUsuarios = require("../services/database/consultaUsuarios");
 const obtenerLista = require("../services/database/obtenerLista");
+const obtenerNombreUsuario = require("../services/database/obtenerNombreUsuario");
 
 
 
 async function obtenerListaModel(listaID, userID) {
 
-    const lista = await obtenerLista(listaID);
+    const datosLista = await obtenerLista(listaID);
+    const datosEditores = await consultaUsuarios(datosLista.editores);
+    const datosLectores = await consultaUsuarios(datosLista.lectores);
 
-    console.log(lista);
+    let lista = {};
+    lista.nombre = datosLista.nombre;
+
+    // Autoridad: si es dueño 3, si es editor 2, si es lector 1, si no aparece 0.
+    if(datosLista.dueño === userID) {
+        lista.autoridad = 3;
+    } else if(datosLista.editores.includes(userID)) {
+        lista.autoridad = 2;
+    } else if(datosLista.lectores.includes(userID)) {
+        lista.autoridad = 1;
+    } else {
+        lista.autoridad = 0;
+    }
+
+    lista.esPublica = !datosLista.esPrivada;
+
+    lista.peliculas = datosLista.peliculas;
+
+    /*
+    lista.editores = datosLista.editores.map(async (editorID) => {
+        return await obtenerNombreUsuario(editorID);
+    })
+    */
+
+    lista.editores = [];
+
+    
+
+    for(let i = 0; i < datosLista.editores.length; i++) {
+        const objetoEditor = {nombre: await obtenerNombreUsuario(datosLista.editores[i])};
+        //console.log("Objeto Editor: ", objetoEditor);
+        lista.editores.push(objetoEditor);
+    }
+
+    //console.log("Datos que leimos: ", datosLista);
+    //console.log("Datos que envias: ", lista);
 
 
 
 }
 
 module.exports = obtenerListaModel;
+
+/*
+return {
+    nombre: 'Para maratonear!!!',
+    autoridad: 3,
+    esPublica: true,
+    editores: [
+        {id: '12RFGTH', nombre: 'Mario Bros', imgPerfil: 'anonimo.png'},
+        {id: '1GT67LO', nombre: 'Michael Jackson', imgPerfil: 'anonimo.png'},
+        {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
+    ],
+    lectores: [
+        {id: 'EGGRGTA', nombre: 'Jose Jose', imgPerfil: 'anonimo.png'},
+        {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png'},
+    ],
+    peliculas: [
+        {id: 4312, vista: false, urlPoster: 'pmjiwwfT7kRJQ0ATi79upBmSOO9.jpg', titulo: 'Nosotros los Inocentes', año: 1200},
+        {id: 4321, vista: false, urlPoster: 'zaqam2RNscH5ooYFWInV6hjx6y5.jpg', titulo: 'luigi', año: 2000},
+        {id: 4321, vista: false, urlPoster: '3bhkrj58Vtu7enYsRolD1fZdja1.jpg', titulo: 'peach', año: 2012},
+        {id: 4321, vista: false, urlPoster: 'lgEXNBnFsq8oTck1C2giSvnTjzz.jpg', titulo: 'bowser', año: 2011},
+        {id: 4321, vista: true, urlPoster: 'vSzOobYVu16MogSALNg1bjTaGc.jpg', titulo: 'monkey', año: 2009},
+        {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+        {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+        {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+        {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+        {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
+    ],
+}
+*/
