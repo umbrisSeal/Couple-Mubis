@@ -26,6 +26,10 @@ async function obtenerListasModel(userID) {
     }
 
     const resumenListas = await obtenerResumenListas(listasArreglo);
+    console.log("Resumen Listas: ", resumenListas);
+
+    // {id: 4321, vista: false, urlPoster: 'lgEXNBnFsq8oTck1C2giSvnTjzz.jpg', titulo: 'bowser', año: 2011},
+    // Agregar una pelicula a una lista para confirmar si esta bien.
 
     listas.listas = resumenListas.map( (resumenLista) => {
         const datosLista = {
@@ -33,7 +37,7 @@ async function obtenerListasModel(userID) {
             nombre: resumenLista.nombre,
             privada: resumenLista.esPrivada,
             cantidadPeliculas: resumenLista.peliculas.length,
-            urlPosters: resumenLista.peliculas.length > 0 ? [/* Sustituir por un .map en resumenLista.peliculas */] : [],
+            urlPosters: resumenLista.peliculas.length > 0 ? resumenLista.peliculas.map((pelicula) => pelicula.urlPoster) : [],
             editores: resumenLista.editores,
         };
 

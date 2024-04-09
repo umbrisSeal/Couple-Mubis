@@ -8,12 +8,14 @@ const cuenta = require('./cuenta');
 const auth = require('./auth');
 const usuario = require('./usuario');
 const lista = require('./lista');
+const pelicula = require('./pelicula');
 
 
 mainRouter.use("/cuenta", cuenta);
 mainRouter.use("/auth", auth);
 mainRouter.use("/usuario", usuario);
 mainRouter.use("/lista", lista);
+mainRouter.use("/pelicula", pelicula);
 
 
 mainRouter.get("/", async (req, res) => {
