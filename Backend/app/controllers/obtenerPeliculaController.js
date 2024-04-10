@@ -1,6 +1,7 @@
 const obtenerPeliculaModel = require("../models/obtenerPeliculaModel");
 const validarPeliculaId = require("../validations/validarPeliculaId");
 const verificaKeys = require("../validations/verificaKeys");
+const obtenerPeliculaView = require("../views/obtenerPeliculaView");
 
 
 async function obtenerPeliculaController(request, response) {
@@ -18,14 +19,16 @@ async function obtenerPeliculaController(request, response) {
         return;
     }
 
-    const resultado = await obtenerPeliculaModel(peliculaID);
+    const resultado = await obtenerPeliculaModel(parseInt(peliculaID));
 
-    // Mandar a solicitar los datos de la pelicula a la API. (Por medio del Modelo.)
+    if(!resultado) {
+        response.status(400).send("No se encontro la pelicula solicitada.");
+        return;
+    }
 
+    request.resultado = resultado;
 
-    // Mandar a llamar la api en otra funcion.
-
-    response.send("Ya esta");
+    obtenerPeliculaView(request, response);
 }
 
 
