@@ -1,6 +1,7 @@
 const agregarPeliculaModel = require("../models/agregarPeliculaModel");
 const validarPeliculaId = require("../validations/validarPeliculaId");
 const verificaKeys = require("../validations/verificaKeys");
+const agregarPeliculaView = require("../views/agregarPeliculaView");
 
 
 async function agregarPeliculaController(request, response) {
@@ -17,13 +18,11 @@ async function agregarPeliculaController(request, response) {
         return;
     }
 
-    const resultado = await agregarPeliculaModel(request, response);
+    await agregarPeliculaModel(request, response);
+    agregarPeliculaView(request, response);
 
-    // Proceder a solicitar la informacion de la API, nuestra base de datos y registrarla.
 
-    //response.send(response.body);
-
-    //response.send(request.body);
+    return;
 }
 
 module.exports = agregarPeliculaController;

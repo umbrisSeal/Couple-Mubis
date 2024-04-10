@@ -10,13 +10,6 @@ async function obtenerListasController(request, response) {
 
 
     response.status(200).send(listaJSON);
-
-
-
-    //response.send("Todo bien");
-    // Extraer idToken, extraer userID.
-    // Mandar a llamar el modelo pasando el user ID.
-    // El view se encarga de armar el JSON con los datos.
 }
 
 module.exports = obtenerListasController;
