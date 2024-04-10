@@ -1,22 +1,42 @@
+const actualizarColaboradores = require("../services/database/actualizarColaboradores");
+const obtenerLista = require("../services/database/obtenerLista");
 
-const express = require('express');
-const lista = express.Router();
+async function editarEditoresModel(request) {
 
-const auth = require('../auth/authenticar');
-const crearListaController = require('../controllers/crearListaController');
-const obtenerListaController = require('../controllers/obtenerListaController');
-const editarEditoresController = require('../controllers/editarEditoresController');
+    const userID = request.userID;
+    const {listaID, nuevosEditores, nuevosLectores} = request.body;
+    
+    const datosLista = await obtenerLista(listaID);
 
+    if(datosLista.dueño !== userID) return false;
 
-lista.get("/:listaID", auth, obtenerListaController);
-lista.post("/", auth, crearListaController);
-lista.put("/", auth, editarEditoresController);
+    const usuariosRepetidos = nuevosEditores.filter((nuevoEditor) => {
+        return nuevosLectores.includes(nuevoEditor);
+    });
+    if(usuariosRepetidos.length > 0) return false;  // Hay al menos 1 usuario que sera editor y lector al mismo tiempo.
 
+    // Generar lista de editores a agregar y eliminar.
+    const agregarEditores = nuevosEditores.filter((nuevoEditor) => {
+        return !datosLista.editores.includes(nuevoEditor);
+    });
+    const agregarLectores = nuevosLectores.filter((nuevoLector) => {
+        return !datosLista.lectores.includes(nuevoLector);
+    });
+    const borrarEditores = datosLista.editores.filter((editorActual) => {
+        return !nuevosEditores.includes(editorActual);
+    });
+    const borrarLectores = datosLista.lectores.filter((lectorActual) => {
+        return !nuevosLectores.includes(lectorActual);
+    });
 
+    const configuracionColaboradores = {listaID, agregarEditores, agregarLectores, borrarEditores, borrarLectores};
 
+    request.resultado = await actualizarColaboradores(configuracionColaboradores);
 
+    return;
+}
 
-module.exports = lista;
+module.exports = editarEditoresModel;
 
 /*
  Formato en el que viene la informacion de la lista en el body del request.
