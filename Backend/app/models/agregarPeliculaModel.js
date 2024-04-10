@@ -2,6 +2,7 @@ const obtenerUserIdToken = require("../helpers/obtenerUserIdToken");
 const solicitarPelicula = require("../services/api/solicitarPelicula");
 const agregarPelicula = require("../services/database/agregarPelicula");
 const obtenerLista = require("../services/database/obtenerLista");
+const agregarPeliculaView = require("../views/agregarPeliculaView");
 
 async function agregarPeliculaModel(request, response) {
 
@@ -28,10 +29,11 @@ async function agregarPeliculaModel(request, response) {
 
         const resultado = await agregarPelicula(listaID, datosPelicula.data);
 
-        response.send(resultado);
+        request.resultado = resultado;
+
+        agregarPeliculaView(request, response);
         return;
-
-
+        
     } else {
         response.status(401).send("El usuario no tiene los permisos para editar la lista.");
         return;

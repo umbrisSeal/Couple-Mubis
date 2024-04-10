@@ -29,6 +29,7 @@ async function obtenerPeliculaController(request, response) {
     request.resultado = resultado;
 
     obtenerPeliculaView(request, response);
+    return;
 }
 
 
