@@ -1,7 +1,6 @@
 const express = require('express');
 const mainRouter = express.Router();
 
-const generarID = require('../helpers/generarID');
 const hashearPassword = require('../helpers/hashearPassword');
 
 const cuenta = require('./cuenta');
@@ -9,6 +8,7 @@ const auth = require('./auth');
 const usuario = require('./usuario');
 const lista = require('./lista');
 const pelicula = require('./pelicula');
+const buscar = require('./buscar');
 
 
 mainRouter.use("/cuenta", cuenta);
@@ -16,6 +16,7 @@ mainRouter.use("/auth", auth);
 mainRouter.use("/usuario", usuario);
 mainRouter.use("/lista", lista);
 mainRouter.use("/pelicula", pelicula);
+mainRouter.use("/buscar", buscar);
 
 
 mainRouter.get("/", async (req, res) => {
