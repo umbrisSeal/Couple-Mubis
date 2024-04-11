@@ -6,11 +6,13 @@ const auth = require('../auth/authenticar');
 const crearListaController = require('../controllers/crearListaController');
 const obtenerListaController = require('../controllers/obtenerListaController');
 const editarEditoresController = require('../controllers/editarEditoresController');
+const borrarListaController = require('../controllers/borrarListaController');
 
 
 lista.get("/:listaID", auth, obtenerListaController);
 lista.post("/", auth, crearListaController);
 lista.put("/", auth, editarEditoresController);
+lista.delete("/", auth, borrarListaController);
 
 
 
