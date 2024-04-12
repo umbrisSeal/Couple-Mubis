@@ -1,4 +1,4 @@
-import { createBrowserRouter, createRoutesFromElements, redirect, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, redirect, RouterProvider} from 'react-router-dom';
 import { Route, Link, NavLink } from 'react-router-dom';
 
 import LandingPage from './pages/LandingPage';
@@ -8,6 +8,9 @@ import Home from './pages/Home';
 import VerPelicula from './pages/VerPelicula';
 import Perfil from './pages/Perfil';
 import VerLista from './pages/VerLista';
+
+import DIRECCIONES from './assets/js/diccionarioURLs';
+
 
 const datosSimulados = {
     nombre: 'Mac Giver',
@@ -91,9 +94,30 @@ function App() {
 
     }
 
+    async function authLoader() {
+        const configuracionSolicitud = {
+            method: 'GET',
+            credentials: 'include', // Incluir cookies.
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND_TEST}`
+            }
+        };
+        
+        const auth = await fetch(`${DIRECCIONES.BACKEND_TEST}/api/${DIRECCIONES.AUTH}`, configuracionSolicitud)
+            .then(response => response.ok)
+            .catch(error => {
+                console.log("Wow, algo salio mal.");
+                console.log(error);
+                return false;
+            })
+        ;
+
+        return auth ? redirect('/home') : null;
+    }
+
 
     const router = createBrowserRouter(createRoutesFromElements([
-        <Route path='/' element={<LandingPage />} />,
+        <Route path='/' element={<LandingPage />} loader={async () => await authLoader()} />,
         <Route path='/login' element={<Login />} />,
         <Route path='/registro-temporal' element={<Login version='registro' />} />,
         <Route path='/registro' element={<Login version='vincular' />} />,
