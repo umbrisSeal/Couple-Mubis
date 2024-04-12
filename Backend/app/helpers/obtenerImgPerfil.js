@@ -21,10 +21,10 @@ const imagenesPerfil = {
     15: 'marmota.jpg',
 }
 
-function obtenerImgPerfil(imgPerfilInt) {
-    if(imgPerfilInt < 0 || imgPerfilInt > 15) return imagenesPerfil[1];
+function obtenerImgPerfil(imgPerfilID) {
+    if(imgPerfilID < 0 || imgPerfilID > 15) return imagenesPerfil[1];
 
-    return imagenesPerfil[imgPerfilInt];
+    return imagenesPerfil[imgPerfilID];
 }
 
 module.exports = obtenerImgPerfil;
