@@ -94,7 +94,7 @@ function App() {
 
     }
 
-    async function authLoader() {
+    async function landingPageLoader() {
         const configuracionSolicitud = {
             method: 'GET',
             credentials: 'include', // Incluir cookies.
@@ -102,7 +102,7 @@ function App() {
                 'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND_TEST}`
             }
         };
-        
+
         const auth = await fetch(`${DIRECCIONES.BACKEND_TEST}/api/${DIRECCIONES.AUTH}`, configuracionSolicitud)
             .then(response => response.ok)
             .catch(error => {
@@ -115,13 +115,48 @@ function App() {
         return auth ? redirect('/home') : null;
     }
 
+    async function homeLoader() {
+
+        /*
+            Todo el async-await no es necesario, se puede invocar la funcion regular en el loader. Sin embargo, no podra usar array destructuring para el Promise.all y tendra que retornar el Promise directamente... aunque no estoy seguro si se esta esperando a tener una respuesta ANTES de renderizar el componente. De cualquier caso, la respuesta SI llega al componente. Usando el await si garantiza que el componente no se renderize hasta que se complete este promise.
+        */
+
+        // Verifica que aun este autenticado el usuario, si no, mandalo a reautenticar.
+
+        const [ peliculasRecomendadas, listasUsuario ] = await Promise.all(
+            [
+                fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+                    }
+                }).then(response => response.json()).then(data => data).catch(error => []),
+
+                fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+                    }
+                }).then(response => console.log(response.text())),
+            ]
+        )
+        .then((responses) => responses);
+
+        return {
+            peliculasRecomendadas,
+            listasUsuario
+        };
+    }
+
 
     const router = createBrowserRouter(createRoutesFromElements([
-        <Route path='/' element={<LandingPage />} loader={async () => await authLoader()} />,
+        <Route path='/' element={<LandingPage />} loader={async () => await landingPageLoader()} />,
         <Route path='/login' element={<Login />} />,
         <Route path='/registro-temporal' element={<Login version='registro' />} />,
         <Route path='/registro' element={<Login version='vincular' />} />,
-        <Route path='/home' element={<Home />} />, /* agregar loader para authenticar usuario y sesion. */
+        <Route path='/home' element={<Home />} loader={async () => await homeLoader()} />, /* agregar loader para authenticar usuario y sesion. */
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} />,
         <Route path='/pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
         <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => solicitarDatosUsuario(params.perfilId)} />,

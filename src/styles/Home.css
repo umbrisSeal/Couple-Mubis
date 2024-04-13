@@ -36,6 +36,7 @@
 
 .conjunto-recomendados {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 
     /* Ocultar elementos overflow, solo mostrar 1 linea de maximo 8 recomendaciones. */

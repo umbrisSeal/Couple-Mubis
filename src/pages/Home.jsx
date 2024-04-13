@@ -4,9 +4,11 @@ import Header from '../components/Header';
 import Boton from '../components/Boton';
 import Lista from '../components/Lista';
 import Pelicula from '../components/Pelicula';
+import { useLoaderData } from 'react-router-dom';
 
 
 function Home() {
+    const { peliculasRecomendadas } = useLoaderData();
 
     const datosSimulados = {
         cantidadListas: 5,
@@ -62,12 +64,6 @@ function Home() {
         ]
     }
 
-    const datosSimulados2 = [
-        {id: 671, titulo: 'Harry Potter and the Philosopher\'s Stone', año: 2013, urlPoster: 'wuMc08IPKEatf9rnMNXvIDxqP4W.jpg'},
-        {id: 505832, titulo: "My Little Pony: Equestria Girls", año: 2012, urlPoster: 'dY7pdaPfbTnJnfnZBjRFprgRuUn.jpg'}
-    ]
-
-
     return (
         <Fragment>
             <Header version='home' />
@@ -93,7 +89,7 @@ function Home() {
                         <Boton version='verMas' />
                     </div>
                     <div className='conjunto-recomendados'>
-                        {datosSimulados2.map((pelicula, index) => {
+                        {peliculasRecomendadas.map((pelicula, index) => {
                             return <Pelicula version='recomendada' pelicula={pelicula} key={pelicula + index} />
                         } )}
                     </div>
