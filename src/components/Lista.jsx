@@ -38,7 +38,7 @@ function Lista({lista}) {
             if(editoresRestantes > 0) {
                 return `${stringEditores} y ${editoresRestantes} mas.`;
             } else {
-                return editoresRestantes;
+                return stringEditores;
             }
         } else {
             return 'Solo tu.'

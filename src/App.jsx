@@ -124,7 +124,7 @@ function App() {
 
         console.log("INICIA SOLICITUD");
 
-        const [ peliculasRecomendadas ] = await Promise.all(
+        const [ peliculasRecomendadas, listasUsuario ] = await Promise.all(
             [
                 fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
                     method: 'GET',
@@ -133,39 +133,24 @@ function App() {
                         'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
                     }
                 }).then(response => response.json()).then(data => data).catch(error => []),
-                /*
+
                 fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
                     method: 'GET',
                     credentials: 'include',
                     headers: {
                         'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
                     }
-                }).then(response => console.log(response.text())),
-                */
+                }).then(response => response.json()).then(data => data).catch(error => {}),
             ]
         )
         .then((responses) => responses);
 
-        console.log("Primera respuesta: ", peliculasRecomendadas);
-
-        console.log("Iniciando segunda solicitud:");
-
-        const peliculas2 = await fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
-            }
-        }).then(response => response.json()).then(data => data).catch(error => [])
-
-        console.log("Terminado operacion2");
-        console.log(peliculas2);
-
+        console.log(listasUsuario);
 
 
         return {
             peliculasRecomendadas,
-            //listasUsuario
+            listasUsuario
         };
     }
 
