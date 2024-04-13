@@ -10,7 +10,7 @@ function obtenerPeliculaView(request, response) {
         sinopsis: datos.overview,
         popularidad: datos.popularity,
         año: obtenerAñoPelicula(datos.release_date),
-        clasificacion: datos.vote_average,
+        calificacion: datos.vote_average,
         urlPoster: datos.poster_path
     };
 

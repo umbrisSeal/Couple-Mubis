@@ -64,7 +64,6 @@ function App() {
 
     const solicitarDatosLista = (listaId = 0) => {
 
-
         return {
             nombre: 'Para maratonear!!!',
             autoridad: 3,
@@ -122,8 +121,6 @@ function App() {
 
         // Verifica que aun este autenticado el usuario, si no, mandalo a reautenticar.
 
-        console.log("INICIA SOLICITUD");
-
         const [ peliculasRecomendadas, listasUsuario ] = await Promise.all(
             [
                 fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
@@ -145,13 +142,26 @@ function App() {
         )
         .then((responses) => responses);
 
-        console.log(listasUsuario);
-
 
         return {
             peliculasRecomendadas,
             listasUsuario
         };
+    }
+
+    const peliculaLoader = async (peliculaID) => {
+        // Solicitar datos de la pelicula.
+        // http://localhost:3000/api/pelicula/:peliculaID
+
+        const datosPelicula = await fetch(`${DIRECCIONES.BACKEND}/api/pelicula/${peliculaID}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+            }
+        }).then(response => response.ok ? response.json() : {}).then(data => data).catch(error => {});
+
+        return datosPelicula;
     }
 
 
@@ -161,7 +171,7 @@ function App() {
         <Route path='/registro-temporal' element={<Login version='registro' />} />,
         <Route path='/registro' element={<Login version='vincular' />} />,
         <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />, /* agregar loader para authenticar usuario y sesion. */
-        <Route path='/pelicula/:peliculaId' element={<VerPelicula />} />,
+        <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} />,
         <Route path='/pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
         <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => solicitarDatosUsuario(params.perfilId)} />,
         <Route path='/perfil' loader={() => redirect('/configuracion')} />,

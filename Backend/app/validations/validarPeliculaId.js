@@ -8,7 +8,7 @@ function validarPeliculaId(peliculaID) {
     if(parseInt(peliculaID) === NaN) return false;
 
     const id = parseInt(peliculaID);
-    if(id > 1000000 || id < 0) return false;
+    if(id > 10000000 || id < 0) return false;
 
     return true;
 }
