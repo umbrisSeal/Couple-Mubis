@@ -123,7 +123,7 @@ function App() {
 
         // Verifica que aun este autenticado el usuario, si no, mandalo a reautenticar.
 
-        const [ peliculasRecomendadas, listasUsuario ] = await Promise.all(
+        const [ peliculasRecomendadas ] = await Promise.all(
             [
                 fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
                     method: 'GET',
@@ -133,6 +133,7 @@ function App() {
                     }
                 }).then(response => response.json()).then(data => data).catch(error => []),
 
+                /*
                 fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
                     method: 'GET',
                     credentials: 'include',
@@ -140,13 +141,14 @@ function App() {
                         'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
                     }
                 }).then(response => console.log(response.text())),
+                */
             ]
         )
         .then((responses) => responses);
 
         return {
             peliculasRecomendadas,
-            listasUsuario
+            //listasUsuario
         };
     }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../styles/Login.css'
 import Boton from '../components/Boton';
 import { Link } from 'react-router-dom';
+import hashearPassword from '../assets/js/hashearPassword';
 
 function Login(props) {
     const [user, setUser] = useState('');
@@ -101,12 +102,13 @@ function Login(props) {
 
     async function solicitudRegistro() {
         // Tener una state variable para saber como actuar.
+
         const requestBody = {
             clave: clave,
             email: user,
             usuario: 'Sin Nombre',
-            password: password,
-            passwordRepetido: passwordConfirmar,
+            password: await hashearPassword(password),
+            passwordRepetido: await hashearPassword(passwordConfirmar),
         }
 
         console.log(requestBody);
@@ -128,13 +130,12 @@ function Login(props) {
     const handlePasswordConfirmarChange = (event) => setPasswordConfirmar(event.target.value);
     const handleClaveChange = (event) => setClave(event.target.value);
 
-    const submitForm = (event) => {
+    const submitForm = async (event) => {
         event.preventDefault();
         validarDatos();
-        if(errorState === ESTADO_ERROR.NONE && validarDatos()) {
+        if(errorState === ESTADO_ERROR.NONE && !validarDatos()) {
             // Realizar la solicitud HTTP.
             if(props?.version === 'registro') solicitudRegistro();
-            console.log("Datos aceptados!");
         } else {
             return;
         }

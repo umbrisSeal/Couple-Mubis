@@ -18,14 +18,14 @@ async function hashearPassword(passwordOriginal) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
 
     const passwordHash = hashArray.map( (bite) => {
-        bite.toString(16).padStart(2, '0');
+        return bite.toString(16).padStart(2, '0');
     }).join('');
 
 
     return passwordHash;
 }
 
-module.exports = hashearPassword;
+export default hashearPassword;
 
 /*
     Se debe de usar como un promise. (async-await)
