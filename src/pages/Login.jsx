@@ -76,20 +76,52 @@ function Login(props) {
        const contieneNumeroRegex = /\d/;
        const contieneCaracterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
+       let error = true;
+
        if(version != 'vincular') {
             if(user == '' || password == '') return setErrorState(ESTADO_ERROR.CAMPOS_VACIOS);
             if(user.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_USUARIO);
             if(password.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_PASSWORD);
             if(!emailRegex.test(user)) return setErrorState(ESTADO_ERROR.CORREO);
             if(!emailValidoRegex.test(user)) return setErrorState(ESTADO_ERROR.DOMINIO_CORREO);
+            error = false;
        }
        if(version === 'registro') {
             if(password.length < 6) return setErrorState(ESTADO_ERROR.PASSWORD_PEQUEÑO);
             if(!contieneNumeroRegex.test(password)) return setErrorState(ESTADO_ERROR.PASSWORD_NUMERO);
             if(!contieneCaracterRegex.test(password)) return setErrorState(ESTADO_ERROR.PASSWORD_CARACTER);
             if(password != passwordConfirmar) return setErrorState(ESTADO_ERROR.PASSWORD_DIFERENTE);
+            error = false;
         }
+
+        return error;
     }
+
+    // Solicitudes HTTP:
+
+    async function solicitudRegistro() {
+        // Tener una state variable para saber como actuar.
+        const requestBody = {
+            clave: clave,
+            email: user,
+            usuario: 'Sin Nombre',
+            password: password,
+            passwordRepetido: passwordConfirmar,
+        }
+
+        console.log(requestBody);
+
+    }
+
+    /*
+    {
+    "clave": "RUD40S",
+    "email": "purebatacos@gmail.com",
+    "usuario": "El Tquero Loco",
+    "password": "Password-hash1",
+    "passwordRepetido": "Password-hash1"
+    }
+    */
 
     const handleUserChange = (event) => setUser(event.target.value);
     const handlePasswordChange = (event) => setPassword(event.target.value);
@@ -99,8 +131,10 @@ function Login(props) {
     const submitForm = (event) => {
         event.preventDefault();
         validarDatos();
-        if(errorState === ESTADO_ERROR.NONE) {
+        if(errorState === ESTADO_ERROR.NONE && validarDatos()) {
             // Realizar la solicitud HTTP.
+            if(props?.version === 'registro') solicitudRegistro();
+            console.log("Datos aceptados!");
         } else {
             return;
         }
