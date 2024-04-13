@@ -10,7 +10,7 @@ import { useLoaderData } from 'react-router-dom';
 function Home() {
     const { peliculasRecomendadas } = useLoaderData();
 
-    const datosSimulados = {
+    const listasUsuario = {
         cantidadListas: 5,
         listas: [
             {
@@ -74,10 +74,10 @@ function Home() {
                         <Boton version='agregarLista' />
                     </div>
                     <div className='conjunto-listas'>
-                        {datosSimulados.listas.length == 0 ?
+                        {listasUsuario.listas.length == 0 ?
                             <p> ¡Aun no has creado ninguna lista! </p>
                             :
-                            datosSimulados.listas.map((lista, index) => {
+                            listasUsuario.listas.map((lista, index) => {
                                 return <Lista key={index + lista.nombre} lista={lista} />
                             })
                         }

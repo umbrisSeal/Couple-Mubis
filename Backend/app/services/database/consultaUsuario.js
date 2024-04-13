@@ -34,7 +34,6 @@ async function consultaUsuario(referenciaUsuario) {
         resultado = null;
     }
 
-    conexionMDB.desconectar();
     return resultado === null ? {} : resultado;
 }
 

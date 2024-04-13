@@ -102,7 +102,6 @@ function App() {
                 'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND_TEST}`
             }
         };
-
         const auth = await fetch(`${DIRECCIONES.BACKEND_TEST}/api/${DIRECCIONES.AUTH}`, configuracionSolicitud)
             .then(response => response.ok)
             .catch(error => {
@@ -112,9 +111,7 @@ function App() {
             })
         ;
 
-        //return auth ? redirect('/home') : null;
-        console.log("Autenticado? ", auth);
-        return 0;
+        return auth ? redirect('/home') : null;
     }
 
     async function homeLoader() {
@@ -125,7 +122,9 @@ function App() {
 
         // Verifica que aun este autenticado el usuario, si no, mandalo a reautenticar.
 
-        const [ peliculasRecomendadas, listasUsuario ] = await Promise.all(
+        console.log("INICIA SOLICITUD");
+
+        const [ peliculasRecomendadas ] = await Promise.all(
             [
                 fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
                     method: 'GET',
@@ -134,7 +133,7 @@ function App() {
                         'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
                     }
                 }).then(response => response.json()).then(data => data).catch(error => []),
-
+                /*
                 fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
                     method: 'GET',
                     credentials: 'include',
@@ -142,13 +141,31 @@ function App() {
                         'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
                     }
                 }).then(response => console.log(response.text())),
+                */
             ]
         )
         .then((responses) => responses);
 
+        console.log("Primera respuesta: ", peliculasRecomendadas);
+
+        console.log("Iniciando segunda solicitud:");
+
+        const peliculas2 = await fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+            }
+        }).then(response => response.json()).then(data => data).catch(error => [])
+
+        console.log("Terminado operacion2");
+        console.log(peliculas2);
+
+
+
         return {
             peliculasRecomendadas,
-            listasUsuario
+            //listasUsuario
         };
     }
 
@@ -158,7 +175,7 @@ function App() {
         <Route path='/login' element={<Login />} />,
         <Route path='/registro-temporal' element={<Login version='registro' />} />,
         <Route path='/registro' element={<Login version='vincular' />} />,
-        <Route path='/home' element={<Home />} />, /* agregar loader para authenticar usuario y sesion. */
+        <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />, /* agregar loader para authenticar usuario y sesion. */
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} />,
         <Route path='/pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
         <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => solicitarDatosUsuario(params.perfilId)} />,
