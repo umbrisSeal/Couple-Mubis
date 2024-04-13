@@ -25,7 +25,6 @@ async function obtenerListasModel(userID) {
     }
 
     const resumenListas = await obtenerResumenListas(listasArreglo);
-    console.log("Resumen Listas: ", resumenListas);
 
     listas.listas = resumenListas.map( (resumenLista) => {
         const datosLista = {

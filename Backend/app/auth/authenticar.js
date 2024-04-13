@@ -2,12 +2,13 @@ const validarIdToken = require("./validarIdToken");
 const validarSessionToken = require("./validarSessionToken");
 const refreshSessionToken = require("../helpers/refreshSessionToken");
 const refreshIdToken = require("../helpers/refreshIdToken");
+const verificaKeys = require("../validations/verificaKeys");
 
 async function authController(request, response, next) {
 
     const cookies = request.cookies;
 
-    if(!cookies['idToken', 'sessionToken']) {
+    if(!verificaKeys(cookies, ['idToken', 'sessionToken'])) {
         response.status(401).send("No tiene sus 2 tokens, por favor de authenticarse.");
         return;
     }
