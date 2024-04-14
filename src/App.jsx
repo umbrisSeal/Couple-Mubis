@@ -62,6 +62,21 @@ function App() {
         }
     }
 
+    const verListaLoader = async (listaID) => {
+        // Solicitud para datos lista.
+        // http://localhost:3000/api/lista/:listaID
+
+        const datosLista = await fetch(`${DIRECCIONES.BACKEND}/api/lista/${listaID}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND_TEST}`
+            }
+        }).then(response => response.ok ? response.json() : {}).then(data => data).catch(error => {});
+
+        return datosLista;
+    }
+
     const solicitarDatosLista = (listaId = 0) => {
 
         return {
@@ -178,7 +193,7 @@ function App() {
         <Route path='/perfil' loader={() => redirect('/configuracion')} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
         <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => solicitarDatosUsuario()} />,
-        <Route path='/lista/:listaId' element={<VerLista />} loader={({params}) => solicitarDatosLista(params.listaId)} />,
+        <Route path='/lista/:listaId' element={<VerLista />} loader={async ({params}) => await verListaLoader(params.listaId)} />,
         <Route path='/lista' loader={() => redirect('/home')} />,
 
         <Route path='*' element={<ErrorPage />} />

@@ -11,6 +11,7 @@ function Header(props) {
     const [busqueda, setBusqueda] = useState('');
     const [mostrarPerfil, setMostrarPerfil] = useState(false);
     const [informacionUsuario, setInformacionUsuario] = useState({});
+    const [resultadosBusqueda, setResultadosBusqueda] = useState({});
     const perfilRef = useRef(null);
     const navigate = useNavigate();
 
@@ -53,16 +54,41 @@ function Header(props) {
     }, [mostrarPerfil])
 
     const handleBusquedaChange = (event) => setBusqueda(event.target.value);
+    const handleBusquedaEnter = (event) => {if(event.key === 'Enter') buscarPeliculas();};
 
     const regresar = () => {
         navigate(-1);   // Sustituto del history.goBack().
     }
 
 
-    const buscarPeliculas = function() {
+    const buscarPeliculas = async () => {
         // Solicitud HTTP para solicitar peliculas.
-        return;
+        if(busqueda.length === 0) return;
+
+        const requestBody = {
+            parametroBusqueda: busqueda
+        };
+
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            const resultadosBusqueda = await fetch(`${DIRECCIONES.BACKEND}/api/buscar`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody),
+            }).then(response => response.ok ? response.json() : {}).then(data => data).catch(error => {});
+    
+            setResultadosBusqueda(resultadosBusqueda);
+
+        } catch {
+            return;
+        }
+
     }
+
     const handleMostrarPerfilChange = function() {
         // Cambiar variable de estado para mostrar perfil mini.
         setMostrarPerfil(!mostrarPerfil);
@@ -107,11 +133,11 @@ function Header(props) {
                         <img src='../src/assets/images/iconos/buscar.png' className='icono-buscar'/>
                     </button>
                     <div className='contenedor-busqueda'>
-                        <input type='text' id='inputBusqueda' name='inputBusqueda' maxLength={80} value={busqueda} onChange={handleBusquedaChange} placeholder='Buscar pelicula...' className='campo-busqueda'></input>
+                        <input type='text' id='inputBusqueda' name='inputBusqueda' maxLength={80} value={busqueda} onChange={handleBusquedaChange} placeholder='Buscar pelicula...' className='campo-busqueda' onKeyUp={handleBusquedaEnter}></input>
                         <div className='resultados-busqueda'>
                             <ul id='lista-busqueda'>
-                                {datosSimulados.resultados > 0 ? 
-                                datosSimulados.peliculas.map((pelicula, index) => {
+                                {resultadosBusqueda.resultados > 0 ? 
+                                resultadosBusqueda.peliculas.map((pelicula, index) => {
                                     return (
                                         <li key={pelicula.id}>
                                             <Link to={`/pelicula/${pelicula.id}`} className='link-busqueda'>
