@@ -60,10 +60,16 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     const handleNombreListaNueva = (event) => setNombreNuevaLista(event.target.value);
     const handleBotonAgregarUsuarios = () => setMostrarAgregarUsuarios(!mostrarAgregarUsuarios);
 
-    const handleAceptar = () => {
+    const handleAceptar = async () => {
         if(version == 'agregarLista' && !validarInput(nombreNuevaLista)) {
             setMostrarError(true);
             return;
+        }
+
+        // Funcionalidades.
+        if(version === 'agregarLista' && validarInput(nombreNuevaLista)) {
+            await handleBotonAceptar(nombreNuevaLista);
+            handleBotonCancelar();
         }
 
         handleBotonAceptar(indexPelicula);

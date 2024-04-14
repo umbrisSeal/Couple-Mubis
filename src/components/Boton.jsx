@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import '../styles/Boton.css';
 import VentanaEmergente from './VentanaEmergente';
 import { useNavigate } from 'react-router-dom';
+import DIRECCIONES from '../assets/js/diccionarioURLs';
 
 
 function Boton(props) {
@@ -35,6 +36,25 @@ function Boton(props) {
         }
     }
 
+    // Solicitudes HTTP:
+    const crearNuevaLista = async (nuevaListaNombre) => {
+        const requestBody = {nuevoNombre: nuevaListaNombre};
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/lista`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => false);
+        } catch {}
+
+        handleVentanaEmergente();
+        window.location.reload();
+    }
 
     const versionBoton = {
         loginTransparente: <button type='button' className='boton bordeado-amarillo'> Login </button>,
@@ -50,7 +70,7 @@ function Boton(props) {
                     </div>
                 </button>
                 {mostrarVentana ?
-                    <VentanaEmergente handleBotonCancelar={handleVentanaEmergente} version='agregarLista' handleBotonAceptar={handleVentanaEmergente} />
+                    <VentanaEmergente handleBotonCancelar={handleVentanaEmergente} version='agregarLista' handleBotonAceptar={crearNuevaLista} />
                 : <></>}
             </Fragment>,
         verMas:
