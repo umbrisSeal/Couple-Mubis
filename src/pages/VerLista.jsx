@@ -1,17 +1,19 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import '../styles/VerLista.css'
 import { obtenerNombres } from '../assets/js/obtenerNombres';
-import { useLoaderData, useNavigate } from 'react-router-dom'
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/Header';
 import Boton from '../components/Boton';
 import Pelicula from '../components/Pelicula';
 import { copiarObjeto } from '../assets/js/copiarObjeto';
+import DIRECCIONES from '../assets/js/diccionarioURLs';
 
 function VerLista() {
     const datosLista = useLoaderData();
     const [peliculas, setPeliculas] = useState(datosLista.peliculas || []);
     const navegador = useNavigate();
     const [lista, setLista] = useState(useLoaderData());
+    const parametrosURL = useParams();
     // Generar un state para datosLista para actualizarlos cuando sea necesario sin recargar la pagina.
 
     useEffect(() => {
@@ -31,10 +33,26 @@ function VerLista() {
         setPeliculas(peliculasActualizadas);
     }
 
-    const handleBorrarLista = () => {
+    const handleBorrarLista = async () => {
         // Mandar la solicitud HTTP para borrar la lista.
         // Una vez terminado, redireccionar al usuario a home.
-        navegador('/home');
+        try {
+            const listaID = parametrosURL.listaId;
+            const requestBody = {listaID};
+            const jsonBody = JSON.stringify(requestBody);
+
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/lista`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => error);
+            
+            navegador('/home');
+        } catch {}
     }
 
     const actualizarColaboradores = (nuevosColaboradoresReorganizados) => {
