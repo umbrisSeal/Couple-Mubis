@@ -78,7 +78,7 @@ function Header(props) {
                     'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(requestBody),
+                body: jsonBody,
             }).then(response => response.ok ? response.json() : {}).then(data => data).catch(error => {});
     
             setResultadosBusqueda(resultadosBusqueda);
@@ -95,23 +95,6 @@ function Header(props) {
     }
 
     const tamaño = 'w92';
-
-    const datosSimulados = {
-        resultados: 5,
-        peliculas: [
-            {titulo: 'Tarzan: Rey de los Monos monas', año: '1999', id: '123', urlPoster: 'bTvHlcqiOjGa3lFtbrTLTM3zasY.jpg'},
-            {titulo: 'High School Musical', año: '2006', id: '10947', urlPoster: 'bg1eLo2OjySRYKaTO89ZDsqUcJ4.jpg'},
-            {titulo: 'Godzilla', año: '2014', id: '124905', urlPoster: 'zokD6uxR2iWfYM3Y84yGJvnNTK7.jpg'},
-            {titulo: 'KONOSUBA - God\'s blessing on this wonderful world', año: '2019', id: '532067', urlPoster: 'fv5BgcfkpWh3V6Pb1qVlXESBOdl.jpg'},
-            {titulo: 'Rocky II', año: '1979', id: '1367', urlPoster: 'nMaiiu0CzT77U4JZkUYV7KqdAjK.jpg'}
-        ]
-    }
-    const datosSimulados2 = {
-        resultados: 0,
-        peliculas: []
-    }
-
-
 
     return(
         <header className={`${props.version === 'home' ? 'd-flex' : ''}`}>

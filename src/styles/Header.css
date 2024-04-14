@@ -103,6 +103,7 @@
 
 .resultados-busqueda {
     position: absolute;
+    z-index: 200;
     display: none;
 }
 
