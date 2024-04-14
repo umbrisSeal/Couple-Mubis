@@ -5,12 +5,31 @@ import '../styles/Header.css';
 import '../assets/js/niveles.js';
 import RuedaXP from './RuedaXP.jsx';
 import { obtenerNivel } from '../assets/js/niveles.js';
+import DIRECCIONES from '../assets/js/diccionarioURLs.js';
 
 function Header(props) {
     const [busqueda, setBusqueda] = useState('');
     const [mostrarPerfil, setMostrarPerfil] = useState(false);
+    const [informacionUsuario, setInformacionUsuario] = useState({});
     const perfilRef = useRef(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+
+        const consultarInformacionUsuario = async () => {
+            const datos = await fetch(`${DIRECCIONES.BACKEND}/api/usuario`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+                }
+            }).then(response => response.ok ? response.json() : {}).then(data => data).catch(error => {});
+    
+            setInformacionUsuario(datos);
+        };
+
+        consultarInformacionUsuario();
+    }, [])
 
     useEffect(() => {
         // Definir esta funcion handle, para garantizar el tener el valor actualizado de mostarPerfil.
@@ -66,15 +85,6 @@ function Header(props) {
         peliculas: []
     }
 
-    const datosSimulados3 = {
-        usuarioId: 'REVETGILLE',
-        imagenPerfil: 'anonimo.png',
-        nombreUsuario: 'Kevin Monterrey',
-        //nivel: 2, /* Puede ser omitido y calculado en la app para solo guardar el xp. */
-        xpTotal: 100,
-    }
-    
-
 
 
     return(
@@ -129,16 +139,16 @@ function Header(props) {
                 </div>
 
                 <button type='button' className='boton-perfil' ref={perfilRef}>
-                    <img src={`../src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
+                    <img src={`../src/assets/images/perfiles/${informacionUsuario.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
                     <div id='contenedor-menu-perfil' className={`${mostrarPerfil ? '' : 'ocultar'}`} >
                         <div className='triangulo'></div>
                         <div className='contenedor-menu'>
-                            <h3> {datosSimulados3.nombreUsuario} </h3>
-                            <p id='id-usuario'> ID: {datosSimulados3.usuarioId} </p>
+                            <h3> {informacionUsuario.nombreUsuario} </h3>
+                            <p id='id-usuario'> ID: {informacionUsuario.usuarioId} </p>
                             <hr/>
-                            <p id='nivel'> Nivel {obtenerNivel(datosSimulados3.xpTotal).nivel} </p>
-                            <p id='nivel-nombre'> {obtenerNivel(datosSimulados3.xpTotal).nombreNivel} </p>
-                            <RuedaXP nivel={obtenerNivel(datosSimulados3.xpTotal)} />
+                            <p id='nivel'> Nivel {obtenerNivel(informacionUsuario.xpTotal).nivel} </p>
+                            <p id='nivel-nombre'> {obtenerNivel(informacionUsuario.xpTotal).nombreNivel} </p>
+                            <RuedaXP nivel={obtenerNivel(informacionUsuario.xpTotal)} />
                             <hr/>
                             <Link to='/configuracion' className='no-hypervinculo' >
                                 <h4> Configuración de Perfil </h4>
@@ -158,7 +168,7 @@ function Header(props) {
                     <button className='boton-header-volver' onClick={regresar}> &lt; Regresar </button>
                 </div>
                 <div className='contenedor-header-perfil fondo-perfil-inferior'>
-                    <img src={`../src/assets/images/perfiles/${datosSimulados3.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
+                    <img src={`../src/assets/images/perfiles/${informacionUsuario.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
                     <div className={`configuracion-imagen-perfil-perfil ${props.configuracion ? '' : 'ocultar'}`}>
                         <img src='../src/assets/images/iconos/editar.png' alt='Imagen editar' width={25} />
                         <p> Editar </p>

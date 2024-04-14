@@ -138,6 +138,7 @@ function App() {
                         'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
                     }
                 }).then(response => response.json()).then(data => data).catch(error => {}),
+
             ]
         )
         .then((responses) => responses);
@@ -145,7 +146,7 @@ function App() {
 
         return {
             peliculasRecomendadas,
-            listasUsuario
+            listasUsuario,
         };
     }
 
