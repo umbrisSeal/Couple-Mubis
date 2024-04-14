@@ -4,7 +4,7 @@
 */
 
 const imagenesPerfil = {
-    1: 'anonimo.jpg',
+    1: 'anonimo.png',
     2: 'mapache.jpg',
     3: 'zorro.jpg',
     4: 'rosas.jpg',

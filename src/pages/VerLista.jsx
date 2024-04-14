@@ -27,10 +27,29 @@ function VerLista() {
         // Mandar a actualizar a la base de datos? O agregarlo a un useEffect[]?
     }
 
-    const handleBorrarPelicula = (indexPelicula) => {
+    const handleBorrarPelicula = async (indexPelicula) => {
         let peliculasActualizadas = [...peliculas];
         peliculasActualizadas.splice(indexPelicula, 1);
         setPeliculas(peliculasActualizadas);
+
+        // Enviar la solicitud para actualizar peliculas.
+        const requestBody = {
+            listaID: parametrosURL.listaId,
+            peliculas: peliculasActualizadas
+        };
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => error);
+            console.log(confirmacion);
+        } catch {}
     }
 
     const handleBorrarLista = async () => {
