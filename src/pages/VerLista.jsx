@@ -20,11 +20,34 @@ function VerLista() {
         setLista(copiarObjeto(datosLista));
     }, []);
 
+    const handlePeliculaVistaChange = async (peliculasActualizadas) => {
+
+        
+        try {
+            const listaID = parametrosURL.listaId;
+            const requestBody = {
+                listaID,
+                peliculas: peliculasActualizadas
+            };
+            const jsonBody = JSON.stringify(requestBody);
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => error);
+        } catch {}
+    }
+
     const handleVistaChange = (indexPelicula) => {
         let peliculasActualizadas = [...peliculas];
         peliculasActualizadas[indexPelicula].vista = !peliculas[indexPelicula].vista;
         setPeliculas(peliculasActualizadas);
-        // Mandar a actualizar a la base de datos? O agregarlo a un useEffect[]?
+
+        handlePeliculaVistaChange(peliculasActualizadas);
     }
 
     const handleBorrarPelicula = async (indexPelicula) => {
