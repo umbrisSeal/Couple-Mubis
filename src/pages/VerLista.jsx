@@ -74,27 +74,49 @@ function VerLista() {
         } catch {}
     }
 
-    const actualizarColaboradores = (nuevosColaboradoresReorganizados) => {
+    const handleActualizarColaboradores = async (editores, lectores) => {
+        try {
+            const listaID = parametrosURL.listaId;
+            const nuevosEditores = editores.map((editor) => editor.id);
+            const nuevosLectores = lectores.map((lector) => lector.id);
+            const requestBody = {
+                listaID,
+                nuevosEditores,
+                nuevosLectores
+            };
+            const jsonBody = JSON.stringify(requestBody);
+            
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/lista`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => error);
+
+        } catch {}
+    }
+
+    const actualizarColaboradores = async (nuevosColaboradoresReorganizados) => {
         // Re-organizar los colaboradores y mandar la solicitud HTTP, tambien actualizar
         // nuestro state (crear uno nuevo para el loader.);
-        //console.log('autoridad original', colaboradoresReorganizados);
-        //console.log('nueva autoridad', nuevosColaboradoresReorganizados);
 
         const nuevosEditores = nuevosColaboradoresReorganizados.filter((colaborador) => {
             return colaborador.autoridad == 2;
-        })
+        });
         const nuevosLectores = nuevosColaboradoresReorganizados.filter((colaborador) => {
             return colaborador.autoridad == 1;
-        })
-
-        console.log('editores', nuevosEditores);
-        console.log('lectores',nuevosLectores)
+        });
 
         let nuevaLista = copiarObjeto(lista);
         nuevaLista.editores = nuevosEditores;
         nuevaLista.lectores = nuevosLectores;
 
         setLista(nuevaLista);
+
+        await handleActualizarColaboradores(nuevosEditores, nuevosLectores);
 
         console.log("Ser o no ser... aniquilado!");
     }
