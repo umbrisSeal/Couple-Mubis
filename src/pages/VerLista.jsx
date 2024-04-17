@@ -21,8 +21,6 @@ function VerLista() {
     }, []);
 
     const handlePeliculaVistaChange = async (peliculasActualizadas) => {
-
-        
         try {
             const listaID = parametrosURL.listaId;
             const requestBody = {

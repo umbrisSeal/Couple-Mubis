@@ -5,14 +5,18 @@
 
 const conexionMDB = require('./conexionMDB');
 
-async function obtenerResumenListas(listaIDs) {
+async function obtenerResumenListas(listaIDs, incluirDueño = false) {
     const clienteMDB = conexionMDB.conectar();
     const coleccionListas = clienteMDB.db('coupleMubis').collection('listas');
 
     let listas;
 
     try {
-        listas = await coleccionListas.find({listaID: {$in: listaIDs}}, {projection: {_id: false, lectores: false, dueño: false}}).toArray();
+        if(incluirDueño) {
+            listas = await coleccionListas.find({listaID: {$in: listaIDs}}, {projection: {_id: false, lectores: false}}).toArray();
+        } else {
+            listas = await coleccionListas.find({listaID: {$in: listaIDs}}, {projection: {_id: false, lectores: false, dueño: false}}).toArray();
+        }
     } catch {
         console.log("Error!");
         listas = [];
