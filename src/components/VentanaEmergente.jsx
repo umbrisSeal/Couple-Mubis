@@ -66,11 +66,11 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                 body: jsonBody
             }).then(response => response.json()).then(data => data).catch(error => []);
             setListas(listasUsuario);
+            setNuevasListas(copiarObjeto(listasUsuario));
         } catch {}
     };
 
     async function handleAgregarPeliculas() {
-        const nuevasPeliculas = nuevasListas;
         const peliculaID = parametrosURL.peliculaId;
 
         const peliculasParaAgregar = nuevasListas.filter((lista) => {
@@ -83,11 +83,9 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
             }
             return lista.peliculaAgregada
         });
-
         /*
             TODO: Riezgo potencial de que el JSON.stringify no funcione y arruine la solicitud.
         */
-
         const confirmaciones = await Promise.all(peliculasParaAgregar.map(async (lista) => {
             return fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
                 method: 'POST',
@@ -184,7 +182,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     }
 
     const handleAgregarPelicula = (peliculaIndex, nuevoValor) => {
-        let listaCopia = copiarObjeto(listas);
+        let listaCopia = copiarObjeto(nuevasListas);
         listaCopia[peliculaIndex].peliculaAgregada = nuevoValor;
         setNuevasListas(copiarObjeto(listaCopia));
     };
