@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 import { copiarObjeto } from '../assets/js/copiarObjeto.js';
+import { json, useParams } from 'react-router-dom';
+import DIRECCIONES from '../assets/js/diccionarioURLs.js';
 
 const datosSimulados = [
     // Datos simulados  de la lista de amigos del usuario. Quizas un useContext? Cookies? localstorage? preguntar aqui mismo?
@@ -17,7 +19,8 @@ const datosSimulados = [
     {id: 'F9i3DqWs', nombre: 'Eren Yaguer', imgPerfil: 'anonimo.png', esColaborador: false},
     {id: 'G1h7RpUz', nombre: 'Nezuko Kalamardo', imgPerfil: 'anonimo.png', esColaborador: false},
     {id: 'K6l8NsYo', nombre: 'Chavo del 8', imgPerfil: 'anonimo.png', esColaborador: false},
-]
+];
+
 
 function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados, actualizarColaboradores}) {
     const ventanaRef = useRef(null);
@@ -26,6 +29,9 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
     const [nombreNuevaLista, setNombreNuevaLista] = useState('');
     const [mostrarError, setMostrarError] = useState(false);
     const [amigosColaboradores, setAmigosColaboradores] = useState([]);
+    const [listas, setListas] = useState([]);
+    const [nuevasListas, setNuevasListas] = useState([]);
+    const parametrosURL = useParams();
 
     useEffect(() => {
         setColaboradores(copiarObjeto(colaboradoresReorganizados));
@@ -44,11 +50,70 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         }
     }, []);
 
+    async function handleObtenerListasUsuario() {
+        const peliculaID = parametrosURL.peliculaId;
+        const peliculaIDInt = parseInt(peliculaID);
+        const requestBody = {peliculaID: peliculaIDInt};
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            const listasUsuario = await fetch(`${DIRECCIONES.BACKEND}/api/usuario/listas`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.json()).then(data => data).catch(error => []);
+            setListas(listasUsuario);
+        } catch {}
+    };
+
+    async function handleAgregarPeliculas() {
+        const nuevasPeliculas = nuevasListas;
+        const peliculaID = parametrosURL.peliculaId;
+
+        const peliculasParaAgregar = nuevasListas.filter((lista) => {
+            const peliculaAgregada = lista.peliculaAgregada;
+            if(peliculaAgregada) {
+                // Filtro para evitar agregar la pelicula si ya estaba agregada a la lista.
+                const listaID = lista.listaID;
+                const indexLista = listas.findIndex((lista) => lista.listaID === listaID);
+                if(listas[indexLista].peliculaAgregada) return false;
+            }
+            return lista.peliculaAgregada
+        });
+
+        /*
+            TODO: Riezgo potencial de que el JSON.stringify no funcione y arruine la solicitud.
+        */
+
+        const confirmaciones = await Promise.all(peliculasParaAgregar.map(async (lista) => {
+            return fetch(`${DIRECCIONES.BACKEND}/api/pelicula`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({peliculaID: peliculaID, listaID: lista.listaID})
+            }).then(response => response.ok).catch(error => false);
+        })).then(responses => responses);
+    }
+
     useEffect(() => {
         // Quizas elminar esto, y consultar los datos siempre al empezar.
         // No podra actualizar y agregar usuarios al mismo tiempo.
         // Aqui debe de ser la solicitud HTTP para consultar los amigos.
         setAmigosColaboradores(copiarObjeto(datosSimulados));
+
+        if(version === 'agregarPelicula') {
+            const fetchLista = async () => {
+                await handleObtenerListasUsuario();
+            };
+            fetchLista();
+        }
+
     }, [])
 
     const validarInput = (valorInput) => {
@@ -66,10 +131,16 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
             return;
         }
 
-        // Funcionalidades.
+        // Funcionalidades de solicitudes HTTP.
         if(version === 'agregarLista' && validarInput(nombreNuevaLista)) {
             await handleBotonAceptar(nombreNuevaLista);
             handleBotonCancelar();
+            return;
+        }
+        if(version === 'agregarPelicula') {
+            await handleAgregarPeliculas();
+            handleBotonCancelar();
+            return;
         }
 
         handleBotonAceptar(indexPelicula);
@@ -112,13 +183,19 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         handleBotonCancelar();
     }
 
+    const handleAgregarPelicula = (peliculaIndex, nuevoValor) => {
+        let listaCopia = copiarObjeto(listas);
+        listaCopia[peliculaIndex].peliculaAgregada = nuevoValor;
+        setNuevasListas(copiarObjeto(listaCopia));
+    };
+
     // Iniciador de Mensajes.
     const mensajesVentana = {
         borrarPeliculaLista: {titulo: 'Borrar Pelicula', mensaje: 'BORRAR-PELICULA', mensajeAceptar: 'Borrar Pelicula', mensajeCancelar: 'Cancelar'},
         borrarLista: {titulo: 'Borrar Lista', mensaje: '¿Seguro que quieres borrar esta lista? Se borrara de manera permanente! ', mensajeAceptar: 'Borrar Lista', mensajeCancelar: 'Cancelar'},
         editarLista: {titulo: 'Editar Colaboradores', mensaje: 'Selecciona los permisos de cada colaborador, o agrega nuevos.', mensajeAceptar: 'Guardar Cambios', mensajeCancelar: 'Cancelar'},
         agregarLista: {titulo: 'Crear Lista', mensaje: 'Crea una nueva lista para añadir peliculas.', mensajeAceptar: 'Crear Lista', mensajeCancelar: 'Cancelar' },
-
+        agregarPelicula: {titulo: 'Agregar Pelicula', mensaje: 'Selecciona la lista a la cual agregar esta pelicula.', mensajeAceptar: 'Guardar Cambios', mensajeCancelar: 'Cancelar'},
     }
 
     
@@ -175,6 +252,28 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                     </div>
             :
                 <></>,
+        agregarPelicula:
+            <div className='ventana-contenedor-especial'>
+                <div className='ventana-tabla'>
+                    <table>
+                        <tbody>
+                            {listas.map((lista, index) => {
+                                return <tr key={`${index} + ${lista}`}>
+                                    <td className='columna-nombre columna-listas'> {lista.nombre} </td>
+                                    <td>
+                                        <Boton
+                                            version='checkBox'
+                                            estadoInicial={lista.peliculaAgregada}
+                                            indexLista={index}
+                                            handleChange={handleAgregarPelicula}
+                                        />
+                                    </td>
+                                </tr>
+                            })}
+                        </tbody>
+                    </table>
+                </div>
+            </div>,
     };
 
     const mensaje = mensajesVentana[version] || {titulo: 'Mensaje no definido!', mensaje: 'Esta version de ventana emergente no esta definida.'};

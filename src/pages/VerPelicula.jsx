@@ -10,7 +10,6 @@ function VerPelicula() {
     const tamaño = 'w342';
     const prueba = 'original'
 
-
     return <Fragment>
         <Header version='home' />
         <main className='fondo-radial-tenue fondo-completo-header presentacion-centrar' >

@@ -82,6 +82,10 @@
     font-weight: 600;
 }
 
+.columna-listas {
+    text-align: center;
+}
+
 .ventana-contenido-input {
     display: flex;
     flex-direction: column;

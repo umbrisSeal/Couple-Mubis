@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import '../styles/Boton.css';
 import VentanaEmergente from './VentanaEmergente';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DIRECCIONES from '../assets/js/diccionarioURLs';
 
 
@@ -18,7 +18,10 @@ function Boton(props) {
         setEstadoBoton(!estadoBoton);
     }
 
-
+    const handleChangeEstadoBoton = () => {
+        setEstadoBoton(!estadoBoton);
+        if(props.version === 'checkBox') props.handleChange(props.indexLista, !estadoBoton);
+    }
 
     const handleChange = () => {
         props.handleBotonChange();
@@ -80,13 +83,15 @@ function Boton(props) {
                     <p> Ver mas </p>
                 </div>
             </button>,
-        agregarPelicula:
-            <button className='boton-agregar amarillo'>
+        agregarPelicula: <Fragment>
+            <button className='boton-agregar amarillo' onClick={handleVentanaEmergente}>
                 <div className='contenedor-doble negritas'>
                     <img src='../src/assets/images/iconos/boleto.png' alt='Icono Agregar' height={30} width={30} />
                     <p> Agregar Pelicula </p>
                 </div>
-            </button>,
+            </button>
+            {mostrarVentana ? <VentanaEmergente handleBotonCancelar={handleVentanaEmergente} version='agregarPelicula' /> : ''}
+        </Fragment>,
         perfilAgregar: <button type='button' className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Agregar Contacto'} </button>,
         perfilBloquear: <button type='button' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Bloquear Usuario'} </button>,
         perfilGuardar: <button type='submit' className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
@@ -123,11 +128,14 @@ function Boton(props) {
             <button onClick={handleEstadoBoton} className={`boton-ventana-colaborador ${estadoBoton ? 'boton-ventana-agregado' : 'boton-ventana-agregar'}`}>
                 {estadoBoton ? 'Agregado' : '+ Añadir' }
             </button>,
+        checkBox:
+            <div className='form-check'>
+                <input className='form-check-input' type='checkbox' value='' id={`flexCheckbox${props.indexLista}`} checked={estadoBoton} onChange={handleChangeEstadoBoton} disabled={props.estadoInicial} />
+                <label className='form-check-label' htmlFor={`flexCheckbox${props.indexLista}`} > Agregar Pelicula </label>
+            </div>,
     };
 
     return versionBoton[props.version] || <p> Error: Version de boton no definida. </p>
 }
-
-
 
 export default Boton

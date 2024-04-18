@@ -11,12 +11,7 @@ async function obtenerListasAutoridadController(request, response) {
         response.status(403).send("La solicitud no tiene la forma adecuada.");
         return;
     }
-
-    if(!validaID(request.body.peliculaID)) {
-        response.status(403).send("El peliculaID tiene la forma incorrecta.");
-        return;
-    }
-
+    
     request.userID = obtenerUserIdToken(request.cookies['idToken']);
 
     await obtenerListasAutoridadModel(request);
