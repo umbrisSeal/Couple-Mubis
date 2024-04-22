@@ -9,6 +9,7 @@ const usuario = require('./usuario');
 const lista = require('./lista');
 const pelicula = require('./pelicula');
 const buscar = require('./buscar');
+const perfil = require('./perfil');
 
 
 mainRouter.use("/cuenta", cuenta);
@@ -17,6 +18,7 @@ mainRouter.use("/usuario", usuario);
 mainRouter.use("/lista", lista);
 mainRouter.use("/pelicula", pelicula);
 mainRouter.use("/buscar", buscar);
+mainRouter.use("/perfil", perfil);
 
 
 mainRouter.get("/", async (req, res) => {
