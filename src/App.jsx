@@ -28,6 +28,19 @@ const datosSimulados = {
 
 function App() {
 
+    async function autenticar() {
+        // Autentica al usuario, retorna un boleano como resultado.
+        const auth = await fetch(`${DIRECCIONES.BACKEND}/api/${DIRECCIONES.AUTH}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+            }
+        }).then(response => response.ok).catch(error => false);
+
+        return auth;
+    }
+
     const solicitarDatosUsuario = (id = 0) => {
         // Si no se provee un id, entonces devolver datos del usuario actual. (por cookie?)
         // Quien sea que use esto, debe de estar autenticado.
@@ -65,6 +78,9 @@ function App() {
     const verListaLoader = async (listaID) => {
         // Solicitud para datos lista.
         // http://localhost:3000/api/lista/:listaID
+        const auth = await autenticar();
+        console.log("Auntenticado? ", auth);
+        if(!auth) return redirect('/login');
 
         const datosLista = await fetch(`${DIRECCIONES.BACKEND}/api/lista/${listaID}`, {
             method: 'GET',
@@ -77,54 +93,8 @@ function App() {
         return datosLista;
     }
 
-    const solicitarDatosLista = (listaId = 0) => {
-
-        return {
-            nombre: 'Para maratonear!!!',
-            autoridad: 3,
-            esPublica: true,
-            editores: [
-                {id: '12RFGTH', nombre: 'Mario Bros', imgPerfil: 'anonimo.png'},
-                {id: '1GT67LO', nombre: 'Michael Jackson', imgPerfil: 'anonimo.png'},
-                {id: 'GKBIE90', nombre: 'Tea-Bean', imgPerfil: 'anonimo.png'},
-            ],
-            lectores: [
-                {id: 'EGGRGTA', nombre: 'Jose Jose', imgPerfil: 'anonimo.png'},
-                {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png'},
-            ],
-            peliculas: [
-                {id: 4312, vista: false, urlPoster: 'pmjiwwfT7kRJQ0ATi79upBmSOO9.jpg', titulo: 'Nosotros los Inocentes', año: 1200},
-                {id: 4321, vista: false, urlPoster: 'zaqam2RNscH5ooYFWInV6hjx6y5.jpg', titulo: 'luigi', año: 2000},
-                {id: 4321, vista: false, urlPoster: '3bhkrj58Vtu7enYsRolD1fZdja1.jpg', titulo: 'peach', año: 2012},
-                {id: 4321, vista: false, urlPoster: 'lgEXNBnFsq8oTck1C2giSvnTjzz.jpg', titulo: 'bowser', año: 2011},
-                {id: 4321, vista: true, urlPoster: 'vSzOobYVu16MogSALNg1bjTaGc.jpg', titulo: 'monkey', año: 2009},
-                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
-                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
-                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
-                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
-                {id: 4321, vista: true, urlPoster: 'bhjuTUPgY9S21yDDfRe3PeEYlYY.jpg', titulo: 'billbullet', año: 2009},
-            ],
-        }
-
-    }
-
     async function landingPageLoader() {
-        const configuracionSolicitud = {
-            method: 'GET',
-            credentials: 'include', // Incluir cookies.
-            headers: {
-                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND_TEST}`
-            }
-        };
-        const auth = await fetch(`${DIRECCIONES.BACKEND_TEST}/api/${DIRECCIONES.AUTH}`, configuracionSolicitud)
-            .then(response => response.ok)
-            .catch(error => {
-                console.log("Wow, algo salio mal.");
-                console.log(error);
-                return false;
-            })
-        ;
-
+        const auth = await autenticar();
         return auth ? redirect('/home') : null;
     }
 
@@ -135,6 +105,8 @@ function App() {
         */
 
         // Verifica que aun este autenticado el usuario, si no, mandalo a reautenticar.
+        const auth = await autenticar();
+        if(!auth) return redirect('/login');
 
         const [ peliculasRecomendadas, listasUsuario ] = await Promise.all(
             [
@@ -169,6 +141,9 @@ function App() {
         // Solicitar datos de la pelicula.
         // http://localhost:3000/api/pelicula/:peliculaID
 
+        const auth = await autenticar();
+        if(!auth) return redirect('/login');
+
         const datosPelicula = await fetch(`${DIRECCIONES.BACKEND}/api/pelicula/${peliculaID}`, {
             method: 'GET',
             credentials: 'include',
@@ -180,13 +155,19 @@ function App() {
         return datosPelicula;
     }
 
+    const loginLoader = async () => {
+        const auth = await autenticar();
+        if(auth) return redirect('/home');
+        return 0;
+    }
+
 
     const router = createBrowserRouter(createRoutesFromElements([
         <Route path='/' element={<LandingPage />} loader={async () => await landingPageLoader()} />,
-        <Route path='/login' element={<Login />} />,
-        <Route path='/registro-temporal' element={<Login version='registro' />} />,
-        <Route path='/registro' element={<Login version='vincular' />} />,
-        <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />, /* agregar loader para authenticar usuario y sesion. */
+        <Route path='/login' element={<Login />} loader={async () => await loginLoader()} />,
+        <Route path='/registro-temporal' element={<Login version='registro' />} loader={async () => await loginLoader()} />,
+        <Route path='/registro' element={<Login version='vincular' />} loader={async () => await loginLoader()} />,
+        <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />,
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} />,
         <Route path='/pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
         <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => solicitarDatosUsuario(params.perfilId)} />,

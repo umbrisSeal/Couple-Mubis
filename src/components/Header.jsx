@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import Boton from './Boton';
 import '../styles/Header.css';
 import '../assets/js/niveles.js';
@@ -60,6 +60,16 @@ function Header(props) {
         navigate(-1);   // Sustituto del history.goBack().
     }
 
+    const handleCerrarSesion = async () => {
+        const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/auth`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                'Content-Type': 'application/json'
+            },
+        }).then(response => response.ok).catch(error => error);
+    }
 
     const buscarPeliculas = async () => {
         // Solicitud HTTP para solicitar peliculas.
@@ -86,7 +96,6 @@ function Header(props) {
         } catch {
             return;
         }
-
     }
 
     const handleMostrarPerfilChange = function() {
@@ -163,7 +172,7 @@ function Header(props) {
                                 <h4 className='hipervinculo-header-menu-resaltar'> Configuración de Perfil </h4>
                             </Link>
                             <hr/>
-                            <Link to='/logout' className='no-hypervinculo' >
+                            <Link to='/' className='no-hypervinculo' onClick={handleCerrarSesion}>
                                 <h4 className='hipervinculo-header-menu-resaltar'> Cerrar Sesion </h4>
                             </Link>
                         </div>
