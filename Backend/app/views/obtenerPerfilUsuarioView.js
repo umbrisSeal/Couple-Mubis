@@ -21,7 +21,7 @@ function obtenerPerfilUsuarioView(request, response) {
         idiomaBusqueda: informacionUsuario.idiomaBusqueda
     }
 
-    response.send(respuesta);
+    response.status(200).send(respuesta);
 }
 
 module.exports = obtenerPerfilUsuarioView;
