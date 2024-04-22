@@ -105,7 +105,7 @@ function Perfil(props) {
                             <label> Mostrar Nombre de Usuario: </label>
                             <div className='configuracion-conjunto-switch'>
                                 <FormSwitch estadoInicial={usarAlias} handleChange={handleUsarAliasChange} />
-                                <p> {usarAlias ? 'Se usara el Alias de Couple Mubis.' : 'Se usara tu mismo nombre de Refugio14.'} </p>
+                                <p> {usarAlias ? 'Se usara tu Alias de Couple Mubis.' : 'Se usara el mismo nombre de tu cuenta Refugio14.'} </p>
                             </div>
 
                             <label> Privacidad de Perfil: </label>

@@ -41,10 +41,46 @@ function App() {
         return auth;
     }
 
-    const solicitarDatosUsuario = (id = 0) => {
+    const perfilLoader = async (id = null) => {
+        const auth = await autenticar();
+        if(!auth) return redirect('/login');
+
+        if(id === null) {
+            // Datos del usuario.
+            return {    // Datos simulados
+                id: '4GT70ARR49',
+                nombre: 'Kevin Monterrey',
+                xp: 100,
+                alias: '',
+                bibliografia: '',
+                usarAlias: false,
+                usarPrivacidad: true,
+                usuariosBloqueados: [/* {id, nombreUsuario} */],
+                idiomaBusqueda: 0,
+            }
+        } else {
+            // Datos del usuario solicitado.
+            return {
+                nombre: 'Mac Giver',
+                id: 'RT0054AWSA',
+                xp: 514,
+                bibliografia: 'Hola! Soy Mac Gyver, autentico cineasta de los años 60. Vivi en una casa de campo hasta mis 50 años, ahora me dedico a criticar gente en internet.',
+                esAmigo: false,
+                esBloqueado: false,
+                listasPublicas: [
+                    {nombre: 'La Toalla del Mojado', id: 'RFRTG31'},
+                    {nombre: 'Mis Actuaciones de 1971', id: 'RTGAW21'},
+                    {nombre: 'James Bond', id:'J5B4GG'},
+                ]
+            }
+        }
+    }
+
+    const solicitarDatosUsuario = (id) => {
         // Si no se provee un id, entonces devolver datos del usuario actual. (por cookie?)
         // Quien sea que use esto, debe de estar autenticado.
-        if(id == 0) {
+
+        if(id === null) {
             // Datos del usuario.
             return {    // Datos simulados
                 id: '4GT70ARR49',
@@ -99,11 +135,9 @@ function App() {
     }
 
     async function homeLoader() {
-
         /*
             Todo el async-await no es necesario, se puede invocar la funcion regular en el loader. Sin embargo, no podra usar array destructuring para el Promise.all y tendra que retornar el Promise directamente... aunque no estoy seguro si se esta esperando a tener una respuesta ANTES de renderizar el componente. De cualquier caso, la respuesta SI llega al componente. Usando el await si garantiza que el componente no se renderize hasta que se complete este promise.
         */
-
         // Verifica que aun este autenticado el usuario, si no, mandalo a reautenticar.
         const auth = await autenticar();
         if(!auth) return redirect('/login');
@@ -170,10 +204,10 @@ function App() {
         <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />,
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} />,
         <Route path='/pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
-        <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => solicitarDatosUsuario(params.perfilId)} />,
+        <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => perfilLoader(params.perfilId)} />,
         <Route path='/perfil' loader={() => redirect('/configuracion')} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
-        <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => solicitarDatosUsuario()} />,
+        <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => perfilLoader()} />,
         <Route path='/lista/:listaId' element={<VerLista />} loader={async ({params}) => await verListaLoader(params.listaId)} />,
         <Route path='/lista' loader={() => redirect('/home')} />,
 
