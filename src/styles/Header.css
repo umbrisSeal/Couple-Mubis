@@ -325,6 +325,9 @@
     font-weight: 600;
 }
 
+.hipervinculo-header-menu-resaltar:hover {
+    color: var(--acento);
+    font-size: 1.2rem;
 
-
-/* primario a terciario */
+    transition: all 0.2s ease-in-out;
+}

@@ -160,11 +160,11 @@ function Header(props) {
                             <RuedaXP nivel={obtenerNivel(informacionUsuario.xpTotal)} />
                             <hr/>
                             <Link to='/configuracion' className='no-hypervinculo' >
-                                <h4> Configuración de Perfil </h4>
+                                <h4 className='hipervinculo-header-menu-resaltar'> Configuración de Perfil </h4>
                             </Link>
                             <hr/>
                             <Link to='/logout' className='no-hypervinculo' >
-                                <h4> Cerrar Sesion </h4>
+                                <h4 className='hipervinculo-header-menu-resaltar'> Cerrar Sesion </h4>
                             </Link>
                         </div>
                     </div>
