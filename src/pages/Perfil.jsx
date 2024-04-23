@@ -26,42 +26,14 @@ function Perfil(props) {
 
     const actualizarPerfil = (event) => {
         event.preventDefault();
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         // Mandar soliciutd HTTP.
+        const requestBody = {
+
+        }
     }
 
-    
-    //const handleUsarPrivacidadChange
-
     const caracteresMaximos = 160;
-
-    /*
-        Datos el usuario.
-        {    // Datos simulados.
-            idUsuario: '4GT70ARR49',
-            nombre: 'Kevin Monterrey',
-            xp: 100,
-            alias: '',
-            bibliografia: '',
-            usarAlias: true,
-            usarPrivacidad: true,
-            usuariosBloqueados: [// {id, nombreUsuario} ],
-            idiomaBusqueda: 0,
-        }
-        Datos de un usuario solicitado:
-        {
-            nombre: 'Mac Giver',
-            id: 'RT0054AWSA',
-            xp: 210,
-            bibliografia: 'Hola! Soy Mac Gyver, autentico cineasta de los años 60. Vivi en una casa de campo hasta mis 50 años, ahora me dedico a criticar gente en internet.',
-            esAmigo: false,
-            esBloqueado: false,
-            listasPublicas: [
-                {nombre: 'La Toalla del Mojado', id: 'RFRTG31'},
-                {nombre: 'Mis Actuaciones de 1971', id: 'RTGAW21'},
-                {nombre: 'James Bond', id:'J5B4GG'},
-            ]
-        }
-    */
 
     return <Fragment>
         <Header version='perfil' configuracion={configuracion} />
