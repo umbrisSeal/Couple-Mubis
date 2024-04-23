@@ -4,6 +4,7 @@
 */
 
 const objetoVacio = require("../../helpers/objetoVacio");
+const consultaUsuarios = require("./consultaUsuarios");
 
 async function confirmarAmistad(userID, amigoID) {
     const datosUsuarios = await consultaUsuarios([userID, amigoID]);
@@ -14,7 +15,7 @@ async function confirmarAmistad(userID, amigoID) {
         return false;
     }
 
-    const sonAmigos = amigosUsuario.includes(request.amigoID) && amigosAmigo.includes(request.userID);
+    const sonAmigos = amigosUsuario.includes(amigoID) && amigosAmigo.includes(userID);
     return sonAmigos;
 }
 
