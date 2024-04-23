@@ -2,25 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import '../styles/VentanaEmergente.css'
 import Boton from './Boton'
 import { copiarObjeto } from '../assets/js/copiarObjeto.js';
-import { json, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DIRECCIONES from '../assets/js/diccionarioURLs.js';
-
-const datosSimulados = [
-    // Datos simulados  de la lista de amigos del usuario. Quizas un useContext? Cookies? localstorage? preguntar aqui mismo?
-    // No deberia mezclarse con la informacion de la lista... porque se supone que es informacion aparte no?
-
-    // Conclusion, entonces esto se debe actualizar cada vez que se abre la ventana "editar Colaboradores", o mandarlo igual como prop. No creo
-    // que sea muy eficiente.
-    {id: 'RIGNOTA', nombre: 'Ringo Star', imgPerfil: 'anonimo.png', esColaborador: true},
-    {id: 'J7t9KpWx', nombre: 'Pato Lucas', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'R3y6NqPz', nombre: 'Rico McPato', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'E5u8MoYv', nombre: 'Obama Barack', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'A2s4LpTx', nombre: 'Laios Gloton', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'F9i3DqWs', nombre: 'Eren Yaguer', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'G1h7RpUz', nombre: 'Nezuko Kalamardo', imgPerfil: 'anonimo.png', esColaborador: false},
-    {id: 'K6l8NsYo', nombre: 'Chavo del 8', imgPerfil: 'anonimo.png', esColaborador: false},
-];
-
 
 function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados, actualizarColaboradores}) {
     const ventanaRef = useRef(null);
@@ -99,17 +82,30 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
         })).then(responses => responses);
     }
 
+    async function handleConsultarAmigosColaboradores() {
+        const datosAmigosColaboradores = await fetch(`${DIRECCIONES.BACKEND}/api/amigos/colaboradores/${parametrosURL.listaId}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+            }
+        }).then(response => response.json()).then(data => data).catch(error => {});
+        setAmigosColaboradores(datosAmigosColaboradores);
+    }
+
     useEffect(() => {
-        // Quizas elminar esto, y consultar los datos siempre al empezar.
-        // No podra actualizar y agregar usuarios al mismo tiempo.
-        // Aqui debe de ser la solicitud HTTP para consultar los amigos.
-        setAmigosColaboradores(copiarObjeto(datosSimulados));
 
         if(version === 'agregarPelicula') {
             const fetchLista = async () => {
                 await handleObtenerListasUsuario();
             };
             fetchLista();
+        }
+        if(version === 'editarLista') {
+            const fetchAmigosColaboradores = async () => {
+                await handleConsultarAmigosColaboradores();
+            };
+            fetchAmigosColaboradores();
         }
 
     }, [])
