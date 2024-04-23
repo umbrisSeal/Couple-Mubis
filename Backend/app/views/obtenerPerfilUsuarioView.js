@@ -17,7 +17,7 @@ function obtenerPerfilUsuarioView(request, response) {
         bibliografia: informacionUsuario.bibliografia,
         usarAlias: informacionUsuario.usarAlias,
         usarPrivacidad: informacionUsuario.usarPrivacidad,
-        usuariosBloqueados: informacionUsuario.bloquados,
+        usuariosBloqueados: informacionUsuario.bloqueados,
         idiomaBusqueda: informacionUsuario.idiomaBusqueda
     }
 

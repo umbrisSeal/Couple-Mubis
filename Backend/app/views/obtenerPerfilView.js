@@ -18,7 +18,7 @@ function obtenerPerfilView(request, response) {
         bibliografia: datosUsuario.bibliografia,
         esAmigo: request.esAmigo,
         esBloqueado: request.esBloqueado,
-        listas
+        listasPublicas: listas
     };
 
     if(request.esBloqueado || request.datosUsuario.usarPrivacidad) {

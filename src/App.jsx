@@ -11,21 +11,6 @@ import VerLista from './pages/VerLista';
 
 import DIRECCIONES from './assets/js/diccionarioURLs';
 
-
-const datosSimulados = {
-    nombre: 'Mac Giver',
-    id: 'RT0054AWSA',
-    xp: 210,
-    bibliografia: 'Hola! Soy Mac Gyver, autentico cineasta de los años 60. Vivi en una casa de campo hasta mis 50 años, ahora me dedico a criticar gente en internet.',
-    esAmigo: false,
-    esBloqueado: false,
-    listasPublicas: [
-        {nombre: 'La Toalla del Mojado', id: 'RFRTG31'},
-        {nombre: 'Mis Actuaciones de 1971', id: 'RTGAW21'},
-        {nombre: 'James Bond', id:'J5B4GG'},
-    ]
-}
-
 function App() {
 
     async function autenticar() {
@@ -44,70 +29,30 @@ function App() {
     const perfilLoader = async (id = null) => {
         const auth = await autenticar();
         if(!auth) return redirect('/login');
-
-        if(id === null) {
-            // Datos del usuario.
-            return {    // Datos simulados
-                id: '4GT70ARR49',
-                nombre: 'Kevin Monterrey',
-                xp: 100,
-                alias: '',
-                bibliografia: '',
-                usarAlias: false,
-                usarPrivacidad: true,
-                usuariosBloqueados: [/* {id, nombreUsuario} */],
-                idiomaBusqueda: 0,
+        if(id) {
+            try {
+                const datosUsuario = await fetch(`${DIRECCIONES.BACKEND}/api/perfil`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({idSolicitado: id})
+                }).then(response => response.json()).then(data => data).catch(error => {});
+                return datosUsuario;
+            } catch {
+                return {};
             }
         } else {
-            // Datos del usuario solicitado.
-            return {
-                nombre: 'Mac Giver',
-                id: 'RT0054AWSA',
-                xp: 514,
-                bibliografia: 'Hola! Soy Mac Gyver, autentico cineasta de los años 60. Vivi en una casa de campo hasta mis 50 años, ahora me dedico a criticar gente en internet.',
-                esAmigo: false,
-                esBloqueado: false,
-                listasPublicas: [
-                    {nombre: 'La Toalla del Mojado', id: 'RFRTG31'},
-                    {nombre: 'Mis Actuaciones de 1971', id: 'RTGAW21'},
-                    {nombre: 'James Bond', id:'J5B4GG'},
-                ]
-            }
-        }
-    }
-
-    const solicitarDatosUsuario = (id) => {
-        // Si no se provee un id, entonces devolver datos del usuario actual. (por cookie?)
-        // Quien sea que use esto, debe de estar autenticado.
-
-        if(id === null) {
-            // Datos del usuario.
-            return {    // Datos simulados
-                id: '4GT70ARR49',
-                nombre: 'Kevin Monterrey',
-                xp: 100,
-                alias: '',
-                bibliografia: '',
-                usarAlias: false,
-                usarPrivacidad: true,
-                usuariosBloqueados: [/* {id, nombreUsuario} */],
-                idiomaBusqueda: 0,
-            }
-        } else {
-            // Datos del usuario solicitado.
-            return {
-                nombre: 'Mac Giver',
-                id: 'RT0054AWSA',
-                xp: 514,
-                bibliografia: 'Hola! Soy Mac Gyver, autentico cineasta de los años 60. Vivi en una casa de campo hasta mis 50 años, ahora me dedico a criticar gente en internet.',
-                esAmigo: false,
-                esBloqueado: false,
-                listasPublicas: [
-                    {nombre: 'La Toalla del Mojado', id: 'RFRTG31'},
-                    {nombre: 'Mis Actuaciones de 1971', id: 'RTGAW21'},
-                    {nombre: 'James Bond', id:'J5B4GG'},
-                ]
-            }
+            const datosUsuario = await fetch(`${DIRECCIONES.BACKEND}/api/perfil`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                }
+            }).then(response => response.json()).then(data => data).catch(error => {});
+            return datosUsuario;
         }
     }
 
@@ -161,9 +106,7 @@ function App() {
                 }).then(response => response.json()).then(data => data).catch(error => {}),
 
             ]
-        )
-        .then((responses) => responses);
-
+        ).then((responses) => responses);
 
         return {
             peliculasRecomendadas,
@@ -203,7 +146,7 @@ function App() {
         <Route path='/registro' element={<Login version='vincular' />} loader={async () => await loginLoader()} />,
         <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />,
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} />,
-        <Route path='/pelicula' loader={() => redirect('/home') } />,    /* redirecciona al no especificar :peliculaid */
+        <Route path='/pelicula' loader={() => redirect('/home') } />,
         <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => perfilLoader(params.perfilId)} />,
         <Route path='/perfil' loader={() => redirect('/configuracion')} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
