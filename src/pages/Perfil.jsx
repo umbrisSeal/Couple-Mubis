@@ -5,6 +5,7 @@ import { obtenerNivel } from '../assets/js/niveles';
 import Header from '../components/Header';
 import Boton from '../components/Boton';
 import FormSwitch from '../components/FormSwitch';
+import DIRECCIONES from '../assets/js/diccionarioURLs';
 
 function Perfil(props) {
     const datosUsuario = useLoaderData();
@@ -24,13 +25,27 @@ function Perfil(props) {
     const handleBorrarCuentaChange = (event) => setBorrarCuenta(event.target.value);
     const handleIdiomaBusquedaChange = (event) => setIdiomaBusqueda(event.target.value);
 
-    const actualizarPerfil = (event) => {
+    const actualizarPerfil = async (event) => {
         event.preventDefault();
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        // Mandar soliciutd HTTP.
         const requestBody = {
-
-        }
+            alias,
+            usarAlias,
+            usarPrivacidad,
+            bibliografia,
+            idiomaBusqueda
+        };
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            await fetch(`${DIRECCIONES.BACKEND}/api/cuenta`, {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => false);
+        } catch {}
     }
 
     const caracteresMaximos = 160;
