@@ -34,21 +34,6 @@ function Perfil(props) {
 
     const caracteresMaximos = 160;
 
-
-    const datosSimulados = {
-        nombre: 'Mac Giver',
-        id: 'RT0054AWSA',
-        xp: 210,
-        bibliografia: 'Hola! Soy Mac Gyver, autentico cineasta de los años 60. Vivi en una casa de campo hasta mis 50 años, ahora me dedico a criticar gente en internet.',
-        esAmigo: false,
-        esBloqueado: false,
-        listasPublicas: [
-            {nombre: 'La Toalla del Mojado', id: 'RFRTG31'},
-            {nombre: 'Mis Actuaciones de 1971', id: 'RTGAW21'},
-            {nombre: 'James Bond', id:'J5B4GG'},
-        ]
-    }
-
     /*
         Datos el usuario.
         {    // Datos simulados.
@@ -147,22 +132,32 @@ function Perfil(props) {
                         <br />
                         <br />
                         <p> Bibliografia: </p>
-                        <p id='perfil-bibliografia'> {datosUsuario.bibliografia} </p>
+                        <p id='perfil-bibliografia'>
+                            { datosUsuario.bibliografia.length === 0 ? 
+                                <span style={{fontStyle: 'italic'}}> Este usuario aun no ha compartido informacion. </span>
+                                :
+                                datosUsuario.bibliografia
+                            }
+                        </p>
                         <br />
                         <br />
                         <br />
                         <p> Listas Publicas: </p>
                         <div id='perfil-conjunto-listas'>
-                            {datosUsuario.listasPublicas.map((lista, index) => {
-                                return(
-                                    <Link to={`/lista/${lista.id}`} className='no-hypervinculo' key={lista + index}>
-                                        <div className='perfil-lista'>
-                                            <img src='../src/assets/images/iconos/pelicula-roja.png' alt='Icono Pelicula' width={50} />
-                                            <p> {lista.nombre} </p>
-                                        </div>
-                                    </Link>
-                                )
-                            })}
+                            { datosUsuario.listasPublicas.length !== 0 ?
+                                datosUsuario.listasPublicas.map((lista, index) => {
+                                    return(
+                                        <Link to={`/lista/${lista.id}`} className='no-hypervinculo' key={lista + index}>
+                                            <div className='perfil-lista'>
+                                                <img src='../src/assets/images/iconos/pelicula-roja.png' alt='Icono Pelicula' width={50} />
+                                                <p> {lista.nombre} </p>
+                                            </div>
+                                        </Link>
+                                    )
+                                })
+                                :
+                                <span style={{fontStyle: 'italic'}}> Este usuario no tiene listas publicas disponibles. </span>
+                            }
                         </div>
                     </Fragment>
                 }
