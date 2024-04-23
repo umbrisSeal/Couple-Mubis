@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 import '../styles/Perfil.css';
 import { obtenerNivel } from '../assets/js/niveles';
 import Header from '../components/Header';
@@ -17,6 +17,11 @@ function Perfil(props) {
     const [idiomaBusqueda, setIdiomaBusqueda] = useState(datosUsuario.idiomaBusqueda || 0);
     const [borrarCuenta, setBorrarCuenta] = useState('');
     const [caracteres, setCaracteres] = useState(datosUsuario.bibliografia.length);
+    const [amigoAgregado, setAmigoAgregado] = useState(false);
+    const [perfilSelf, setPerfilSelf] = useState(false);
+    const parametrosURL = useParams();
+
+    console.log(parametrosURL);
 
     const handleAliasChange = (event) => setAlias(event.target.value);
     const handleUsarAliasChange = (estado) => setUsarAlias(estado);
@@ -24,6 +29,53 @@ function Perfil(props) {
     const handleBibliografiaChange = (event) => { setBibliografia(event.target.value); setCaracteres(event.target.value.length); }
     const handleBorrarCuentaChange = (event) => setBorrarCuenta(event.target.value);
     const handleIdiomaBusquedaChange = (event) => setIdiomaBusqueda(event.target.value);
+
+    async function obtenerUserID() {
+        const userID = fetch(`${DIRECCIONES.BACKEND}/`)
+    }
+
+    useEffect(() => {
+
+        const fetchPerfilSelf = async () => {
+            return await obtenerUserID();
+        }
+        const presentarSelfPerfil = fetchPerfilSelf();
+        if(!presentarSelfPerfil) {
+            // hacer la otra solicitud.
+        }
+        // Endpoint para consultar el userID y compararlo con el id mostrado actualmente (useParams) en dicho caso ocultar botones.
+        // Endpoint para consultar si el perfil mostrado aparece en la lista de amigos tuya. (Eliminar Amigo instead?) en lugar de bloquear cambiar boton.
+    }, [])
+
+    /*
+    async function handleConsultarAmigosColaboradores() {
+        const datosAmigosColaboradores = await fetch(`${DIRECCIONES.BACKEND}/api/amigos/colaboradores/${parametrosURL.listaId}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+            }
+        }).then(response => response.json()).then(data => data).catch(error => {});
+        setAmigosColaboradores(datosAmigosColaboradores);
+    }
+
+    useEffect(() => {
+
+        if(version === 'agregarPelicula') {
+            const fetchLista = async () => {
+                await handleObtenerListasUsuario();
+            };
+            fetchLista();
+        }
+        if(version === 'editarLista') {
+            const fetchAmigosColaboradores = async () => {
+                await handleConsultarAmigosColaboradores();
+            };
+            fetchAmigosColaboradores();
+        }
+
+    }, [])
+    */
 
     const actualizarPerfil = async (event) => {
         event.preventDefault();
