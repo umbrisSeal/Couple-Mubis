@@ -21,8 +21,6 @@ function Perfil(props) {
     const [perfilSelf, setPerfilSelf] = useState(false);
     const parametrosURL = useParams();
 
-    console.log(parametrosURL);
-
     const handleAliasChange = (event) => setAlias(event.target.value);
     const handleUsarAliasChange = (estado) => setUsarAlias(estado);
     const handleUsarPrivacidadChange = (estado) => setUsarPrivacidad(estado);
@@ -30,52 +28,72 @@ function Perfil(props) {
     const handleBorrarCuentaChange = (event) => setBorrarCuenta(event.target.value);
     const handleIdiomaBusquedaChange = (event) => setIdiomaBusqueda(event.target.value);
 
-    async function obtenerUserID() {
-        const userID = fetch(`${DIRECCIONES.BACKEND}/`)
+    async function handleAgregarAmigo() {
+        const amigoID = parametrosURL.perfilId;
+        const requestBody = {amigoID};
+        try {
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/amigos`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            }).then(response => response.ok).catch(error => {});
+            if(confirmacion) setAmigoAgregado(true);
+        } catch {}
     }
 
-    useEffect(() => {
+    async function handleBorrarAmigo() {
+        const amigoID = parametrosURL.perfilId;
+        const requestBody = {amigoID};
+        console.log(requestBody);
+        try {
+            const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/amigos`, {
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            }).then(response => response.ok).catch(error => {});
+            if(confirmacion) setAmigoAgregado(false);
+        } catch {}
+    }
 
-        const fetchPerfilSelf = async () => {
-            return await obtenerUserID();
-        }
-        const presentarSelfPerfil = fetchPerfilSelf();
-        if(!presentarSelfPerfil) {
-            // hacer la otra solicitud.
-        }
-        // Endpoint para consultar el userID y compararlo con el id mostrado actualmente (useParams) en dicho caso ocultar botones.
-        // Endpoint para consultar si el perfil mostrado aparece en la lista de amigos tuya. (Eliminar Amigo instead?) en lugar de bloquear cambiar boton.
-    }, [])
-
-    /*
-    async function handleConsultarAmigosColaboradores() {
-        const datosAmigosColaboradores = await fetch(`${DIRECCIONES.BACKEND}/api/amigos/colaboradores/${parametrosURL.listaId}`, {
+    async function obtenerUserID() {
+        const userID = await fetch(`${DIRECCIONES.BACKEND}/api/token`, {
             method: 'GET',
             credentials: 'include',
             headers: {
                 'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
             }
-        }).then(response => response.json()).then(data => data).catch(error => {});
-        setAmigosColaboradores(datosAmigosColaboradores);
+        }).then(response => response.text()).catch(error => '');
+
+        if(!configuracion) {
+            const userIDVisitado = parametrosURL.perfilId;
+            setPerfilSelf(userID == userIDVisitado);
+
+            const esAmigo = await fetch(`${DIRECCIONES.BACKEND}/api/amigos/${userIDVisitado}`, {
+                method: 'GET',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+                }
+            }).then(response => response.text()).catch(error => '');
+
+            setAmigoAgregado(esAmigo === 'true' ? true : false);
+        }
     }
 
     useEffect(() => {
-
-        if(version === 'agregarPelicula') {
-            const fetchLista = async () => {
-                await handleObtenerListasUsuario();
-            };
-            fetchLista();
+        const fetchPerfilSelf = async () => {
+            await obtenerUserID();
         }
-        if(version === 'editarLista') {
-            const fetchAmigosColaboradores = async () => {
-                await handleConsultarAmigosColaboradores();
-            };
-            fetchAmigosColaboradores();
-        }
-
+        fetchPerfilSelf();
     }, [])
-    */
 
     const actualizarPerfil = async (event) => {
         event.preventDefault();
@@ -164,9 +182,12 @@ function Perfil(props) {
                     </Fragment>
                 :
                     <Fragment>
-                        <div id='perfil-botones'>
-                            <Boton version='perfilAgregar' />
-                            <Boton version='perfilBloquear' />
+                        <div id='perfil-botones' className={`${perfilSelf ? 'ocultar' : ''}`}>
+                            { amigoAgregado ? 
+                                <Boton version='perfilBorrarAmigo' fnOnClick={handleBorrarAmigo} />
+                                :
+                                <Boton version='perfilAgregar' fnOnClick={handleAgregarAmigo} />
+                            }
                         </div>
                         <br />
                         <br />

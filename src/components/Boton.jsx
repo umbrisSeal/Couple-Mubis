@@ -92,8 +92,9 @@ function Boton(props) {
             </button>
             {mostrarVentana ? <VentanaEmergente handleBotonCancelar={handleVentanaEmergente} version='agregarPelicula' /> : ''}
         </Fragment>,
-        perfilAgregar: <button type='button' className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Agregar Contacto'} </button>,
+        perfilAgregar: <button type='button' className='perfil-boton perfil-boton-amarillo negritas' onClick={props.fnOnClick}> {props.mensaje || 'Agregar Amigo'} </button>,
         perfilBloquear: <button type='button' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Bloquear Usuario'} </button>,
+        perfilBorrarAmigo: <button type='button' className='perfil-boton perfil-boton-rojo negritas' onClick={props.fnOnClick}> {props.mensaje || 'Borrar Amigo'} </button>,
         perfilGuardar: <button type='submit' className='perfil-boton perfil-boton-amarillo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
         perfilBorrar: <button type='submit' className='perfil-boton perfil-boton-rojo negritas'> {props.mensaje || 'Mensaje no definido.'} </button>,
         listaEditar: <Fragment>
