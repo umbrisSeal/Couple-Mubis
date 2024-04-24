@@ -75,15 +75,17 @@ function Perfil(props) {
             const userIDVisitado = parametrosURL.perfilId;
             setPerfilSelf(userID == userIDVisitado);
 
-            const esAmigo = await fetch(`${DIRECCIONES.BACKEND}/api/amigos/${userIDVisitado}`, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
-                }
-            }).then(response => response.text()).catch(error => '');
-
-            setAmigoAgregado(esAmigo === 'true' ? true : false);
+            if(userID !== userIDVisitado) {
+                const esAmigo = await fetch(`${DIRECCIONES.BACKEND}/api/amigos/${userIDVisitado}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`
+                    }
+                }).then(response => response.text()).catch(error => '');
+    
+                setAmigoAgregado(esAmigo === 'true' ? true : false);
+            }
         }
     }
 
