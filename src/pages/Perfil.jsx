@@ -48,7 +48,6 @@ function Perfil(props) {
     async function handleBorrarAmigo() {
         const amigoID = parametrosURL.perfilId;
         const requestBody = {amigoID};
-        console.log(requestBody);
         try {
             const confirmacion = await fetch(`${DIRECCIONES.BACKEND}/api/amigos`, {
                 method: 'DELETE',

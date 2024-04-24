@@ -4,13 +4,20 @@ const consultaUsuarios = require("../services/database/consultaUsuarios");
 async function confirmarAmistadModel(request) {
 
     const datosUsuarios = await consultaUsuarios([request.userID, request.amigoID]);
-    const amigosUsuario = datosUsuarios[0].amigos;
-    const amigosAmigo = datosUsuarios[1].amigos;
+
+    if(datosUsuarios.length !== 2) {
+        request.error = true;
+        return;
+    }
 
     if(objetoVacio(datosUsuarios[0]) || objetoVacio(datosUsuarios[1])) {
         request.error = true;
         return;
     }
+
+    const amigosUsuario = datosUsuarios[0].amigos;
+    const amigosAmigo = datosUsuarios[1].amigos;
+
     request.error = false;
 
     const sonAmigos = amigosUsuario.includes(request.amigoID) && amigosAmigo.includes(request.userID);
