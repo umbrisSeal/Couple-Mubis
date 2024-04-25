@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/Login.css'
 import Boton from '../components/Boton';
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import hashearPassword from '../assets/js/hashearPassword';
+import DIRECCIONES from '../assets/js/diccionarioURLs';
 
 function Login(props) {
     const [user, setUser] = useState('');
@@ -12,6 +13,7 @@ function Login(props) {
     const [errorState, setErrorState] = useState('');
     const [version, setVersion] = useState('');
     const [textoBoton, setTextoBoton] = useState('');
+    const navegador = useNavigate();
 
     useEffect(() => {
         setPassword('');
@@ -53,77 +55,85 @@ function Login(props) {
         PASSWORD_PEQUEÑO: 'El password debe tener al menos 6 caracteres',
         PASSWORD_NUMERO: 'El password debe contener al menos 1 numero.',
         PASSWORD_CARACTER: 'El password debe contener al menos 1 caracter especial.',
+        CLAVE_INCORRECTA: 'La clave de registro es incorrecta.'
     }
 
-    // Renderizar pagina de vinculacion login si no tiene usuario (revisar en base de datos).
-    // Por defecto, solicitar la vinculacion de la aplicacion con la cuenta de Refugio14
-    // Mostrar una pagina de "error" para indicar que no hay una cuenta asociada de Refugio14.
-
-    // Login por defecto, solicitara la informacion de la cuenta de refugio14. !
-
     const validarDatos = () => {
-        /*
-            - Verificar longitud de entrada.
-            - Verificar formato de correo.
-            - lowercase a todo el correo electronico
-            - Proteccion con esterilizacion de codigo (evita inyeccion de SQL).
-
-            - Ocultar mensaje de error al ejecutar, luego revisar codigo y volver a lanzar error.
-            - La respuesta HTTP tambien puede contener una instruccion de error.
-        */
-       setErrorState(ESTADO_ERROR.NONE);
        const emailValidoRegex = /^[a-zA-Z0-9._%+-]+@(gmail|yahoo|outlook)\.(com|net|org)$/;
        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
        const contieneNumeroRegex = /\d/;
        const contieneCaracterRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-       let error = true;
-
        if(version != 'vincular') {
-            if(user == '' || password == '') return setErrorState(ESTADO_ERROR.CAMPOS_VACIOS);
-            if(user.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_USUARIO);
-            if(password.length > 50) return setErrorState(ESTADO_ERROR.LONGITUD_PASSWORD);
-            if(!emailRegex.test(user)) return setErrorState(ESTADO_ERROR.CORREO);
-            if(!emailValidoRegex.test(user)) return setErrorState(ESTADO_ERROR.DOMINIO_CORREO);
-            error = false;
+            if(user == '' || password == '') {setErrorState(ESTADO_ERROR.CAMPOS_VACIOS); return false;}
+            if(user.length > 50) {setErrorState(ESTADO_ERROR.LONGITUD_USUARIO); return false;}
+            if(password.length > 50) {setErrorState(ESTADO_ERROR.LONGITUD_PASSWORD); return false;}
+            if(!emailRegex.test(user)) {setErrorState(ESTADO_ERROR.CORREO); return false;}
+            if(!emailValidoRegex.test(user)) {setErrorState(ESTADO_ERROR.DOMINIO_CORREO); return false;}
        }
        if(version === 'registro') {
-            if(password.length < 6) return setErrorState(ESTADO_ERROR.PASSWORD_PEQUEÑO);
-            if(!contieneNumeroRegex.test(password)) return setErrorState(ESTADO_ERROR.PASSWORD_NUMERO);
-            if(!contieneCaracterRegex.test(password)) return setErrorState(ESTADO_ERROR.PASSWORD_CARACTER);
-            if(password != passwordConfirmar) return setErrorState(ESTADO_ERROR.PASSWORD_DIFERENTE);
-            error = false;
+            if(password.length < 6) {setErrorState(ESTADO_ERROR.PASSWORD_PEQUEÑO); return false;}
+            if(!contieneNumeroRegex.test(password)) {setErrorState(ESTADO_ERROR.PASSWORD_NUMERO); return false;}
+            if(!contieneCaracterRegex.test(password)) {setErrorState(ESTADO_ERROR.PASSWORD_CARACTER); return false;}
+            if(password != passwordConfirmar) {setErrorState(ESTADO_ERROR.PASSWORD_DIFERENTE); return false;}
         }
 
-        return error;
+        setErrorState(ESTADO_ERROR.NONE);
+        return true;
     }
 
     // Solicitudes HTTP:
 
     async function solicitudRegistro() {
-        // Tener una state variable para saber como actuar.
-
         const requestBody = {
             clave: clave,
             email: user,
-            usuario: 'Sin Nombre',
+            usuario: 'Nuevo Usuario',
             password: await hashearPassword(password),
             passwordRepetido: await hashearPassword(passwordConfirmar),
         }
 
-        console.log(requestBody);
+        let confirmacionRegistro = false;
 
-    }
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            confirmacionRegistro = await fetch(`${DIRECCIONES.BACKEND}/api/cuenta`, {
+                method: 'POST',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.status).catch(error => false);
+        } catch {}
 
-    /*
-    {
-    "clave": "RUD40S",
-    "email": "purebatacos@gmail.com",
-    "usuario": "El Tquero Loco",
-    "password": "Password-hash1",
-    "passwordRepetido": "Password-hash1"
+        if(confirmacionRegistro === 403) setErrorState(ESTADO_ERROR.CLAVE_INCORRECTA);
+        if(confirmacionRegistro === 200) {
+            setErrorState(ESTADO_ERROR.NONE);
+            const requestBodyLogin = {
+                email: user,
+                password: await hashearPassword(password)
+            };
+            let confirmacionLogin = false;
+            try {
+                const jsonBodyLogin = JSON.stringify(requestBodyLogin);
+                confirmacionLogin = await fetch(`${DIRECCIONES.BACKEND}/api/auth`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: jsonBodyLogin
+                }).then(response => response.ok).catch(error => false);
+            } catch {}
+            if(confirmacionLogin) {
+                navegador('/home');
+            } else {
+                navegador('/login');
+            }
+        }
     }
-    */
 
     const handleUserChange = (event) => setUser(event.target.value);
     const handlePasswordChange = (event) => setPassword(event.target.value);
@@ -132,13 +142,15 @@ function Login(props) {
 
     const submitForm = async (event) => {
         event.preventDefault();
-        validarDatos();
-        if(errorState === ESTADO_ERROR.NONE && !validarDatos()) {
-            // Realizar la solicitud HTTP.
-            if(props?.version === 'registro') solicitudRegistro();
-        } else {
+        /*
+        const datosValidados = validarDatos();
+        if(datosValidados && props?.version === 'registro') {
+            await solicitudRegistro();
             return;
         }
+        */
+
+        await solicitudRegistro();
     }
 
 
