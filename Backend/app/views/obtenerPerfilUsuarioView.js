@@ -9,9 +9,11 @@ function obtenerPerfilUsuarioView(request, response) {
         return;
     }
 
+    const nombrePreferido = informacionUsuario.usarAlias ? informacionUsuario.alias : informacionUsuario.usuario;
+
     const respuesta = {
         id: informacionUsuario.userID,
-        nombre: informacionUsuario.usuario,
+        nombre: nombrePreferido,
         xp: informacionUsuario.puntosXP,
         alias: informacionUsuario.alias,
         bibliografia: informacionUsuario.bibliografia,
