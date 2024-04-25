@@ -147,14 +147,14 @@ function App() {
         <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />,
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} />,
         <Route path='/pelicula' loader={() => redirect('/home') } />,
-        <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => perfilLoader(params.perfilId)} />,
+        <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => perfilLoader(params.perfilId)} errorElement={<ErrorPage />} />,
         <Route path='/perfil' loader={() => redirect('/configuracion')} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
         <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => perfilLoader()} />,
         <Route path='/lista/:listaId' element={<VerLista />} loader={async ({params}) => await verListaLoader(params.listaId)} />,
         <Route path='/lista' loader={() => redirect('/home')} />,
 
-        <Route path='*' element={<ErrorPage />} />
+        <Route path='*' element={<ErrorPage error={404} />} />
     ]))
 
     return(

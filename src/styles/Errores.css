@@ -1,0 +1,23 @@
+
+.pagina-error {
+    color: white;
+}
+
+.error-main-fondo {
+    width: 100%;
+    height: 100dvh;
+}
+
+.error-contenedor-central {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+}
+
+.error-imagen-margen {
+    margin-bottom: 1.4rem;
+}
