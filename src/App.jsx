@@ -121,7 +121,10 @@ function App() {
         const auth = await autenticar();
         if(!auth) return redirect('/login');
 
-        // Verificar que pelicula id sea un int.
+        const numerosRegex = /^[0-9]+$/;
+        if(!numerosRegex.test(peliculaID)) {
+            throw new Response("Not Found", { status: 404 });
+        }
 
         const datosPelicula = await fetch(`${DIRECCIONES.BACKEND}/api/pelicula/${peliculaID}`, {
             method: 'GET',
