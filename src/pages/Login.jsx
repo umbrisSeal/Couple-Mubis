@@ -55,7 +55,8 @@ function Login(props) {
         PASSWORD_PEQUEÑO: 'El password debe tener al menos 6 caracteres',
         PASSWORD_NUMERO: 'El password debe contener al menos 1 numero.',
         PASSWORD_CARACTER: 'El password debe contener al menos 1 caracter especial.',
-        CLAVE_INCORRECTA: 'La clave de registro es incorrecta.'
+        CLAVE_INCORRECTA: 'La clave de registro es incorrecta.',
+        ERROR_INICIO_SESION: 'No se pudo iniciar sesion.'
     }
 
     const validarDatos = () => {
@@ -135,6 +136,31 @@ function Login(props) {
         }
     }
 
+    async function iniciarSesion() {
+        const requestBody = {
+            email: user,
+            password: await hashearPassword(password)
+        };
+        let confirmacionLogin = false;
+        try {
+            const jsonBody = JSON.stringify(requestBody);
+            confirmacionLogin = await fetch(`${DIRECCIONES.BACKEND}/api/auth`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Origin': `${DIRECCIONES.BACKEND}`,
+                    'Content-Type': 'application/json'
+                },
+                body: jsonBody
+            }).then(response => response.ok).catch(error => false);
+        } catch {}
+        if(confirmacionLogin) {
+            navegador('/home');
+        } else {
+            setErrorState(ESTADO_ERROR.ERROR_INICIO_SESION);
+        }
+    }
+
     const handleUserChange = (event) => setUser(event.target.value);
     const handlePasswordChange = (event) => setPassword(event.target.value);
     const handlePasswordConfirmarChange = (event) => setPasswordConfirmar(event.target.value);
@@ -142,17 +168,16 @@ function Login(props) {
 
     const submitForm = async (event) => {
         event.preventDefault();
-        /*
         const datosValidados = validarDatos();
         if(datosValidados && props?.version === 'registro') {
             await solicitudRegistro();
             return;
         }
-        */
-
-        await solicitudRegistro();
+        if(!props.hasOwnProperty('version') && validarDatos()) {
+            await iniciarSesion();
+            return;
+        }
     }
-
 
     return(
         <main className='fondo-gris fondo-completo'>
@@ -207,33 +232,3 @@ function Login(props) {
 }
 
 export default Login
-
-/*
-Distribucion de login
-
------------------------
-Imagen de refugio14
-"Login"
-[Message error]
-Usuario y contraseña
-"Iniciar Sesion"
-¿Aun no tiene una cuenta? Cree una.
------------------------
-
----------------------------
-Y en caso de registro:
-Crear Cuenta
-Couple Mubis (En mas pequeñas)
-Circulo con flechas
-Se creara y vinculara su cuenta principal de Refugio14
-a Couple Mubis. Puede ingresar usando su mismo correo
-y contraseña que Refugio14.
-
-¿Desea vincular y crear su cuenta Cuple Mubis?
-
-[ Registrarse ] -> Registrar, vincular y iniciar sesion.
-Al registrarse acepta los terminos y condiciones. [Link to a document]
------------------------------------------------------------
-
-
-*/
