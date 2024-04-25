@@ -221,7 +221,7 @@ function Login(props) {
                 <div className='contenedor-boton'>
                     <Boton version='loginSubmit' texto={textoBoton} />
 
-                    <p className={`centrar-texto letras-pequeñas ${version === '' ? '' : 'ocultar'}`}> ¿No tienes una cuenta? Crea una <Link to="/registro-temporal"> <span className='hypervinculo'>aqui.</span> </Link> </p>
+                    <p className={`centrar-texto letras-pequeñas ${version === '' ? '' : 'ocultar'}`}> ¿No tienes una cuenta? Crea una <Link to="/registro"> <span className='hypervinculo'>aqui.</span> </Link> </p>
                     <p className={`centrar-texto letras-pequeñas ${version === 'registro' ? '' : 'ocultar'}`}> ¿Ya tienes una cuenta refugio14? Inicia sesion <Link to="/login"> <span className='hypervinculo'> aqui.</span> </Link> </p>
                     <p className={`centrar-texto letras-pequeñas ${version === 'vincular' ? '' : 'ocultar'}`}> Al vincular su cuenta, acepta los <Link to="/terminos"> <span className='hypervinculo'>terminos y condiciones</span> </Link> de Couple Mubis. </p>
                 </div>

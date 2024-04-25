@@ -147,8 +147,8 @@ function App() {
     const router = createBrowserRouter(createRoutesFromElements([
         <Route path='/' element={<LandingPage />} loader={async () => await landingPageLoader()} errorElement={<ErrorPage />} />,
         <Route path='/login' element={<Login />} loader={async () => await loginLoader()} errorElement={<ErrorPage />} />,
-        <Route path='/registro-temporal' element={<Login version='registro' />} loader={async () => await loginLoader()} errorElement={<ErrorPage />} />,
-        <Route path='/registro' element={<Login version='vincular' />} loader={async () => await loginLoader()} />,
+        <Route path='/registro' element={<Login version='registro' />} loader={async () => await loginLoader()} errorElement={<ErrorPage />} />,
+        // <Route path='/registro' element={<Login version='vincular' />} loader={async () => await loginLoader()} />,
         <Route path='/home' element={<Home />} loader={async() => await homeLoader()} errorElement={<ErrorPage />} />,
         <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} errorElement={<ErrorPage error={404} />} />,
         <Route path='/pelicula' loader={() => redirect('/home') } errorElement={<ErrorPage />} />,
