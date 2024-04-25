@@ -186,7 +186,7 @@ function Header(props) {
                     <button className='boton-header-volver' onClick={regresar}> &lt; Regresar </button>
                 </div>
                 <div className='contenedor-header-perfil fondo-perfil-inferior'>
-                    <img src={`../src/assets/images/perfiles/${informacionUsuario.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
+                    <img src={`../src/assets/images/perfiles/${props.imagenPerfil || informacionUsuario.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
                     <div className={`configuracion-imagen-perfil-perfil ${props.configuracion ? '' : 'ocultar'}`}>
                         <img src='../src/assets/images/iconos/editar.png' alt='Imagen editar' width={25} />
                         <p> Editar </p>

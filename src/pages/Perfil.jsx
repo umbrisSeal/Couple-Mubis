@@ -122,7 +122,11 @@ function Perfil(props) {
     const caracteresMaximos = 160;
 
     return <Fragment>
-        <Header version='perfil' configuracion={configuracion} />
+        { datosUsuario.imagenPerfil ?
+            <Header version='perfil' configuracion={configuracion} imagenPerfil={datosUsuario.imagenPerfil} />
+            :
+            <Header version='perfil' configuracion={configuracion} />
+        }
         <main className='fondo-rojo contenedor-informacion-perfil'>
             <div className='contenedor-informacion-perfil-perfil'>
                 <h1 className='negritas'> {datosUsuario.nombre} </h1>

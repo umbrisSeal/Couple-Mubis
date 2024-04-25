@@ -1,3 +1,4 @@
+const obtenerImgPerfil = require("../helpers/obtenerImgPerfil");
 
 
 function obtenerPerfilView(request, response) {
@@ -18,7 +19,8 @@ function obtenerPerfilView(request, response) {
         bibliografia: datosUsuario.bibliografia,
         esAmigo: request.esAmigo,
         esBloqueado: request.esBloqueado,
-        listasPublicas: listas
+        listasPublicas: listas,
+        imagenPerfil: obtenerImgPerfil(datosUsuario.imgPerfilID)
     };
 
     if(request.esBloqueado || request.datosUsuario.usarPrivacidad) {
