@@ -121,6 +121,8 @@ function App() {
         const auth = await autenticar();
         if(!auth) return redirect('/login');
 
+        // Verificar que pelicula id sea un int.
+
         const datosPelicula = await fetch(`${DIRECCIONES.BACKEND}/api/pelicula/${peliculaID}`, {
             method: 'GET',
             credentials: 'include',
@@ -140,19 +142,19 @@ function App() {
 
 
     const router = createBrowserRouter(createRoutesFromElements([
-        <Route path='/' element={<LandingPage />} loader={async () => await landingPageLoader()} />,
-        <Route path='/login' element={<Login />} loader={async () => await loginLoader()} />,
-        <Route path='/registro-temporal' element={<Login version='registro' />} loader={async () => await loginLoader()} />,
+        <Route path='/' element={<LandingPage />} loader={async () => await landingPageLoader()} errorElement={<ErrorPage />} />,
+        <Route path='/login' element={<Login />} loader={async () => await loginLoader()} errorElement={<ErrorPage />} />,
+        <Route path='/registro-temporal' element={<Login version='registro' />} loader={async () => await loginLoader()} errorElement={<ErrorPage />} />,
         <Route path='/registro' element={<Login version='vincular' />} loader={async () => await loginLoader()} />,
-        <Route path='/home' element={<Home />} loader={async() => await homeLoader()} />,
-        <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} />,
-        <Route path='/pelicula' loader={() => redirect('/home') } />,
-        <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => perfilLoader(params.perfilId)} errorElement={<ErrorPage />} />,
-        <Route path='/perfil' loader={() => redirect('/configuracion')} />,
+        <Route path='/home' element={<Home />} loader={async() => await homeLoader()} errorElement={<ErrorPage />} />,
+        <Route path='/pelicula/:peliculaId' element={<VerPelicula />} loader={async({params}) => await peliculaLoader(params.peliculaId)} errorElement={<ErrorPage error={404} />} />,
+        <Route path='/pelicula' loader={() => redirect('/home') } errorElement={<ErrorPage />} />,
+        <Route path='/perfil/:perfilId' element={<Perfil configuracion={false} />} loader={({params}) => perfilLoader(params.perfilId)} errorElement={<ErrorPage error={404} />} />,
+        <Route path='/perfil' loader={() => redirect('/configuracion')} errorElement={<ErrorPage />} />,
         // Crear ruta para redireccionar al perfil de usuario si no se encontro id.
-        <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => perfilLoader()} />,
-        <Route path='/lista/:listaId' element={<VerLista />} loader={async ({params}) => await verListaLoader(params.listaId)} />,
-        <Route path='/lista' loader={() => redirect('/home')} />,
+        <Route path='/configuracion' element={<Perfil configuracion={true} />} loader={() => perfilLoader()} errorElement={<ErrorPage />} />,
+        <Route path='/lista/:listaId' element={<VerLista />} loader={async ({params}) => await verListaLoader(params.listaId)} errorElement={<ErrorPage error={404} />} />,
+        <Route path='/lista' loader={() => redirect('/home')} errorElement={<ErrorPage />} />,
 
         <Route path='*' element={<ErrorPage error={404} />} />
     ]))
