@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header'
 
 import '../styles/Bienvenida.css';
+import { obtenerImagen } from '../assets/js/obtenerImagen';
 
 function Bienvenida() {
     const [estilos, setEstilos] = useState('animar-inicio');
@@ -17,7 +18,7 @@ function Bienvenida() {
             <Header version='login' />
             <div className='centrar-contenido'>
                 <div className='contenedor-imagen'>
-                    <img src='./src/assets/images/logo.png' alt='Logo de Couple Mubis'
+                    <img src={obtenerImagen('logo.png')} alt='Logo de Couple Mubis'
                         className={`animacion ${estilos}`}
                     />
                 </div>
