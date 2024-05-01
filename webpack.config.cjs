@@ -8,7 +8,7 @@ const configuracionWebpack = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'myFirstWebpack.bundle.js',
         //assetModuleFilename: "./imagenes/[name].[hash].[ext]",
-        publicPath: '/'
+        publicPath: ''
     },
     mode: 'production',
     resolve: {
@@ -19,7 +19,8 @@ const configuracionWebpack = {
             {test: /\.(js|jsx)$/, exclude: /node_modules/, use: {loader: 'babel-loader', options: {presets: ['@babel/preset-env', ["@babel/preset-react", {"runtime": "automatic"}]]}}}, // React JS.
             {test: /\.css$/, exclude: /node_modules/, use: [MiniCssExtractPlugin.loader, 'css-loader']},   // Regular CSS.
             {test: /\.css$/, include: /node_modules/, use: ['style-loader', 'css-loader']},  // Bootstrap CSS.
-            {test: /\.(png|jpg|webp|)$/i, type: 'asset'}
+            {test: /\.(png|jpg|webp|)$/i, type: 'asset'},
+            {test: /\.(woff|woff2|eot|ttf|otf)$/i, type: 'asset/resource'}
         ]
     },
     plugins: [
