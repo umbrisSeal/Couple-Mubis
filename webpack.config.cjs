@@ -20,11 +20,11 @@ const configuracionWebpack = {
             {test: /\.css$/, exclude: /node_modules/, use: [MiniCssExtractPlugin.loader, 'css-loader']},   // Regular CSS.
             {test: /\.css$/, include: /node_modules/, use: ['style-loader', 'css-loader']},  // Bootstrap CSS.
             {test: /\.(png|jpg|webp|)$/i, type: 'asset'},
-            {test: /\.(woff|woff2|eot|ttf|otf)$/i, type: 'asset/resource'}
+            {test: /\.(woff|woff2|eot|ttf|otf)$/i, type: 'asset/resource'},
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({ template: './index.html', filename: 'index.html' }),
+        new HtmlWebpackPlugin({ template: './index.html', filename: 'index.html', favicon: './public/favicon.ico' }),
         new MiniCssExtractPlugin({ filename: '[name].css', chunkFilename: '[id].css'})
     ],
     devServer: {

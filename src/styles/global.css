@@ -1,3 +1,5 @@
+@import '../fonts/Fuentes.css';
+
 :root {
     --fuente-lexend: "Lexend", sans-serif;
     --primario: #220901;
