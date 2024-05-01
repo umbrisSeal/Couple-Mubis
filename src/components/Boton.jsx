@@ -3,6 +3,7 @@ import '../styles/Boton.css';
 import VentanaEmergente from './VentanaEmergente';
 import { useNavigate, useParams } from 'react-router-dom';
 import DIRECCIONES from '../assets/js/diccionarioURLs';
+import { obtenerImagen } from '../assets/js/obtenerImagen';
 
 
 function Boton(props) {
@@ -68,7 +69,7 @@ function Boton(props) {
             <Fragment>
                 <button type='button' className='boton-borde borde-amarillo texto-grande texto-capital' onClick={handleVentanaEmergente}>
                     <div className='contenedor-doble negritas'>
-                        <img src='../src/assets/images/iconos/pelicula.png' alt='Icono Pelicula' height={30} width={30} />
+                        <img src={obtenerImagen('pelicula.png')} alt='Icono Pelicula' height={30} width={30} />
                         <p> Crear lista </p>
                     </div>
                 </button>
@@ -79,14 +80,14 @@ function Boton(props) {
         verMas:
             <button type='button' className='boton-borde borde-rojo texto-grande texto-capital'>
                 <div className='contenedor-doble negritas'>
-                    <img src='../src/assets/images/iconos/verMas.png' alt='Icono Lupa' height={30} width={30} />
+                    <img src={obtenerImagen('verMas.png')} alt='Icono Lupa' height={30} width={30} />
                     <p> Ver mas </p>
                 </div>
             </button>,
         agregarPelicula: <Fragment>
             <button className='boton-agregar amarillo' onClick={handleVentanaEmergente}>
                 <div className='contenedor-doble negritas'>
-                    <img src='../src/assets/images/iconos/boleto.png' alt='Icono Agregar' height={30} width={30} />
+                    <img src={obtenerImagen('boleto.png')} alt='Icono Agregar' height={30} width={30} />
                     <p> Agregar Pelicula </p>
                 </div>
             </button>
@@ -113,7 +114,7 @@ function Boton(props) {
         </Fragment>,
         peliculaVer: <button type='button' className={`boton-pelicula ${vista ? 'boton-pelicula-vista' : 'boton-pelicula-novista'}`} onClick={handleChange} >
             <div className='contenedor-doble'>
-                <img src={`../src/assets/images/iconos/${vista ? 'vista.png' : 'no-vista.png'}`} alt='Icono Vista' width={20} height={20} />
+                <img src={obtenerImagen(vista ? 'vista.png' : 'no-vista.png')} alt='Icono Vista' width={20} height={20} />
                 <p> {vista ? 'Vista' : 'Por Ver'} </p>
             </div>
         </button>,

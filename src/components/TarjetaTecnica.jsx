@@ -1,5 +1,6 @@
 import React from 'react'
 import '../styles/TarjetaTecnica.css';
+import { obtenerImagen } from '../assets/js/obtenerImagen';
 
 function TarjetaTecnica(props) {
     // frontend or backend
@@ -46,7 +47,7 @@ function TarjetaTecnica(props) {
             <div className='d-flex align-items-center justify-content-center gap-4 contenedor-imagenes'>
                 { imagenes.map((imagen) => {
                     return (
-                        <img src={`src/assets/images/iconos/${imagen}`} alt='Icono Herramienta.' width='50px' height='auto' key={Symbol(imagen).toString()} />
+                        <img src={obtenerImagen(imagen.toString())} alt='Icono Herramienta.' width='50px' height='auto' key={Symbol(imagen).toString()} />
                     )
                 }) }
             </div>

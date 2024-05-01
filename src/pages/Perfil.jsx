@@ -6,6 +6,7 @@ import Header from '../components/Header';
 import Boton from '../components/Boton';
 import FormSwitch from '../components/FormSwitch';
 import DIRECCIONES from '../assets/js/diccionarioURLs';
+import { obtenerImagen } from '../assets/js/obtenerImagen';
 
 function Perfil(props) {
     const datosUsuario = useLoaderData();
@@ -214,7 +215,7 @@ function Perfil(props) {
                                     return(
                                         <Link to={`/lista/${lista.id}`} className='no-hypervinculo' key={lista + index}>
                                             <div className='perfil-lista'>
-                                                <img src='../src/assets/images/iconos/pelicula-roja.png' alt='Icono Pelicula' width={50} />
+                                                <img src={obtenerImagen('pelicula-roja.png')} alt='Icono Pelicula' width={50} />
                                                 <p> {lista.nombre} </p>
                                             </div>
                                         </Link>

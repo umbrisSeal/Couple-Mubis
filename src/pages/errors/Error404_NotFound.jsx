@@ -1,12 +1,13 @@
 import React from 'react'
 import '../../styles/Errores.css';
 import { Link } from 'react-router-dom';
+import { obtenerImagen } from '../../assets/js/obtenerImagen';
 
 function Error404_NotFound() {
     return(
         <main className='fondo-radial error-main-fondo pagina-error'>
             <div className='error-contenedor-central'>
-                <img src='../src/assets/images/iconos/not_found.webp' alt='De que me estas hablando padrino.' width={150} className='error-imagen-margen' />
+                <img src={obtenerImagen('not_found.webp')} alt='De que me estas hablando padrino.' width={150} className='error-imagen-margen' />
                 <h1> Error 404 </h1>
                 <p> No se ha encontrado la pagina solicitada. </p>
                 <Link to='/home'>

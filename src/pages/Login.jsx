@@ -4,6 +4,7 @@ import Boton from '../components/Boton';
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import hashearPassword from '../assets/js/hashearPassword';
 import DIRECCIONES from '../assets/js/diccionarioURLs';
+import { obtenerImagen } from '../assets/js/obtenerImagen';
 
 function Login(props) {
     const [user, setUser] = useState('');
@@ -206,9 +207,9 @@ function Login(props) {
                 {/* Codigo para la seccion de vinculacion de cuenta: */}
 
                 <div className={`contenedor-vinculacion ${version === 'vincular' ? '' : 'ocultar'}`}>
-                    <img src='src\assets\images\iconos\AppPerfil_Refugio14.png' className='vinculacion-app' />
-                    <img src='src\assets\images\figuraFlecha.png' className='vinculacion-flecha' />
-                    <img src='src\assets\images\iconos\AppPerfil_CoupleMubis.png' className='vinculacion-app' />
+                    <img src={obtenerImagen('AppPerfil_Refugio14.png')} className='vinculacion-app' />
+                    <img src={obtenerImagen('figuraFlecha.png')} className='vinculacion-flecha' />
+                    <img src={obtenerImagen('AppPerfil_CoupleMubis.png')} className='vinculacion-app' />
                 </div>
 
                 <div className={`centrar-texto texto-vinculacion ${version === 'vincular' ? '' : 'ocultar'}`}>

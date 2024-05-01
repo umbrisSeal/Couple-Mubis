@@ -21,7 +21,7 @@ app.use(express.json());     // Allow req.body
 */
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:8080',
     credentials: true
 }));
 

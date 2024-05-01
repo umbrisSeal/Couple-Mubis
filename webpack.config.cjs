@@ -19,7 +19,7 @@ const configuracionWebpack = {
             {test: /\.(js|jsx)$/, exclude: /node_modules/, use: {loader: 'babel-loader', options: {presets: ['@babel/preset-env', ["@babel/preset-react", {"runtime": "automatic"}]]}}}, // React JS.
             {test: /\.css$/, exclude: /node_modules/, use: [MiniCssExtractPlugin.loader, 'css-loader']},   // Regular CSS.
             {test: /\.css$/, include: /node_modules/, use: ['style-loader', 'css-loader']},  // Bootstrap CSS.
-            {test: /\.(png|jpg)$/i, type: 'asset'}
+            {test: /\.(png|jpg|webp|)$/i, type: 'asset'}
         ]
     },
     plugins: [

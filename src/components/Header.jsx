@@ -6,6 +6,7 @@ import '../assets/js/niveles.js';
 import RuedaXP from './RuedaXP.jsx';
 import { obtenerNivel } from '../assets/js/niveles.js';
 import DIRECCIONES from '../assets/js/diccionarioURLs.js';
+import { obtenerImagen } from '../assets/js/obtenerImagen.js';
 
 function Header(props) {
     const [busqueda, setBusqueda] = useState('');
@@ -117,12 +118,12 @@ function Header(props) {
             <div className={`fondo-primario extender-fondo header-home ${props.version === 'home' ? '' : 'ocultar'}`}>
                 {/* Version: home */}
                 <Link to='/home'>
-                    <img src='../src/assets/images/logo.png' className='imagen-logo' />
+                    <img src={obtenerImagen('logo.png')} className='imagen-logo' />
                 </Link>
 
                 <div className='seccion-busqueda'>
                     <button type='button' className='boton-buscar' onClick={buscarPeliculas}>
-                        <img src='../src/assets/images/iconos/buscar.png' className='icono-buscar'/>
+                        <img src={obtenerImagen('buscar.png')} className='icono-buscar'/>
                     </button>
                     <div className='contenedor-busqueda'>
                         <input type='text' id='inputBusqueda' name='inputBusqueda' maxLength={80} value={busqueda} onChange={handleBusquedaChange} placeholder='Buscar pelicula...' className='campo-busqueda' onKeyUp={handleBusquedaEnter}></input>
@@ -157,7 +158,7 @@ function Header(props) {
                 </div>
 
                 <button type='button' className='boton-perfil' ref={perfilRef}>
-                    <img src={`../src/assets/images/perfiles/${informacionUsuario.imagenPerfil}`} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
+                    <img src={obtenerImagen(`${informacionUsuario.imagenPerfil}`)} alt='img perfil'  className='imagen-perfil' onClick={handleMostrarPerfilChange} />
                     <div id='contenedor-menu-perfil' className={`${mostrarPerfil ? '' : 'ocultar'}`} >
                         <div className='triangulo'></div>
                         <div className='contenedor-menu'>
@@ -186,9 +187,9 @@ function Header(props) {
                     <button className='boton-header-volver' onClick={regresar}> &lt; Regresar </button>
                 </div>
                 <div className='contenedor-header-perfil fondo-perfil-inferior'>
-                    <img src={`../src/assets/images/perfiles/${props.imagenPerfil || informacionUsuario.imagenPerfil}`} alt='img perfil' className='imagen-perfil-perfil' />
+                    <img src={obtenerImagen(`${props.imagenPerfil || informacionUsuario.imagenPerfil}`)} alt='img perfil' className='imagen-perfil-perfil' />
                     <div className={`configuracion-imagen-perfil-perfil ${props.configuracion ? '' : 'ocultar'}`}>
-                        <img src='../src/assets/images/iconos/editar.png' alt='Imagen editar' width={25} />
+                        <img src={obtenerImagen('editar.png')} alt='Imagen editar' width={25} />
                         <p> Editar </p>
                     </div>
                 </div>

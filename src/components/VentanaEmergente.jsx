@@ -4,6 +4,7 @@ import Boton from './Boton'
 import { copiarObjeto } from '../assets/js/copiarObjeto.js';
 import { useParams } from 'react-router-dom';
 import DIRECCIONES from '../assets/js/diccionarioURLs.js';
+import { obtenerImagen } from '../assets/js/obtenerImagen.js';
 
 function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleBotonAceptar, indexPelicula, colaboradoresReorganizados, actualizarColaboradores}) {
     const ventanaRef = useRef(null);
@@ -215,7 +216,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                                 <tbody>
                                     {colaboradores.map((colaborador, index) => {
                                         return <tr key={colaborador + index}>
-                                            <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${colaborador.imgPerfil}`} alt='Img Perfil' /> </td>
+                                            <td className='columna-imagen'> <img src={obtenerImagen(`${colaborador.imgPerfil}`)} alt='Img Perfil' /> </td>
                                             <td className='columna-nombre'> {colaborador.nombre} </td>
                                             <td className='columna-boton'>
                                                 <Boton version='seleccionAutoridad' autoridad={colaborador.autoridad} indexColaborador={index} handleChange={handleChangeAutoridad} />
@@ -234,7 +235,7 @@ function VentanaEmergente({version, handleBotonCancelar, nombrePelicula, handleB
                                 <tbody>
                                     {amigosColaboradores.map((amigo, index) => {
                                         return <tr key={amigo + index}>
-                                            <td className='columna-imagen'> <img src={`../src/assets/images/perfiles/${amigo.imgPerfil}`} alt='Img Perfil' /> </td>
+                                            <td className='columna-imagen'> <img src={obtenerImagen(`${amigo.imgPerfil}`)} alt='Img Perfil' /> </td>
                                             <td className='columna-nombre'> {amigo.nombre} </td>
                                             <td className='columna-boton'> <Boton version='agregarColaborador' estadoInicial={amigo.esColaborador} indexAmigo=
                                             {index} handleChange={handleAgregarAmigoColaborador} /> </td>
